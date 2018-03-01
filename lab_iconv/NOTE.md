@@ -51,6 +51,10 @@ iconv函数一次转换一个多字节字符，每次转换它都会增长\*inbu
 
 </details>
 
+# 测试代码
+
+[test_iconv](./test_iconv.c)
+
 # 参考资料
 
 man 3 iconv

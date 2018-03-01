@@ -6,7 +6,7 @@
 #endif
 
 #ifdef _WIN32
-#include "include/iconv.h"
+#include "lib/iconv.h"
 #endif
 
 int code_convert(char *from_charset, char *to_charset,

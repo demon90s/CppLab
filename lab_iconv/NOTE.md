@@ -21,8 +21,6 @@ size_t iconv(iconv_t cd,
 
 在Linux平台，libiconv已经包含在C运行时库libc.so中，因此可以直接使用上述接口。
 
----
-
 **iconv_open**函数分配一个转换说明符（conversion descriptor），用于字符集的转换。
 
 tocode是要转换到的字符编码（character encoding），fromcode是从哪种字符编码转换。tocode和fromcode都是依赖于系统的，在Linux平台下，可以使用`iconv --list`查看支持的字符编码。
@@ -31,13 +29,9 @@ tocode是要转换到的字符编码（character encoding），fromcode是从哪
 
 转换说明符包含了一个转换状态（conversion state），当使用iconv_open创建完毕后，转换状态处于初始状态。iconv函数会修改转换状态。
 
----
-
 **iconv_close**函数释放转换说明符。这个转换说明符是之前由iconv_open分配的。
 
 如果成功，函数返回0，出现错误，会设置errno，并返回-1。
-
----
 
 **iconv**函数将一种字符编码的字符序列（sequence of characters）转换成另一种字符编码的字符序列。
 

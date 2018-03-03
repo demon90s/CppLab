@@ -1,0 +1,11 @@
+<config>
+	<name>Liudiwen</name>
+	<age>27</age>
+	<prof>programmer</prof>
+	<reading>
+		<data>CppPrimer</data>
+		<data>Linux Programming</data>
+	</reading>
+	<foobar bbb="123" aaa="456">goo</foobar>
+</config>
+

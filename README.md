@@ -5,3 +5,5 @@
 [rapidxml](./lab_rapidxml/NOTE.md)
 
 [list](./lab_list/NOTE.md)
+
+[protobuf](./lab_protobuf/NOTE.md)

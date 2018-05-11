@@ -8,9 +8,11 @@ RapidXml只有header file，因此没有building和linking的必要，只需要�
 
 RapidXml使用异常来报告错误。
 
-# 测试代码
+# 相关代码
 
-[test_rapidxml](./lab_rapidxml/test_rapidxml.cpp)
+[测试代码](./lab_rapidxml/test_rapidxml.cpp)
+
+[封装类型XmlReader](./lab_rapidxml/XmlReader)
 
 # 参考资料
 

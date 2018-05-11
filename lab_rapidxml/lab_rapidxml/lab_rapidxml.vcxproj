@@ -82,6 +82,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../lib</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -112,6 +114,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="test_rapidxml.cpp" />
+    <ClCompile Include="XmlReader\XmlReader.cpp" />
+    <ClCompile Include="XmlReader\XmlReader_Test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="XmlReader\XmlReader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

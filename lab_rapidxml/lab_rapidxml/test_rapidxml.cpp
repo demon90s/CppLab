@@ -10,6 +10,8 @@
 #include "rapidxml_utils.hpp"
 #pragma warning (pop)
 
+#include "XmlReader/XmlReader.h"
+
 using namespace std;
 
 void ParsingTest()
@@ -128,7 +130,10 @@ int main()
 	//ParsingTest();
 	//AccessingTest();
 	//PrintingTest();
-	ModifyingTest();
+	//ModifyingTest();
+
+	//Test_XmlReader_GetValue1();
+	Test_XmlReader_GetValue2();
 
 	system("pause");
 

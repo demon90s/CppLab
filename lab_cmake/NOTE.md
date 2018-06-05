@@ -102,8 +102,6 @@ CMakeLists.txt语法由指令、变量、注释组成。
 CMAKE_MINIMUM_REQUIRED(VERSION 2.0)
 ```
 
----
-
 **PROJECT**
 
 定义项目的名称。
@@ -116,8 +114,6 @@ PROJECT(projectname)
 
 一旦使用了此指令，将定义两个变量：`projectname_BINARY_DIR`和`projectname_SOURCE_DIR`，这两个变量与这两个内置变量是等价：`PROJECT_BINARY_DIR`和`PROJECT_SOURCE_DIR`
 
----
-
 **MESSAGE**
 
 发送一段信息文本到标准输出。
@@ -127,8 +123,6 @@ PROJECT(projectname)
 ```shell
 MESSAGE("cmake start")
 ```
-
----
 
 **SET**
 
@@ -146,10 +140,6 @@ SET(VAR [VALUE])
 SET(SRC_LIST main.c t1.c t2.c)
 ```
 
----
-
----
-
 **INCLUDE_DIRECTORIES**
 
 设置头文件包含目录。
@@ -160,8 +150,6 @@ SET(SRC_LIST main.c t1.c t2.c)
 INCLUDE_DIRECTORIES(. ./src) # 目录列表
 ```
 
----
-
 **ADD_SUBDIRECTORY**
 
 指明本工程中还有一个子目录，当执行到此指令时，会进入到子目录中，使用子目录中的CMakeList进行构建。
@@ -171,8 +159,6 @@ INCLUDE_DIRECTORIES(. ./src) # 目录列表
 ```shell
 ADD_SUBDIRECTORY(src)
 ```
-
----
 
 **FILE**
 
@@ -185,8 +171,6 @@ FILE(GLOB_RECURSE SRC_FILES *.cpp) # 获取当前处理的CMakeLists.txt文件�
 ```
 
 GLOB_RECURSE代表全局递归查找。
-
----
 
 **ADD_EXECUTABLE**
 
@@ -204,8 +188,6 @@ ADD_EXECUTABLE(exefile src_file_list)
 ADD_EXECUTABLE(main main.c t1.c t2.c)
 ```
 
----
-
 **ADD_LIBRARY**
 
 设置生成一个库文件。
@@ -220,8 +202,6 @@ ADD_LIBRARY(libname [SHARED | STATIC] source_list)
 
 - libname无需加lib前缀和.so后缀
 - SHARED表示动态库，STATIC表示静态库，默认是静态库
-
----
 
 **LINK_DIRECTORIES和TARGET_LINK_LIBRARIES**
 
@@ -240,8 +220,6 @@ TARGET_LINK_LIBRARIES(target lib_list)
 
 - TARGET_LINK_LIBRARIES命令要写在ADD_EXECUTABLE后面
 
----
-
 **STRING**
 
 可以修改字符串，将其存到一个变量里。此变量可以事先没有SET。
@@ -258,8 +236,6 @@ STRING([TOLOWER | TOUPPER] string output_val) # 将string转换成小写，赋�
 STRING(TOLOWER ${CMAKE_BUILD_TYPE} BUILD_TYPE)
 ```
 
----
-
 ## 内置变量
 
 **PROJECT_BINARY_DIR与PROJECT_SOURCE_DIR**
@@ -269,8 +245,6 @@ STRING(TOLOWER ${CMAKE_BUILD_TYPE} BUILD_TYPE)
 PROJECT_BINARY_DIR默认值是编译（make）发生的当前目录。
 
 PROJECT_SOURCE_DIR是工程的顶层目录（顶层CMakeLists.txt所在目录）。
-
----
 
 **EXECUTABLE_OUTPUT_PATH与LIBRARY_OUTPUT_PATH**
 
@@ -283,8 +257,6 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 ```
 
----
-
 **CMAKE_CXX_FLAGS**
 
 C++编译选项。
@@ -294,13 +266,9 @@ C++编译选项。
 - CMAKE_CXX_FLAGS_DEBUG，当CMAKE_BUILD_TYPE为Debug时启用
 - CMAKE_CXX_FLAGS_RELEASE，当CMAKE_BUILD_TYPE为Release时启用
 
----
-
 **CMAKE_CURRENT_SOURCE_DIR**
 
 当前处理的CMakeLists.txt所在路径。
-
----
 
 # 例子
 

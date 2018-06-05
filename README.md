@@ -8,4 +8,4 @@
 
 [protobuf](./lab_protobuf/NOTE.md)
 
-[cmake](./lib_cmake/NOTE.md)
+[cmake](./lab_cmake/NOTE.md)

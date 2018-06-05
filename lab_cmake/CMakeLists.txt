@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 2.0)
+
+PROJECT(PROJ)
+
+SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3 -Wall -D_DEBUG -std=c++11")
+SET(CMAKE_CXX_FLAGS_RELEASE "-O0 -g -Wall -std=c++11")
+
+FILE(GLOB_RECURSE SRC_FILES "./src/*.cpp")
+
+ADD_EXECUTABLE(PROJ_${CMAKE_BUILD_TYPE} ${SRC_FILES})

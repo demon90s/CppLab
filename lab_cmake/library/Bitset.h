@@ -8,7 +8,7 @@
 // 支持N位bit的标记结构，N必须是字节比特位（8）的倍数
 // bit位从最低位开始（最右）
 template <unsigned N>
-struct Bigset
+struct Bitset
 {
 	static const int BIT_FIELD_SIZE = 8 * sizeof(unsigned char);		// 一个位域占一个字节
 	static const int BIT_FIELD_COUNT = N / BIT_FIELD_SIZE;
@@ -16,55 +16,37 @@ struct Bigset
 
 	static_assert(N > 0 && N % BIT_FIELD_SIZE == 0, "Invalid Bitset Instance");
 
+	void Reset();						// 重置所有bit位
 	bool Test(int bit) const;			// 判断第bit位是否激活
 	void Set(int bit);					// 设置第bit位为1
-	void ReSet(int bit);				// 设置第bit位为0
+	void UnSet(int bit);				// 设置第bit位为0
 
 	std::string ToString() const;		// 返回数据的字符串表示
 
 	unsigned char bit_field_list[BIT_FIELD_COUNT] = {0};
 };
 
-template <unsigned N> inline
-std::string Bigset<N>::ToString() const
-{
-	std::list<char> tmp_list;
-	for (int i = 0; i < N; ++i)
-	{
-		if (this->Test(i))
-		{
-			tmp_list.push_front('1');
-		}
-		else
-		{
-			tmp_list.push_front('0');
-		}
-	}
-	return std::string(tmp_list.begin(), tmp_list.end());
-}
-
-template <unsigned N> inline
-std::ostream& operator<<(std::ostream &os, const Bigset<N> &bs)
-{
-	os << bs.ToString();
-	return os;
-}
-
 // typedef
-using Bitset8	= Bigset<8>;
-using Bitset16	= Bigset<16>;
-using Bitset32	= Bigset<32>;
-using Bitset64	= Bigset<64>;
-using Bitset128 = Bigset<128>;
-using Bitset256 = Bigset<256>;
-using Bitset512 = Bigset<512>;
+using Bitset8	= Bitset<8>;
+using Bitset16	= Bitset<16>;
+using Bitset32	= Bitset<32>;
+using Bitset64	= Bitset<64>;
+using Bitset128 = Bitset<128>;
+using Bitset256 = Bitset<256>;
+using Bitset512 = Bitset<512>;
 
 //-------------------------------------------------------------------------------------------
 
 // implement
 
 template <unsigned N> inline
-bool Bigset<N>::Test(int bit) const
+void Bitset<N>::Reset()
+{
+	memset(bit_field_list, 0, sizeof(bit_field_list));
+}
+
+template <unsigned N> inline
+bool Bitset<N>::Test(int bit) const
 {
 	if (bit < 0 || bit >= BIT_COUNT)
 	{
@@ -85,7 +67,7 @@ bool Bigset<N>::Test(int bit) const
 }
 
 template <unsigned N> inline
-void Bigset<N>::Set(int bit)
+void Bitset<N>::Set(int bit)
 {
 	if (bit < 0 || bit >= BIT_COUNT)
 	{
@@ -106,7 +88,7 @@ void Bigset<N>::Set(int bit)
 }
 
 template <unsigned N> inline
-void Bigset<N>::ReSet(int bit)
+void Bitset<N>::UnSet(int bit)
 {
 	if (bit < 0 || bit >= BIT_COUNT)
 	{
@@ -124,6 +106,31 @@ void Bigset<N>::ReSet(int bit)
 	int real_bit = bit % BIT_FIELD_SIZE;
 
 	flag &= ~(1 << real_bit);
+}
+
+template <unsigned N> inline
+std::string Bitset<N>::ToString() const
+{
+	std::list<char> tmp_list;
+	for (int i = 0; i < N; ++i)
+	{
+		if (this->Test(i))
+		{
+			tmp_list.push_front('1');
+		}
+		else
+		{
+			tmp_list.push_front('0');
+		}
+	}
+	return std::string(tmp_list.begin(), tmp_list.end());
+}
+
+template <unsigned N> inline
+std::ostream& operator<<(std::ostream &os, const Bitset<N> &bs)
+{
+	os << bs.ToString();
+	return os;
 }
 
 //-------------------------------------------------------------------------------------------

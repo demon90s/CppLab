@@ -9,6 +9,9 @@ int main()
 	b8.Set(2);
 	std::cout << b8 << std::endl;
 
+	b8.Reset();
+	std::cout << b8 << std::endl;
+
 	Pause();
 
 	return 0;

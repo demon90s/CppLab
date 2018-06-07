@@ -13,6 +13,9 @@ $ rand 100
 */
 int main(int argc, char *argv[])
 {
+	Test_RandFuncs();
+	return 0;
+
 	unsigned long min = 0, max = 0;
 	if (argc <= 1)
 	{

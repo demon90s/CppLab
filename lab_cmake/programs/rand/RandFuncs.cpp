@@ -22,7 +22,7 @@ unsigned long RandNum(unsigned long min, unsigned long max)
 
 	std::uniform_int_distribution<unsigned long> dist(min, max);
 
-	return dist(RD());
+	return dist(GEN());
 }
 
 extern void Test_RandFuncs()

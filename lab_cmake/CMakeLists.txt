@@ -1,13 +1,24 @@
-cmake_minimum_required(VERSION 2.8)
+﻿cmake_minimum_required(VERSION 2.8)
 
 PROJECT(LAB)
 
+# VS设定
+if (MSVC)
+	ADD_DEFINITIONS(/W3 /wd"4819")
+endif(MSVC)
+
+# Linux设定
 if (CMAKE_COMPILER_IS_GNUCXX)
 	SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3 -Wall -D_DEBUG -std=c++11")
 	SET(CMAKE_CXX_FLAGS_RELEASE "-O0 -g -Wall -std=c++11")
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
+# 输出目录
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
+# 子项目
+ADD_SUBDIRECTORY(library)
+ADD_SUBDIRECTORY(programs/lab_library_test)
 ADD_SUBDIRECTORY(programs/hello_cmake)
 ADD_SUBDIRECTORY(programs/rand)

@@ -1,4 +1,6 @@
 INCLUDE_DIRECTORIES(.)
 
 FILE(GLOB_RECURSE SRC_FILES "./*.cpp" "./*.h")
+source_group(src FILES ${SRC_FILES})
+
 ADD_EXECUTABLE(rand ${SRC_FILES})

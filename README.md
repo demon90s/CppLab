@@ -1,11 +1,11 @@
 # Lab
 
-[iconv](./lab_iconv/NOTE.md)
+[iconv](./lab_iconv)
 
-[rapidxml](./lab_rapidxml/NOTE.md)
+[rapidxml](./lab_rapidxml)
 
-[list](./lab_list/NOTE.md)
+[list](./lab_list)
 
-[protobuf](./lab_protobuf/NOTE.md)
+[protobuf](./lab_protobuf)
 
-[cmake](./lab_cmake/NOTE.md)
+[cmake](./lab_cmake)

@@ -2,14 +2,17 @@
 #include "Bitset.h"
 #include "SmallFuncs.h"
 #include "templates.hpp"
+#include "Serializer.hpp"
 
 void TestBitset();
 void TestGetMinIndex();
+void TestSerializer();
 
 int main()
 {
 	//TestBitset();
-	TestGetMinIndex();
+	//TestGetMinIndex();
+	TestSerializer();
 
 	Pause("paused...");
 
@@ -32,4 +35,43 @@ void TestGetMinIndex()
 	int arr[] = { 1, 3, 8, 2, 0, 5 };
 	std::cout << GetMinIndex(arr) << std::endl;
 	std::cout << GetMaxIndex(arr) << std::endl;
+}
+
+void TestSerializer()
+{
+	struct Foo
+	{
+		float pi;
+		long long l;
+	};
+
+	Serializer s;
+	{
+		int a = 42;
+		double d = 3.14;
+		int arr[] = { 1, 2, 3 };
+		Foo foo{ 6.18f, 1000 };
+
+		s.Write(a, d, arr, foo);
+	}
+
+	DeSerializer us(s.Ptr(), s.Size());
+	{
+		int a;
+		double d;
+		int arr[3];
+		Foo foo;
+
+		us.Read(a, d, arr, foo);
+
+		// output
+		std::cout << a << " "
+			<< d << std::endl;
+		
+		for (auto i : arr)
+			std::cout << i << " ";
+		std::cout << std::endl;
+		
+		std::cout << foo.pi << " " << foo.l << std::endl;
+	}
 }

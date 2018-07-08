@@ -3,12 +3,10 @@
 #include "SmallFuncs.h"
 #include "templates.hpp"
 #include "Serializer.hpp"
-#include "ConfigReader.hpp"
 
 void TestBitset();
 void TestGetMinIndex();
 void TestSerializer();
-void TestConfigReader();
 
 int main()
 {
@@ -76,21 +74,4 @@ void TestSerializer()
 		
 		std::cout << foo.pi << " " << foo.l << std::endl;
 	}
-}
-
-void TestConfigReader()
-{
-	struct CfgItem
-	{
-		int GetIndex() const { return seq; }
-		bool Read(XmlNode *node)
-		{
-			return true;
-		}
-
-		int seq = 0;
-		int number = 0;
-	};
-
-	ConfigItemList<CfgItem, 8> cfg_item_list(0);
 }

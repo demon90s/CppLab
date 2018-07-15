@@ -9,3 +9,5 @@
 [protobuf](./lab_protobuf)
 
 [cmake](./lab_cmake)
+
+[precompile header](./lab_precompileheader)

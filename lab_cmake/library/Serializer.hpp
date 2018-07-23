@@ -2,6 +2,7 @@
 #define __SERIALIZER_HPP__
 
 #include <cstring>
+#include <stdexcept>
 
 /*
 	简单的序列化工具，提供序列化内置类型、数组、聚合类型的方法

@@ -22,7 +22,7 @@ inline void TraceBack()
 	
 	for (size_t i = 0; i < frames.size(); ++i)
 	{
-		printf("#%d: %s\n", i, frames[i].c_str());
+		printf("#%lu: %s\n", i, frames[i].c_str());
 	}
 }
 
@@ -32,7 +32,7 @@ inline void TraceBack(std::string *str)
 	StackWalker sw;
 	sw.ShowCallstack(str);
 #else
-	stacktrace(str);
+	stacktrace(*str);
 #endif
 	std::string out = *str;
 	std::vector<std::string> frames;
@@ -40,6 +40,6 @@ inline void TraceBack(std::string *str)
 
 	for (size_t i = 0; i < frames.size(); ++i)
 	{
-		printf("#%d: %s\n", i, frames[i].c_str());
+		printf("#%lu: %s\n", i, frames[i].c_str());
 	}
 }

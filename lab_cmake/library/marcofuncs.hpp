@@ -1,6 +1,7 @@
 #pragma once
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 
 // 字符串拷贝 转long long是为了屏蔽LINUX下的警告
 #define STRNCPY(dst_str, src_str, dst_len)                     \

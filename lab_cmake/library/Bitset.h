@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include <cstring>
 
 // 支持N位bit的标记结构，N必须是字节比特位（8）的倍数
 // bit位从最低位开始（最右）

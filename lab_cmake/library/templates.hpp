@@ -2,6 +2,7 @@
 #define __TEMPLATES_HPP__
 
 #include <vector>
+#include <climits>
 #include "marcofuncs.hpp"
 
 // 获取数组中最小元素的下标

@@ -21,7 +21,7 @@ endfunction(group_by_dir)
 
 # VS设定
 if (MSVC)
-	ADD_DEFINITIONS(/W3 /wd"4819")
+	ADD_DEFINITIONS(/W3 /wd"4819" /wd"4091" /wd"4996")
 	SET(LINK_LIB_COMMON lab_library.lib)
 endif(MSVC)
 

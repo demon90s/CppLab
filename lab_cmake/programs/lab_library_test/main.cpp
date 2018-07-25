@@ -3,16 +3,19 @@
 #include "SmallFuncs.h"
 #include "templates.hpp"
 #include "Serializer.hpp"
+#include "TraceBack/TraceBack.h"
 
 void TestBitset();
 void TestGetMinIndex();
 void TestSerializer();
+void TestTraceBack();
 
 int main()
 {
 	//TestBitset();
 	//TestGetMinIndex();
 	//TestSerializer();
+	TestTraceBack();
 
 	Pause("paused...");
 
@@ -74,4 +77,9 @@ void TestSerializer()
 		
 		std::cout << foo.pi << " " << foo.l << std::endl;
 	}
+}
+
+void TestTraceBack()
+{
+	TraceBack();
 }

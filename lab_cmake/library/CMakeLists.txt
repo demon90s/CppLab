@@ -1,6 +1,6 @@
 INCLUDE_DIRECTORIES(.)
 
 FILE(GLOB_RECURSE SRC_FILES "./*.cpp" "./*.h*")
-source_group(src FILES ${SRC_FILES})
+group_by_dir(${PROJECT_SOURCE_DIR} ${SRC_FILES})
 
 ADD_LIBRARY(lab_library STATIC ${SRC_FILES})

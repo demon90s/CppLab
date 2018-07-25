@@ -23,6 +23,8 @@
  *  2005-08-05   v5    - Removed most Lint (http://www.gimpel.com/) errors... thanks to Okko Willeboordse!
  *
  **********************************************************************/
+#ifdef _MSC_VER
+
 #include <windows.h>
 #include <tchar.h>
 #include <stdio.h>
@@ -1237,3 +1239,5 @@ void StackWalker::OnOutput(LPCSTR buffer)
 {
   OutputDebugStringA(buffer);
 }
+
+#endif

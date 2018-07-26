@@ -57,4 +57,58 @@ inline int ParseParam(const char *src, std::vector<std::string> &result, const c
 	return (int)result.size();
 }
 
+// 有范围的整数，取值：[LOWER, UPPER]
+template<long long LOWER = 0, long long UPPER = INT_MAX>
+class Num
+{
+public:
+	Num() : m_val(0) { this->Check(); }
+	Num(long long val) : m_val(val) { this->Check(); }
+	operator long long() { return m_val; }
+
+	Num& operator+=(const Num& number)
+	{
+		m_val += number.m_val;
+		this->Check();
+		return *this;
+	}
+
+	Num& operator-=(const Num& number)
+	{
+		m_val -= number.m_val;
+		this->Check();
+		return *this;
+	}
+
+	Num& operator*=(const Num& number)
+	{
+		m_val *= number.m_val;
+		this->Check();
+		return *this;
+	}
+
+	Num& operator/=(const Num& number)
+	{
+		m_val /= number.m_val;
+		this->Check();
+		return *this;
+	}
+
+	Num& operator%=(const Num& number)
+	{
+		m_val %= number.m_val;
+		this->Check();
+		return *this;
+	}
+
+private:
+	void Check()
+	{
+		if (m_val < LOWER) m_val = LOWER;
+		else if (m_val > UPPER) m_val = UPPER;
+	}
+
+	long long m_val;
+};
+
 #endif // __TEMPLATES_HPP__

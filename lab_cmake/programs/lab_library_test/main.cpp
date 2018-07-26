@@ -9,13 +9,15 @@ void TestBitset();
 void TestGetMinIndex();
 void TestSerializer();
 void TestTraceBack();
+void TestNum();
 
 int main()
 {
 	//TestBitset();
 	//TestGetMinIndex();
 	//TestSerializer();
-	TestTraceBack();
+	//TestTraceBack();
+	TestNum();
 
 	Pause("paused...");
 
@@ -82,4 +84,44 @@ void TestSerializer()
 void TestTraceBack()
 {
 	TraceBack();
+}
+
+void TestNum()
+{
+	Num<0, 100> number;
+	number = 1000;
+	std::cout << number << std::endl;
+
+	number = number - 90;
+	std::cout << number << std::endl;
+
+	number = number + 20;
+	std::cout << number << std::endl;
+
+	number = number * 5;
+	std::cout << number << std::endl;
+
+	number = number / 10;
+	std::cout << number << std::endl;
+
+	number = number % 3;
+	std::cout << number << std::endl;
+
+	number = 1000;
+	std::cout << number << std::endl;
+
+	number -= 90;
+	std::cout << number << std::endl;
+
+	number += 20;
+	std::cout << number << std::endl;
+
+	number *= 5;
+	std::cout << number << std::endl;
+
+	number /= 10;
+	std::cout << number << std::endl;
+
+	number %= 3;
+	std::cout << number << std::endl;
 }

@@ -6,6 +6,8 @@
 #include "stacktrace.h"
 #endif
 #include <string>
+#include <vector>
+#include "templates.hpp"
 
 // 输出程序的调用堆栈
 inline void TraceBack()

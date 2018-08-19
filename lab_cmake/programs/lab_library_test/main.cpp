@@ -4,12 +4,14 @@
 #include "templates.hpp"
 #include "Serializer.hpp"
 #include "TraceBack/TraceBack.h"
+#include "Array2D.hpp"
 
 void TestBitset();
 void TestGetMinIndex();
 void TestSerializer();
 void TestTraceBack();
 void TestNum();
+void TestArray2D();
 
 int main()
 {
@@ -17,7 +19,8 @@ int main()
 	//TestGetMinIndex();
 	//TestSerializer();
 	//TestTraceBack();
-	TestNum();
+	//TestNum();
+	TestArray2D();
 
 	Pause("paused...");
 
@@ -72,11 +75,11 @@ void TestSerializer()
 		// output
 		std::cout << a << " "
 			<< d << std::endl;
-		
+
 		for (auto i : arr)
 			std::cout << i << " ";
 		std::cout << std::endl;
-		
+
 		std::cout << foo.pi << " " << foo.l << std::endl;
 	}
 }
@@ -124,4 +127,23 @@ void TestNum()
 
 	number %= 3;
 	std::cout << number << std::endl;
+}
+
+void TestArray2D()
+{
+	Array2D<int, 3, 4> arr2d;
+
+	for (int row = 0; row < arr2d.Row(); ++row)
+	{
+		for (int col = 0; col < arr2d.Col(); ++col)
+		{
+			int idx = arr2d.GetIdx(row, col);
+			arr2d[idx] = idx + 1;
+		}
+	}
+
+	arr2d.Sort(std::greater<int>());
+	arr2d.Sort(0, std::less<int>());
+
+	std::cout << "done\n";
 }

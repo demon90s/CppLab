@@ -5,6 +5,7 @@
 #include "Serializer.hpp"
 #include "TraceBack/TraceBack.h"
 #include "Array2D.hpp"
+#include "colorprintf.h"
 
 void TestBitset();
 void TestGetMinIndex();
@@ -12,6 +13,7 @@ void TestSerializer();
 void TestTraceBack();
 void TestNum();
 void TestArray2D();
+void TestColorPrint();
 
 int main()
 {
@@ -20,7 +22,8 @@ int main()
 	//TestSerializer();
 	//TestTraceBack();
 	//TestNum();
-	TestArray2D();
+	//TestArray2D();
+	TestColorPrint();
 
 	Pause("paused...");
 
@@ -146,4 +149,11 @@ void TestArray2D()
 	arr2d.Sort(0, std::less<int>());
 
 	std::cout << "done\n";
+}
+
+void TestColorPrint()
+{
+	CONSOLE_ERROR("This is an error");
+	CONSOLE_DEBUG("%s", "This is a Debug");
+	CONSOLE_WARNING("This is a warning");
 }

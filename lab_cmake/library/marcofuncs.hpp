@@ -54,3 +54,7 @@ inline int SNPRINTF(char *dst, int len, const char *format, ...)
 
 	return ret;
 }
+
+// Format Log
+#define Log(format, ...) \
+	printf(format "\n", ##__VA_ARGS__); fflush(stdout);

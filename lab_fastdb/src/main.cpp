@@ -1,17 +1,21 @@
 #include <stdlib.h>
 #include <iostream>
 #include "fastdb/database.h"
+#include "tabledef.h"
+
+USE_FASTDB_NAMESPACE
 
 static bool open_log = true;
 
-static fastdb::dbDatabase db;
-static fastdb::dbDatabase::OpenParameters open_params;
+static dbDatabase db;
+static dbDatabase::OpenParameters open_params;
 static std::string db_name = "test_fastdb";
 static size_t db_init_sz_mb = 1;
 
 #define Log(format, ...) \
 if (open_log) printf(format "\n", ##__VA_ARGS__); fflush(stdout);
 
+// 开启 fastdb
 static bool OpenDB()
 {
 	if (db.isOpen())
@@ -36,6 +40,7 @@ static bool OpenDB()
 	return ret;
 }
 
+// 关闭 fastdb
 static void CloseDB()
 {
 	if (db.isOpen())
@@ -45,9 +50,119 @@ static void CloseDB()
 	}
 }
 
+// 插入一条记录
+static void InsertRecord()
+{
+	table_test table;
+	{
+		static int inc_id = 1;
+
+		table.inc_id = inc_id++;
+		table.name = "liudiwen";
+		table.number_char = 127;
+		table.number_int = 42;
+		table.number_ll = 100000;
+	}
+
+	dbAnyReference ref;
+	db.insertRecord(&table_test::dbDescriptor, &ref, &table);
+
+	Log("Insert one record");
+}
+
+// 查找记录
+static void Find()
+{
+	dbQuery dbquery;
+	{
+		dbquery.And("name");
+		dbquery.append(dbQueryElement::qExpression, "=");
+		dbquery.add("liudiwen");
+	}
+	dbCursorType type = dbCursorViewOnly;
+
+	dbCursor<table_test> cursor(&db);
+	int n = cursor.select(dbquery, type);
+	if (n > 0)
+	{
+		Log("Find result count : %d", n);
+
+		for (int i = 0; i < n; ++i)
+		{
+			auto record = cursor.get();
+			Log("record %d info: inc_id[%d], name[%s], number_char[%d], number_int[%d], number_ll[%lld]", i + 1,
+				record->inc_id, record->name, record->number_char, record->number_int, record->number_ll);
+
+			cursor.next();
+		}
+	}
+	else
+	{
+		Log("Find no result");
+	}
+}
+
+// 删除记录
+static void Remove()
+{
+	dbQuery dbquery;
+	{
+		dbquery.And("name");
+		dbquery.append(dbQueryElement::qExpression, "=");
+		dbquery.add("liudiwen");
+	}
+	dbCursorType type = dbCursorForUpdate;
+
+	dbCursor<table_test> cursor(&db);
+	int n = cursor.select(dbquery, type);
+
+	cursor.removeAllSelected();
+	Log("Removed %d record", n);
+}
+
+// 更新记录
+static void Update()
+{
+	dbQuery dbquery;
+	{
+		dbquery.And("name");
+		dbquery.append(dbQueryElement::qExpression, "=");
+		dbquery.add("liudiwen");
+	}
+	dbCursorType type = dbCursorForUpdate;
+
+	dbCursor<table_test> cursor(&db);
+	int n = cursor.select(dbquery, type);
+	if (n == 0)
+	{
+		Log("No record to Update");
+		return;
+	}
+
+	do 
+	{
+		auto record = cursor.get();
+		record->number_char = 0;
+		record->number_int = 0;
+		record->number_ll = 0;
+
+		cursor.update();
+
+	} while (cursor.next());
+
+	Log("Updated %d records", n);
+}
+
 int main()
 {
 	OpenDB();
+
+	InsertRecord();
+	//InsertRecord();
+	Find();
+	Update();
+	Find();
+	Remove();
 
 	CloseDB();
 

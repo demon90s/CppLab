@@ -14,6 +14,7 @@ void TestTraceBack();
 void TestNum();
 void TestArray2D();
 void TestColorPrint();
+void TestCommandReader();
 
 int main()
 {
@@ -23,7 +24,7 @@ int main()
 	//TestTraceBack();
 	//TestNum();
 	//TestArray2D();
-	TestColorPrint();
+	//TestColorPrint();
 
 	Pause("paused...");
 

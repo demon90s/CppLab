@@ -44,3 +44,6 @@ ADD_SUBDIRECTORY(library)
 ADD_SUBDIRECTORY(programs/lab_library_test)
 ADD_SUBDIRECTORY(programs/hello_cmake)
 ADD_SUBDIRECTORY(programs/rand)
+
+MESSAGE("[INFO] Build directory: " ${PROJECT_BINARY_DIR})
+MESSAGE("[INFO] Project source directory: " ${PROJECT_SOURCE_DIR})

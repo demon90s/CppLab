@@ -1,4 +1,8 @@
-# 概述
+# cmake 笔记
+
+---
+
+## 概述
 
 cmake可以用来生成项目工程文件，比如Linux下的Makefile文件，VS下的sln等文件。cmake使用一个名为CMakeLists.txt的文件来描述项目构建过程。
 
@@ -10,7 +14,7 @@ cmake可以用来生成项目工程文件，比如Linux下的Makefile文件，VS
 
 3. 编译项目，比如Linux下可使用make命令
 
-# 安装与使用
+## 安装与使用
 
 CentOS 7安装命令：
 
@@ -66,11 +70,11 @@ $ make
 $ cmake -DCMAKE_BUILD_TYPE=Debug path
 ```
 
-这里设置了变量CMAKE_BUILD_TYPE的值为Debug，表示生成的是D ebug版本的程序。还可以取值为Release。
+这里设置了变量CMAKE_BUILD_TYPE的值为Debug，表示生成的是Debug版本的程序。还可以取值为Release。
 
-# 编写CMakeLists.txt
+## 编写CMakeLists.txt
 
-## 语法
+#### 一些语法
 
 CMakeLists.txt语法由指令、变量、注释组成。
 
@@ -88,9 +92,11 @@ CMakeLists.txt语法由指令、变量、注释组成。
 
 **注释**
 
-`#`符号后面的内容被认为是注释
+`##`符号后面的内容被认为是注释
 
-## 指令
+#### 一些指令
+
+在官方文档中，指令中尖括号的内容是必填项，而方括号的内容是选填项，其余的是固定内容。
 
 **CMAKE_MINIMUM_REQUIRED**
 
@@ -98,8 +104,8 @@ CMakeLists.txt语法由指令、变量、注释组成。
 
 使用例子：
 
-```shell
-CMAKE_MINIMUM_REQUIRED(VERSION 2.0)
+```cmake
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 ```
 
 **PROJECT**
@@ -108,11 +114,11 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.0)
 
 使用例子：
 
-```shell
+```cmake
 PROJECT(projectname)
 ```
 
-一旦使用了此指令，将定义两个变量：`projectname_BINARY_DIR`和`projectname_SOURCE_DIR`，这两个变量与这两个内置变量是等价：`PROJECT_BINARY_DIR`和`PROJECT_SOURCE_DIR`
+对于 vs ，这样的指令使得 sln 文件的名字为 projectname 。
 
 **MESSAGE**
 
@@ -120,7 +126,7 @@ PROJECT(projectname)
 
 使用例子：
 
-```shell
+```cmake
 MESSAGE("cmake start")
 ```
 
@@ -130,13 +136,13 @@ MESSAGE("cmake start")
 
 指令语法：
 
-```shell
+```cmake
 SET(VAR [VALUE])
 ```
 
 使用例子：
 
-```shell
+```cmake
 SET(SRC_LIST main.c t1.c t2.c)
 ```
 
@@ -146,8 +152,8 @@ SET(SRC_LIST main.c t1.c t2.c)
 
 使用例子：
 
-```shell
-INCLUDE_DIRECTORIES(. ./src) # 目录列表
+```cmake
+INCLUDE_DIRECTORIES(. ./src) ## 目录列表
 ```
 
 **ADD_SUBDIRECTORY**
@@ -156,8 +162,8 @@ INCLUDE_DIRECTORIES(. ./src) # 目录列表
 
 使用例子：
 
-```shell
-ADD_SUBDIRECTORY(src)
+```cmake
+ADD_SUBDIRECTORY(sub_project_dir)
 ```
 
 **FILE**
@@ -166,8 +172,8 @@ ADD_SUBDIRECTORY(src)
 
 使用例子：
 
-```shell
-FILE(GLOB_RECURSE SRC_FILES *.cpp) # 获取当前处理的CMakeLists.txt文件所在目录及其子目录中所有的cpp文件，放到SRC_FILES变量里
+```cmake
+FILE(GLOB_RECURSE SRC_FILES *.cpp *.h) ## 获取当前处理的CMakeLists.txt文件所在目录及其子目录中所有的cpp文件和h文件，放到SRC_FILES变量里
 ```
 
 GLOB_RECURSE代表全局递归查找。
@@ -178,13 +184,13 @@ GLOB_RECURSE代表全局递归查找。
 
 指令语法：
 
-```shell
+```cmake
 ADD_EXECUTABLE(exefile src_file_list)
 ```
 
 使用例子：
 
-```shell
+```cmake
 ADD_EXECUTABLE(main main.c t1.c t2.c)
 ```
 
@@ -194,7 +200,7 @@ ADD_EXECUTABLE(main main.c t1.c t2.c)
 
 指令语法：
 
-```shell
+```cmake
 ADD_LIBRARY(libname [SHARED | STATIC] source_list)
 ```
 
@@ -209,7 +215,7 @@ ADD_LIBRARY(libname [SHARED | STATIC] source_list)
 
 指令语法：
 
-```shell
+```cmake
 LINK_DIRECTORIES(dir_list)
 TARGET_LINK_LIBRARIES(target lib_list)
 ```
@@ -226,23 +232,66 @@ TARGET_LINK_LIBRARIES(target lib_list)
 
 指令语法：
 
-```shell
-STRING([TOLOWER | TOUPPER] string output_val) # 将string转换成小写，赋给output_val
+```cmake
+STRING([TOLOWER | TOUPPER] string output_val) ## 将string转换成小写，赋给output_val
 ```
 
 使用例子：
 
-```shell
+```cmake
 STRING(TOLOWER ${CMAKE_BUILD_TYPE} BUILD_TYPE)
 ```
 
-## 内置变量
+**source_group**
+
+可以在 vs 中设置筛选器，里面包含指定的项目文件。
+
+指令语法：
+
+```cmake
+source_group(<name> [FILES <src>...] [REGULAR_EXPRESSION <regex>])
+source_group(TREE <root> [PREFIX <prefix>] [FILES <src>...])
+```
+
+使用例子：
+
+```cmake
+source_group(src FILES ${SRC_FILES}) # src 是筛选器的名字
+```
+
+PS: 在vs2015下面经过测试发现，需要重新构建项目，这个指令才会生效。
+
+**set_property**
+
+在一个作用域内设置某属性的值。
+
+指令语法：
+
+```cmake
+set_property(<GLOBAL                            |
+              DIRECTORY [dir]                   |
+              TARGET    [target1 [target2 ...]] |
+              SOURCE    [src1 [src2 ...]]       |
+              INSTALL   [file1 [file2 ...]]     |
+              TEST      [test1 [test2 ...]]     |
+              CACHE     [entry1 [entry2 ...]]>
+             [APPEND] [APPEND_STRING]
+             PROPERTY <name> [value1 [value2 ...]])
+```
+
+使用例子：
+
+```cmake
+set_property( DIRECTORY PROPERTY VS_STARTUP_PROJECT "project" ) # 设置 vs 启动项目为 project
+```
+
+DIRECTORY 默认使用当前的目录为作用域。
+
+#### 一些内置变量
 
 **PROJECT_BINARY_DIR与PROJECT_SOURCE_DIR**
 
-项目的可执行文件目录与源文件目录（最后面没有/）。
-
-PROJECT_BINARY_DIR默认值是编译（make）发生的当前目录。
+PROJECT_BINARY_DIR默认值是编译（make）发生的目录。
 
 PROJECT_SOURCE_DIR是工程的顶层目录（顶层CMakeLists.txt所在目录）。
 
@@ -270,7 +319,7 @@ C++编译选项。
 
 当前处理的CMakeLists.txt所在路径。
 
-# 例子
+## 一个简单的例子
 
 ```
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
@@ -281,12 +330,14 @@ INCLUDE_DIRECTORIES(.)
 
 SET(CMAKE_CXX_FLAGS "-g -Wall")
 
-FILE(GLOB_RECURSE SRC_FILES "./src/*.cpp")
+FILE(GLOB_RECURSE SRC_FILES "./src/*.cpp" "./src/*.h")
 
 SET(EXECUTABLE_OUTPUT_PATH .)
 ADD_EXECUTABLE(proc ${SRC_FILES})
 ```
 
-# 参考资料
+## 参考资料
 
 [在 linux 下使用 CMake 构建应用程序](https://www.ibm.com/developerworks/cn/linux/l-cn-cmake/index.html)
+
+[官方网站](https://cmake.org)

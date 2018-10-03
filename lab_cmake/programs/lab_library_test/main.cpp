@@ -16,9 +16,12 @@ void TestNum();
 void TestArray2D();
 void TestColorPrint();
 void TestFileReader();
+void TestIsUTF8();
 
-int main()
+int main(int argc, char* argv[])
 {
+	std::cout << argv[0] << std::endl;
+
 	//TestBitset();
 	//TestGetMinIndex();
 	//TestSerializer();
@@ -26,7 +29,8 @@ int main()
 	//TestNum();
 	//TestArray2D();
 	//TestColorPrint();
-	TestFileReader();
+	//TestFileReader();
+	TestIsUTF8();
 
 	Pause("paused...");
 
@@ -171,5 +175,17 @@ void TestFileReader()
 	else
 	{
 		std::cerr << "Load file failure" << std::endl;
+	}
+}
+
+void TestIsUTF8()
+{
+	if (Is_File_UTF8_NoBom("test.txt"))
+	{
+		std::cout << "file is utf8 no bom" << std::endl;
+	}
+	else
+	{
+		std::cout << "file is NOT utf8 no bom" << std::endl;
 	}
 }

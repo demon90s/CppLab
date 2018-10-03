@@ -6,6 +6,7 @@
 #include "TraceBack/TraceBack.h"
 #include "Array2D.hpp"
 #include "colorprintf.h"
+#include "FileReader.hpp"
 
 void TestBitset();
 void TestGetMinIndex();
@@ -14,7 +15,7 @@ void TestTraceBack();
 void TestNum();
 void TestArray2D();
 void TestColorPrint();
-void TestCommandReader();
+void TestFileReader();
 
 int main()
 {
@@ -25,6 +26,7 @@ int main()
 	//TestNum();
 	//TestArray2D();
 	//TestColorPrint();
+	TestFileReader();
 
 	Pause("paused...");
 
@@ -157,4 +159,17 @@ void TestColorPrint()
 	CONSOLE_ERROR("This is an error");
 	CONSOLE_DEBUG("%s", "This is a Debug");
 	CONSOLE_WARNING("This is a warning");
+}
+
+void TestFileReader()
+{
+	FileReader fr;
+	if (fr.Load("test.txt"))
+	{
+		std::cout << fr.Data() << std::endl;
+	}
+	else
+	{
+		std::cerr << "Load file failure" << std::endl;
+	}
 }

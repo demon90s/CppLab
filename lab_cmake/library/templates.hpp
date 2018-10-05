@@ -39,6 +39,18 @@ inline int GetMaxIndex(T(&arr)[N])
 	return index;
 }
 
+// 获取数组中的最大值和最小值
+template<typename T, unsigned N>
+inline void GetMaxMin(T(&arr)[N], T* max, T* min)
+{
+	*max = *min = arr[0];
+	for (int i = 0; i < N; ++i)
+	{
+		if (*max < arr[i]) *max = arr[i];
+		if (*min > arr[i]) *min = arr[i];
+	}
+}
+
 // 按分隔符分解字符串，存到result里，返回分解的字符串个数
 inline int ParseParam(const char *src, std::vector<std::string> &result, const char *delim)
 {

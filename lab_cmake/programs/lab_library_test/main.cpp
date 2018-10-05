@@ -17,6 +17,7 @@ void TestArray2D();
 void TestColorPrint();
 void TestFileReader();
 void TestIsUTF8();
+void TestGetMaxMin();
 
 int main(int argc, char* argv[])
 {
@@ -30,7 +31,8 @@ int main(int argc, char* argv[])
 	//TestArray2D();
 	//TestColorPrint();
 	//TestFileReader();
-	TestIsUTF8();
+	//TestIsUTF8();
+	TestGetMaxMin();
 
 	Pause("paused...");
 
@@ -188,4 +190,15 @@ void TestIsUTF8()
 	{
 		std::cout << "file is NOT utf8 no bom" << std::endl;
 	}
+}
+
+void TestGetMaxMin()
+{
+	int a[] = { 3, 4, 10, 9, 100 };
+	int max, min;
+
+	GetMaxMin(a, &max, &min);
+
+	std::cout << "max: " << max << "\n";
+	std::cout << "min: " << min << "\n";
 }

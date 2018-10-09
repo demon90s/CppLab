@@ -101,9 +101,7 @@ inline int colorprintf(int color, const char *format, ...) {
 	}
 #endif
 	va_start(args, format);
-	if (!args) {
-		return -99;
-	}
+	
 	retval = vprintf(format, args);
 	va_end(args);
 	if (fcolor != -1) {

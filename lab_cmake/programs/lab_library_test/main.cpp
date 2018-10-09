@@ -7,6 +7,7 @@
 #include "Array2D.hpp"
 #include "colorprintf.h"
 #include "FileReader.hpp"
+#include "LimitList.hpp"
 
 void TestBitset();
 void TestGetMinIndex();
@@ -18,6 +19,7 @@ void TestColorPrint();
 void TestFileReader();
 void TestIsUTF8();
 void TestGetMaxMin();
+void TestLimitList();
 
 int main(int argc, char* argv[])
 {
@@ -32,7 +34,8 @@ int main(int argc, char* argv[])
 	//TestColorPrint();
 	//TestFileReader();
 	//TestIsUTF8();
-	TestGetMaxMin();
+	//TestGetMaxMin();
+	TestLimitList();
 
 	Pause("paused...");
 
@@ -201,4 +204,97 @@ void TestGetMaxMin()
 
 	std::cout << "max: " << max << "\n";
 	std::cout << "min: " << min << "\n";
+}
+
+void TestLimitList()
+{
+	/*{
+		LimitList<int, 5> limit_list{ 1, 2, 3, 4, 5, 6, 7 };
+
+		for (const auto &v : limit_list)
+		{
+			printf("%d ", v);
+		}
+		printf("\n");
+	}*/
+	
+	/*{
+		LimitList<int, 5> limit_list;
+		limit_list.PushBack(1);
+		limit_list.PushBack(2);
+		limit_list.PushBack(3);
+
+		limit_list.PushFront(3);
+		limit_list.PushFront(2);
+		limit_list.PushFront(1);
+
+		for (const auto &v : limit_list)
+		{
+			printf("%d ", v);
+		}
+		printf("\n");
+
+		for (auto it = limit_list.begin(); it != limit_list.end();)
+		{
+			if (*it == 2) it = limit_list.Erase(it);
+			else ++it;
+		}
+
+		for (const auto &v : limit_list)
+		{
+			printf("%d ", v);
+		}
+		printf("\n");
+
+		limit_list.PopFront();
+		limit_list.PopBack();
+
+		for (const auto &v : limit_list)
+		{
+			printf("%d ", v);
+		}
+		printf("\n");
+	}*/
+
+	/*{
+		LimitList<int, 5> limit_list{42, 100, 22, 13};
+		for (const auto &v : limit_list)
+		{
+			printf("%d ", v);
+		}
+		printf("\n");
+
+		limit_list.Sort();
+		for (const auto &v : limit_list)
+		{
+			printf("%d ", v);
+		}
+		printf("\n");
+
+		limit_list.Sort([](const int& a, const int& b) { return a > b; });
+		for (const auto &v : limit_list)
+		{
+			printf("%d ", v);
+		}
+		printf("\n");
+	}*/
+
+	{
+		LimitList<int, 5> limit_list{ 42, 100, 22, 13 };
+		int arr[5] = { -100000, -100000, -100000, -100000, -100000 };
+
+		limit_list.ToCArray(arr);
+		for (const auto &v : arr)
+		{
+			printf("%d ", v);
+		}
+		printf("\n");
+
+		limit_list.Clear();
+		for (const auto &v : limit_list)
+		{
+			printf("%d ", v);
+		}
+		printf("\n");
+	}
 }

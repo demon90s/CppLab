@@ -4,6 +4,9 @@
 // 挂起进程，可以选择输出一个字符串作为提示
 extern void Pause(const char *notice = nullptr);
 
+// 获取毫秒时间戳
+extern unsigned long PITime();
+
 // 判断 Buffer 是否是 UTF8 格式的序列
 extern bool IsUTF8(const char* buffer, long size);
 

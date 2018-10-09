@@ -256,7 +256,7 @@ void TestLimitList()
 		printf("\n");
 	}*/
 
-	/*{
+	{
 		LimitList<int, 5> limit_list{42, 100, 22, 13};
 		for (const auto &v : limit_list)
 		{
@@ -277,9 +277,9 @@ void TestLimitList()
 			printf("%d ", v);
 		}
 		printf("\n");
-	}*/
+	}
 
-	{
+	/*{
 		LimitList<int, 5> limit_list{ 42, 100, 22, 13 };
 		int arr[5] = { -100000, -100000, -100000, -100000, -100000 };
 
@@ -296,5 +296,5 @@ void TestLimitList()
 			printf("%d ", v);
 		}
 		printf("\n");
-	}
+	}*/
 }

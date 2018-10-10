@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <string.h>
 
 #ifdef __unix
 #include <unistd.h>

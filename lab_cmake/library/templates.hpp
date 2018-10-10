@@ -72,42 +72,42 @@ inline int ParseParam(const char *src, std::vector<std::string> &result, const c
 
 // 有范围的整数，取值：[LOWER, UPPER]
 template<long long LOWER = 0, long long UPPER = INT_MAX>
-class Num
+class LimitNum
 {
 public:
-	Num() : m_val(0) { this->Check(); }
-	Num(long long val) : m_val(val) { this->Check(); }
+	LimitNum() : m_val(0) { this->Check(); }
+	LimitNum(long long val) : m_val(val) { this->Check(); }
 	operator long long() { return m_val; }
 
-	Num& operator+=(const Num& number)
+	LimitNum& operator+=(const LimitNum& number)
 	{
 		m_val += number.m_val;
 		this->Check();
 		return *this;
 	}
 
-	Num& operator-=(const Num& number)
+	LimitNum& operator-=(const LimitNum& number)
 	{
 		m_val -= number.m_val;
 		this->Check();
 		return *this;
 	}
 
-	Num& operator*=(const Num& number)
+	LimitNum& operator*=(const LimitNum& number)
 	{
 		m_val *= number.m_val;
 		this->Check();
 		return *this;
 	}
 
-	Num& operator/=(const Num& number)
+	LimitNum& operator/=(const LimitNum& number)
 	{
 		m_val /= number.m_val;
 		this->Check();
 		return *this;
 	}
 
-	Num& operator%=(const Num& number)
+	LimitNum& operator%=(const LimitNum& number)
 	{
 		m_val %= number.m_val;
 		this->Check();

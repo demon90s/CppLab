@@ -3,6 +3,20 @@
 #include <stdio.h>
 #include <string.h>
 
+// 简化数组拷贝，加了静态检查
+#define ARRAYCPY(dst, src)\
+do\
+{\
+	memcpy((dst), (src), sizeof(src));\
+	static_assert(sizeof(src) == sizeof(dst), "ARRAYCPY sizeof(src) == sizeof(dst)");\
+	static_assert(sizeof((src)[0]) == sizeof((dst)[0]), "ARRAYCPY sizeof((src)[0]) == sizeof((dst)[0])");\
+} while(0)
+
+// 设置、判断、清除标记位，bit取值范围：[0, 64)
+#define SET_BIT(flag, bit) ((flag) |= (UInt64)1 << (bit))
+#define IS_BIT_SET(flag, bit) (((flag) & ((UInt64)1 << (bit))) != 0)
+#define CLEAR_BIT(flag, bit) ((flag) &= ~((UInt64)1 << (bit)))
+
 // 字符串拷贝 转long long是为了屏蔽LINUX下的警告
 #define STRNCPY(dst_str, src_str, dst_len)                     \
 {                                                              \

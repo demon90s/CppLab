@@ -22,6 +22,7 @@ void TestIsUTF8();
 void TestGetMaxMin();
 void TestLimitList();
 void TestNameFilter();
+void TestTimeStrToTimestamp();
 
 int main(int argc, char* argv[])
 {
@@ -38,7 +39,8 @@ int main(int argc, char* argv[])
 	//TestIsUTF8();
 	//TestGetMaxMin();
 	//TestLimitList();
-	TestNameFilter();
+	//TestNameFilter();
+	TestTimeStrToTimestamp();
 
 	Pause("paused...");
 
@@ -109,7 +111,7 @@ void TestTraceBack()
 
 void TestNum()
 {
-	Num<0, 100> number;
+	LimitNum<0, 100> number;
 	number = 1000;
 	std::cout << number << std::endl;
 
@@ -328,5 +330,26 @@ void TestNameFilter()
 		}
 
 		std::cout << "Enter word to test: ";
+	}
+}
+
+void TestTimeStrToTimestamp()
+{
+	std::string time_str;
+
+	std::cout << "Enter time str(yyyy-mm-dd hh:mm::ss): ";
+	while (getline(std::cin, time_str))
+	{
+		time_t timestamp = 0;
+		if (TimeStrToTimestamp(time_str.c_str(), &timestamp))
+		{
+			std::cout << timestamp << std::endl;
+		}
+		else
+		{
+			std::cout << "invalid time str" << std::endl;
+		}
+
+		std::cout << "Enter time str(yyyy-mm-dd hh:mm::ss): ";
 	}
 }

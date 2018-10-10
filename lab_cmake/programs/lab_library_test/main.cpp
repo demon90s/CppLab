@@ -8,6 +8,7 @@
 #include "colorprintf.h"
 #include "FileReader.hpp"
 #include "LimitList.hpp"
+#include "NameFilter/NameFilter.hpp"
 
 void TestBitset();
 void TestGetMinIndex();
@@ -20,6 +21,7 @@ void TestFileReader();
 void TestIsUTF8();
 void TestGetMaxMin();
 void TestLimitList();
+void TestNameFilter();
 
 int main(int argc, char* argv[])
 {
@@ -35,7 +37,8 @@ int main(int argc, char* argv[])
 	//TestFileReader();
 	//TestIsUTF8();
 	//TestGetMaxMin();
-	TestLimitList();
+	//TestLimitList();
+	TestNameFilter();
 
 	Pause("paused...");
 
@@ -297,4 +300,33 @@ void TestLimitList()
 		}
 		printf("\n");
 	}*/
+}
+
+void TestNameFilter()
+{
+	std::string err;
+	bool ret = NameFilter::Instance().Init("name.txt", &err);
+	if (!ret)
+	{
+		printf("Init NameFilter failure: %s\n", err.c_str());
+		return;
+	}
+
+	printf("Init NameFilter succ\n");
+
+	std::string input;
+	std::cout << "Enter word to test: ";
+	while (getline(std::cin, input))
+	{
+		if (NameFilter::Instance().HasSensitiveWord(input.length(), input.c_str()))
+		{
+			std::cout << "Has sensitive word" << std::endl;
+		}
+		else
+		{
+			std::cout << "Fine" << std::endl;
+		}
+
+		std::cout << "Enter word to test: ";
+	}
 }

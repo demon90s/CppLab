@@ -1,4 +1,4 @@
-#include "namefilter.hpp"
+#include "NameFilter.hpp"
 
 #include <fstream>
 #include <string.h>

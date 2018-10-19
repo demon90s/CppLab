@@ -17,6 +17,9 @@ do\
 #define IS_BIT_SET(flag, bit) (((flag) & ((UInt64)1 << (bit))) != 0)
 #define CLEAR_BIT(flag, bit) ((flag) &= ~((UInt64)1 << (bit)))
 
+// long long 转换成 int ，如果超过了 int 的最值，就取它的最值
+#define LL_TO_INT(ll_v) ((ll_v) > INT_MAX ? INT_MAX : ((ll_v) < INT_MIN ? INT_MIN : (int)(ll_v)))
+
 // 字符串拷贝 转long long是为了屏蔽LINUX下的警告
 #define STRNCPY(dst_str, src_str, dst_len)                     \
 {                                                              \

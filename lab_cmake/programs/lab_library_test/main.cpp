@@ -23,6 +23,7 @@ void TestGetMaxMin();
 void TestLimitList();
 void TestNameFilter();
 void TestTimeStrToTimestamp();
+void Test_LL_TO_INT();
 
 int main(int argc, char* argv[])
 {
@@ -40,7 +41,8 @@ int main(int argc, char* argv[])
 	//TestGetMaxMin();
 	//TestLimitList();
 	//TestNameFilter();
-	TestTimeStrToTimestamp();
+	//TestTimeStrToTimestamp();
+	Test_LL_TO_INT();
 
 	Pause("paused...");
 
@@ -351,5 +353,24 @@ void TestTimeStrToTimestamp()
 		}
 
 		std::cout << "Enter time str(yyyy-mm-dd hh:mm::ss): ";
+	}
+}
+
+void Test_LL_TO_INT()
+{
+	{
+		long long ll_v = 112345678900000000;
+
+		std::cout << ll_v << std::endl;
+		std::cout << (int)ll_v << std::endl;
+		std::cout << LL_TO_INT(ll_v) << std::endl;
+	}
+
+	{
+		long long ll_v = -11234567890000000;
+
+		std::cout << ll_v << std::endl;
+		std::cout << (int)ll_v << std::endl;
+		std::cout << LL_TO_INT(ll_v) << std::endl;
 	}
 }

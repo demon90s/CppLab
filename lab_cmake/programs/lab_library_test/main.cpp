@@ -24,6 +24,7 @@ void TestLimitList();
 void TestNameFilter();
 void TestTimeStrToTimestamp();
 void Test_LL_TO_INT();
+void Test_PrintFlag();
 
 int main(int argc, char* argv[])
 {
@@ -42,7 +43,8 @@ int main(int argc, char* argv[])
 	//TestLimitList();
 	//TestNameFilter();
 	//TestTimeStrToTimestamp();
-	Test_LL_TO_INT();
+	//Test_LL_TO_INT();
+	Test_PrintFlag();
 
 	Pause("paused...");
 
@@ -373,4 +375,11 @@ void Test_LL_TO_INT()
 		std::cout << (int)ll_v << std::endl;
 		std::cout << LL_TO_INT(ll_v) << std::endl;
 	}
+}
+
+void Test_PrintFlag()
+{
+	unsigned int flag = 0xF0;
+
+	PrintFlag(flag);
 }

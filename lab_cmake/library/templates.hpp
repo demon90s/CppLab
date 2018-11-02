@@ -5,6 +5,20 @@
 #include <climits>
 #include "marcofuncs.hpp"
 
+// 打印 flag
+template<typename T>
+inline void PrintFlag(T _flag)
+{
+	char buf[65] = { 0 };
+
+	unsigned long long flag = 0;
+	memcpy(&flag, &_flag, sizeof(_flag));
+
+	ultoa((unsigned long)flag, buf, 2);
+
+	printf("flag: %s\n", buf);
+}
+
 // 获取数组中最小元素的下标
 template<typename T, unsigned N>
 inline int GetMinIndex(T (&arr)[N])

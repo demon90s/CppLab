@@ -400,19 +400,19 @@ void Test_ObjectPool()
 		char buffer[1024 * 1024];
 	};
 
-	/*{
+	{
 		ObjectPool<Foo> obj_pool;
 		auto pooled_obj = obj_pool.GetPooledObject();
 		pooled_obj->object->Print();
 		obj_pool.ReturnPooledObject(pooled_obj);
-	}*/
+	}
 	
-	while (true)
+	/*while (true)
 	{
-		PISleep(500); // ¹Û²ìÄÚ´æ
+		PISleep(500);
 
 		ObjectPool<Foo> obj_pool;
-		PooledObject<Foo>* foo_list[3];
+		ObjectPool<Foo>::Object foo_list[3];
 		for (auto &foo : foo_list)
 		{
 			foo = obj_pool.GetPooledObject();
@@ -422,5 +422,5 @@ void Test_ObjectPool()
 		{
 			obj_pool.ReturnPooledObject(foo);
 		}
-	}
+	}*/
 }

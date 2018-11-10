@@ -8,20 +8,19 @@
 #include <stack>
 #include <stdexcept>
 
-template<typename> class ObjectPool;
-
-template<typename T>
-class PooledObject
-{
-public:
-	ObjectPool<T> *pool = nullptr;
-	T *object = nullptr;
-};
-
 template <typename T>
 class ObjectPool
 {
+	template<typename T>
+	class PooledObject
+	{
+	public:
+		ObjectPool<T> *pool = nullptr;
+		T *object = nullptr;
+	};
 public:
+	using Object = PooledObject<T>*;
+
 	ObjectPool() {}
 	~ObjectPool()
 	{
@@ -35,10 +34,10 @@ public:
 		}
 	}
 
-	// 返回池中的一个实例
-	PooledObject<T>* GetPooledObject()
+	// 返回一个实例
+	Object GetPooledObject()
 	{
-		PooledObject<T> *pooled_obj = nullptr;
+		Object pooled_obj = nullptr;
 		if (unconstructed_objects.size() > 0)
 		{
 			pooled_obj = unconstructed_objects.top();
@@ -57,14 +56,14 @@ public:
 	}
 
 	// 将实例返回池中
-	void ReturnPooledObject(PooledObject<T> *to_return)
+	void ReturnPooledObject(Object to_return)
 	{
 		if (to_return->pool != this)
 		{
-			throw std::runtime_error("ObjectPool::ReturnObject, wrong object to return");
+			throw std::runtime_error("ObjectPool::ReturnPooledObject, wrong object to return");
 		}
 
-		alloc.destroy(to_return->object);
+		alloc.destroy(to_return);
 		unconstructed_objects.push(to_return);
 	}
 
@@ -74,7 +73,8 @@ private:
 	ObjectPool& operator=(const ObjectPool&) = delete;
 
 	std::allocator<T> alloc;
-	std::stack<PooledObject<T>*> unconstructed_objects;
+
+	std::stack<Object> unconstructed_objects;
 };
 
 #endif // __OBJECT_POOL_HPP__

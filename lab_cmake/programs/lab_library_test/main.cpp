@@ -9,6 +9,7 @@
 #include "FileReader.hpp"
 #include "LimitList.hpp"
 #include "NameFilter/NameFilter.hpp"
+#include "ObjectPool.hpp"
 
 void TestBitset();
 void TestGetMinIndex();
@@ -25,6 +26,7 @@ void TestNameFilter();
 void TestTimeStrToTimestamp();
 void Test_LL_TO_INT();
 void Test_PrintFlag();
+void Test_ObjectPool();
 
 int main(int argc, char* argv[])
 {
@@ -44,7 +46,8 @@ int main(int argc, char* argv[])
 	//TestNameFilter();
 	//TestTimeStrToTimestamp();
 	//Test_LL_TO_INT();
-	Test_PrintFlag();
+	//Test_PrintFlag();
+	Test_ObjectPool();
 
 	Pause("paused...");
 
@@ -382,4 +385,42 @@ void Test_PrintFlag()
 	unsigned int flag = 0xF0;
 
 	PrintFlag(flag);
+}
+
+void Test_ObjectPool()
+{
+	class Foo
+	{
+	public:
+		Foo() : buffer{}  { std::cout << "Foo::Foo()" << std::endl; }
+		~Foo() { std::cout << "Foo::~Foo()" << std::endl; }
+		void Print() { std::cout << "Foo::Print()" << std::endl; }
+
+	private:
+		char buffer[1024 * 1024];
+	};
+
+	/*{
+		ObjectPool<Foo> obj_pool;
+		auto pooled_obj = obj_pool.GetPooledObject();
+		pooled_obj->object->Print();
+		obj_pool.ReturnPooledObject(pooled_obj);
+	}*/
+	
+	while (true)
+	{
+		PISleep(500); // ¹Û²ìÄÚ´æ
+
+		ObjectPool<Foo> obj_pool;
+		PooledObject<Foo>* foo_list[3];
+		for (auto &foo : foo_list)
+		{
+			foo = obj_pool.GetPooledObject();
+		}
+
+		for (auto foo : foo_list)
+		{
+			obj_pool.ReturnPooledObject(foo);
+		}
+	}
 }

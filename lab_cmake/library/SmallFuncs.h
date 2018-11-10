@@ -9,6 +9,9 @@ extern void Pause(const char *notice = nullptr);
 // 获取毫秒时间戳
 extern unsigned long PITime();
 
+// 睡眠若干毫秒
+void PISleep(unsigned long timems);
+
 // 时间字符串（格式如 2018-09-16 10:12:08）转换成时间戳
 extern bool TimeStrToTimestamp(const char *time_str, time_t *timestamp);
 

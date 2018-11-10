@@ -39,6 +39,15 @@ unsigned long PITime()
 #endif
 }
 
+void PISleep(unsigned long timems)
+{
+#ifdef __unix 	// usleep( time * 1000 );
+	usleep((timems << 10) - (timems << 4) - (timems << 3));
+#elif defined(_WIN32)
+	Sleep(timems);
+#endif
+}
+
 bool TimeStrToTimestamp(const char *time_str, time_t *timestamp)
 {
 	if (NULL == time_str || NULL == timestamp) return false;

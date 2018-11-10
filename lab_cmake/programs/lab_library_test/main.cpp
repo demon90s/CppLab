@@ -400,27 +400,28 @@ void Test_ObjectPool()
 		char buffer[1024 * 1024];
 	};
 
-	{
+	/*{
 		ObjectPool<Foo> obj_pool;
 		auto pooled_obj = obj_pool.GetPooledObject();
-		pooled_obj->object->Print();
+		pooled_obj->Print();
 		obj_pool.ReturnPooledObject(pooled_obj);
-	}
+	}*/
 	
-	/*while (true)
+	while (true)
 	{
 		PISleep(500);
 
-		ObjectPool<Foo> obj_pool;
+		/*static */ObjectPool<Foo> obj_pool; // check if alloc new memory
 		ObjectPool<Foo>::Object foo_list[3];
 		for (auto &foo : foo_list)
 		{
 			foo = obj_pool.GetPooledObject();
+			foo->Print();
 		}
 
 		for (auto foo : foo_list)
 		{
 			obj_pool.ReturnPooledObject(foo);
 		}
-	}*/
+	}
 }

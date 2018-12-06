@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 
+// 静态检查，输出字符串内容就是检查内容
+#define STATIC_ASSERT(expr) static_assert(expr, #expr)
+
 // 简化数组拷贝，加了静态检查
 #define ARRAYCPY(dst, src)\
 do\

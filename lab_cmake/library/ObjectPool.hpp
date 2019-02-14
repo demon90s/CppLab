@@ -11,15 +11,15 @@
 template <typename T>
 class ObjectPool
 {
-	template<typename T>
+	template<typename E>
 	class PooledObject
 	{
-		friend class ObjectPool<T>;
-		ObjectPool<T> *pool = nullptr;
-		T *object = nullptr;
+		friend class ObjectPool<E>;
+		ObjectPool<E> *pool = nullptr;
+		E *object = nullptr;
 	public:
-		T& operator*() { return *object; }
-		T* operator->() { return &this->operator*(); }
+		E& operator*() { return *object; }
+		E* operator->() { return &this->operator*(); }
 	};
 public:
 	using Object = PooledObject<T>;

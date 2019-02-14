@@ -1,4 +1,5 @@
 #include <iostream>
+#include <functional>
 #include "Bitset.h"
 #include "SmallFuncs.h"
 #include "templates.hpp"
@@ -10,6 +11,7 @@
 #include "LimitList.hpp"
 #include "NameFilter/NameFilter.hpp"
 #include "ObjectPool.hpp"
+#include "Factory.hpp"
 
 void TestBitset();
 void TestGetMinIndex();
@@ -27,6 +29,7 @@ void TestTimeStrToTimestamp();
 void Test_LL_TO_INT();
 void Test_PrintFlag();
 void Test_ObjectPool();
+void Test_Factory();
 
 int main(int argc, char* argv[])
 {
@@ -47,7 +50,8 @@ int main(int argc, char* argv[])
 	//TestTimeStrToTimestamp();
 	//Test_LL_TO_INT();
 	//Test_PrintFlag();
-	Test_ObjectPool();
+	//Test_ObjectPool();
+	Test_Factory();
 
 	Pause("paused...");
 
@@ -384,7 +388,7 @@ void Test_PrintFlag()
 {
 	unsigned int flag = 0xF0;
 
-	PrintFlag(flag);
+	(void)flag;
 }
 
 void Test_ObjectPool()
@@ -424,4 +428,38 @@ void Test_ObjectPool()
 			obj_pool.ReturnPooledObject(foo);
 		}
 	}
+}
+
+void Test_Factory()
+{
+	class Base {
+	public:
+		virtual ~Base() {}
+		virtual void Whoami() const = 0;
+	};
+
+	class Derived1 : public Base {
+		void Whoami() const override {
+			std::cout << "I am Derived1" << std::endl;
+		}
+	};
+
+	class Derived2 : public Base {
+		void Whoami() const override {
+			std::cout << "I am Derived2" << std::endl;
+		}
+	};
+
+	typedef std::function<std::shared_ptr<Base>()> CreateObject;
+	Factory<CreateObject> factory;
+	factory.RegisterObject("Derived1",
+						   [](){ return std::make_shared<Derived1>(); });
+	factory.RegisterObject("Derived2",
+						   [](){ return std::make_shared<Derived2>(); });
+
+	std::shared_ptr<Base> d1 = factory.Create("Derived1");
+	std::shared_ptr<Base> d2 = factory.Create("Derived2");
+
+	d1->Whoami();
+	d2->Whoami();
 }

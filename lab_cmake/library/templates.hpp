@@ -2,6 +2,7 @@
 #define __TEMPLATES_HPP__
 
 #include <vector>
+#include <sstream>
 #include <climits>
 #include "marcofuncs.hpp"
 
@@ -10,20 +11,6 @@ template <typename T, int N>
 inline int ArrayItemCount(T(&arr)[N])
 {
 	return N;
-}
-
-// 打印 flag
-template<typename T>
-inline void PrintFlag(T _flag)
-{
-	char buf[65] = { 0 };
-
-	unsigned long long flag = 0;
-	memcpy(&flag, &_flag, sizeof(_flag));
-
-	ultoa((unsigned long)flag, buf, 2);
-
-	printf("flag: %s\n", buf);
 }
 
 // 获取数组中最小元素的下标

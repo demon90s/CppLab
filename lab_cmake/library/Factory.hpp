@@ -7,7 +7,7 @@
 #include <type_traits>
 #include <exception>
 
-namespace factory_base
+namespace detail
 {
 // base class ，提供基本的工厂方法，用于注册创建方法（一个可调用对象）
 template<typename CreateObject>
@@ -57,7 +57,7 @@ private:
 
 // 工厂类，使用 Create 接口创建对象
 template <typename CreateObject>
-class Factory final : public factory_base::BaseFactory<CreateObject> {
+class Factory final : public detail::BaseFactory<CreateObject> {
 public:
 	template<typename... Args>
 	typename std::result_of<CreateObject(Args...)>::type

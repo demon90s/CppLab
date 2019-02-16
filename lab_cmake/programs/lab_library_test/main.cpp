@@ -12,6 +12,7 @@
 #include "NameFilter/NameFilter.hpp"
 #include "ObjectPool.hpp"
 #include "Factory.hpp"
+#include "str_bkdr.hpp"
 
 void TestBitset();
 void TestGetMinIndex();
@@ -30,6 +31,7 @@ void Test_LL_TO_INT();
 void Test_PrintFlag();
 void Test_ObjectPool();
 void Test_Factory();
+void Test_str_bkdr();
 
 int main(int argc, char* argv[])
 {
@@ -51,7 +53,8 @@ int main(int argc, char* argv[])
 	//Test_LL_TO_INT();
 	//Test_PrintFlag();
 	//Test_ObjectPool();
-	Test_Factory();
+	//Test_Factory();
+	Test_str_bkdr();
 
 	Pause("paused...");
 
@@ -462,4 +465,25 @@ void Test_Factory()
 
 	d1->Whoami();
 	d2->Whoami();
+}
+
+void Test_str_bkdr()
+{
+	std::string name;
+	std::cout << "enter name: " << std::endl;
+	std::cin >> name;
+
+	switch(TypicalBKDR(name.c_str())) {
+			case "diwen"_bkdr:
+					std::cout << "Hello diwen\n";
+					break;
+
+			case "miemie"_bkdr:
+					std::cout << "Hello miemie\n";
+					break;
+
+			default:
+					std::cout << "Hello guest " << name << std::endl;
+					break;
+	}
 }

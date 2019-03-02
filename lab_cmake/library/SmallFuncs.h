@@ -2,6 +2,9 @@
 #define SMALL_FUNCS_H
 
 #include <time.h>
+#include <string>
+#include <cstring>
+#include <vector>
 
 // 挂起进程，可以选择输出一个字符串作为提示
 extern void Pause(const char *notice = nullptr);
@@ -9,7 +12,7 @@ extern void Pause(const char *notice = nullptr);
 // 获取毫秒时间戳
 extern unsigned long PITime();
 
-// 睡眠若干毫秒
+// 睡眠执行线程若干毫秒
 void PISleep(unsigned long timems);
 
 // 时间字符串（格式如 2018-09-16 10:12:08）转换成时间戳
@@ -30,5 +33,11 @@ extern bool IsUTF8_Bom(const char* buffer, long size);
 
 // 判断文件是否是 UTF-8 无 BOM 格式的
 extern bool Is_File_UTF8_NoBom(const char *filename);
+
+// 按分隔符分解字符串，存到result里，返回分解的字符串个数, 但不线程安全
+int ParseParam(const char *src, std::vector<std::string> &result, const char *delim);
+
+// 按分隔符分解字符串，将分割好的字符串返回
+std::vector<std::string> SplitString(const std::string &str, const char* delim);
 
 #endif // SMALL_FUNCS_H

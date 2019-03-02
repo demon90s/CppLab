@@ -325,3 +325,4 @@ ASALocalRun/
 
 # MSBuild Binary and Structured Log
 *.binlog
+.vscode/c_cpp_properties.json

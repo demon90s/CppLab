@@ -59,26 +59,6 @@ inline void GetMaxMin(T(&arr)[N], T* max, T* min)
 	}
 }
 
-// 按分隔符分解字符串，存到result里，返回分解的字符串个数
-inline int ParseParam(const char *src, std::vector<std::string> &result, const char *delim)
-{
-	static char temp[4096] = {};
-
-	STRNCPY(temp, src, sizeof(temp));
-	result.clear();
-
-	char *token = strtok(temp, delim);
-
-	while (NULL != token)
-	{
-		result.push_back(token);
-		token = strtok(NULL, delim);
-	}
-
-	return (int)result.size();
-}
-
-
 /*
 * string转换成基础类型，返回是否转换成功
 */

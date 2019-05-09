@@ -10,6 +10,7 @@
 #include "LimitList.hpp"
 #include "NameFilter/NameFilter.hpp"
 #include "ObjectPool.hpp"
+#include "FunctorTable.hpp"
 
 void TestBitset();
 void TestGetMinIndex();
@@ -27,12 +28,13 @@ void TestTimeStrToTimestamp();
 void Test_LL_TO_INT();
 void Test_PrintFlag();
 void Test_ObjectPool();
+void Test_FunctorTable();
 
 int main(int argc, char* argv[])
 {
 	std::cout << argv[0] << std::endl;
 
-	//TestBitset();
+    //TestBitset();
 	//TestGetMinIndex();
 	//TestSerializer();
 	//TestTraceBack();
@@ -47,7 +49,8 @@ int main(int argc, char* argv[])
 	//TestTimeStrToTimestamp();
 	//Test_LL_TO_INT();
 	//Test_PrintFlag();
-	Test_ObjectPool();
+    //Test_ObjectPool();
+    Test_FunctorTable();
 
 	Pause("paused...");
 
@@ -63,13 +66,6 @@ void TestBitset()
 
 	b8.Reset();
 	std::cout << b8 << std::endl;
-}
-
-void TestGetMinIndex()
-{
-	int arr[] = { 1, 3, 8, 2, 0, 5 };
-	std::cout << GetMinIndex(arr) << std::endl;
-	std::cout << GetMaxIndex(arr) << std::endl;
 }
 
 void TestSerializer()
@@ -205,17 +201,6 @@ void TestIsUTF8()
 	{
 		std::cout << "file is NOT utf8 no bom" << std::endl;
 	}
-}
-
-void TestGetMaxMin()
-{
-	int a[] = { 3, 4, 10, 9, 100 };
-	int max, min;
-
-	GetMaxMin(a, &max, &min);
-
-	std::cout << "max: " << max << "\n";
-	std::cout << "min: " << min << "\n";
 }
 
 void TestLimitList()
@@ -380,13 +365,6 @@ void Test_LL_TO_INT()
 	}
 }
 
-void Test_PrintFlag()
-{
-	unsigned int flag = 0xF0;
-
-	PrintFlag(flag);
-}
-
 void Test_ObjectPool()
 {
 	class Foo
@@ -424,4 +402,21 @@ void Test_ObjectPool()
 			obj_pool.ReturnPooledObject(foo);
 		}
 	}
+}
+
+void Test_FunctorTable()
+{
+    FunctorTable ft;
+
+    ft.Register(1, []() {
+       Log("Fuck~~~~1");
+    });
+
+    ft.Register(2, []() {
+       Log("Fuck~~~~2");
+    });
+
+    ft.Call(1);
+    ft.Call(2);
+    ft.Call(3);
 }

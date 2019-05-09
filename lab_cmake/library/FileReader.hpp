@@ -12,6 +12,8 @@ public:
 	{
 		if (m_data) free(m_data);
 	}
+    FileReader(const FileReader&) = delete;
+    FileReader& operator=(const FileReader&) = delete;
 
 	bool Load(const char *filename)
 	{

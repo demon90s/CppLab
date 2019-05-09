@@ -5,24 +5,27 @@
 #include <string>
 #include <list>
 #include <cstring>
+#include <climits>
 
 // 支持N位bit的标记结构，N必须是字节比特位（8）的倍数
 // bit位从最低位开始（最右）
 template <unsigned N>
-struct Bitset
+class Bitset
 {
-	static const int BIT_FIELD_SIZE = 8 * sizeof(unsigned char);		// 一个位域占一个字节
-	static const int BIT_FIELD_COUNT = N / BIT_FIELD_SIZE;
-	static const int BIT_COUNT = N;										// 总共支持N个bit
-
-	static_assert(N > 0 && N % BIT_FIELD_SIZE == 0, "Invalid Bitset Instance");
-
+public:
 	void Reset();						// 重置所有bit位
 	bool Test(int bit) const;			// 判断第bit位是否激活
 	void Set(int bit);					// 设置第bit位为1
 	void UnSet(int bit);				// 设置第bit位为0
 
 	std::string ToString() const;		// 返回数据的字符串表示
+
+private:
+    static const int BIT_FIELD_SIZE = CHAR_BIT * sizeof(unsigned char);	// 一个位域占一个字节
+    static const int BIT_FIELD_COUNT = N / BIT_FIELD_SIZE;
+    static const int BIT_COUNT = N;										// 总共支持N个bit
+
+    static_assert(N > 0 && N % BIT_FIELD_SIZE == 0, "Invalid Bitset Instance");
 
 	unsigned char bit_field_list[BIT_FIELD_COUNT] = {0};
 };
@@ -113,7 +116,7 @@ template <unsigned N> inline
 std::string Bitset<N>::ToString() const
 {
 	std::list<char> tmp_list;
-	for (int i = 0; i < N; ++i)
+    for (unsigned i = 0; i < N; ++i)
 	{
 		if (this->Test(i))
 		{

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <functional>
 #include "Bitset.h"
 #include "SmallFuncs.h"
 #include "templates.hpp"

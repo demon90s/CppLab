@@ -2,7 +2,7 @@
 #define __OBJECT_POOL_HPP__
 
 /*
-	简单地内存池，可以回收Obj并重复利用之
+	锟津单碉拷锟节达拷兀锟斤拷锟斤拷曰锟斤拷锟絆bj锟斤拷锟截革拷锟斤拷锟斤拷之
 */
 #include <memory>
 #include <stack>
@@ -36,7 +36,7 @@ public:
 		}
 	}
 
-	// 返回一个实例
+	// 锟斤拷锟斤拷一锟斤拷实锟斤拷
 	Object GetPooledObject()
 	{
 		Object pooled_obj;
@@ -56,7 +56,7 @@ public:
 		return pooled_obj;
 	}
 
-	// 将实例返回池中
+	// 锟斤拷实锟斤拷锟斤拷锟截筹拷锟斤拷
 	void ReturnPooledObject(Object to_return)
 	{
 		if (to_return.pool != this)

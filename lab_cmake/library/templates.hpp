@@ -7,14 +7,14 @@
 #include <cstdlib>
 #include "marcofuncs.hpp"
 
-// ·µ»ØÊý×éµÄÔªËØµÄ¸öÊý
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ØµÄ¸ï¿½ï¿½ï¿½
 template <typename T, int N>
 inline int ArrayItemCount(T(&arr)[N])
 {
 	return N;
 }
 
-// °´·Ö¸ô·û·Ö½â×Ö·û´®£¬´æµ½resultÀï£¬·µ»Ø·Ö½âµÄ×Ö·û´®¸öÊý
+// ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æµ½resultï¿½ï£¬ï¿½ï¿½ï¿½Ø·Ö½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 inline int ParseParam(const char *src, std::vector<std::string> &result, const char *delim)
 {
 	static char temp[4096] = {};
@@ -35,7 +35,7 @@ inline int ParseParam(const char *src, std::vector<std::string> &result, const c
 
 
 /*
-* string×ª»»³É»ù´¡ÀàÐÍ£¬·µ»ØÊÇ·ñ×ª»»³É¹¦
+* string×ªï¿½ï¿½ï¿½É»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½×ªï¿½ï¿½ï¿½É¹ï¿½
 */
 template<typename T>
 bool string_to_basetype(const std::string &str, T &val)
@@ -48,7 +48,7 @@ bool string_to_basetype(const std::string &str, T &val)
 }
 
 /*
-* »ù´¡ÀàÐÍ×ª»»³Éstring£¬·µ»ØÊÇ·ñ×ª»»³É¹¦
+* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½stringï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½×ªï¿½ï¿½ï¿½É¹ï¿½
 */
 template<typename T>
 bool basetype_to_string(T &val, std::string &str)
@@ -61,7 +61,7 @@ bool basetype_to_string(T &val, std::string &str)
 	return false;
 }
 
-// ÓÐ·¶Î§µÄÕûÊý£¬È¡Öµ£º[LOWER, UPPER]
+// ï¿½Ð·ï¿½Î§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡Öµï¿½ï¿½[LOWER, UPPER]
 template<long long LOWER = 0, long long UPPER = INT_MAX>
 class LimitNum
 {

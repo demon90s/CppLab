@@ -4,3 +4,8 @@ FILE(GLOB_RECURSE SRC_FILES "./*.cpp" "./*.h")
 source_group(src FILES ${SRC_FILES})
 
 ADD_EXECUTABLE(rand ${SRC_FILES})
+
+set_target_properties(rand
+    PROPERTIES
+    CXX_STANDARD 11
+    CXX_STANDARD_REQUIRED ON)

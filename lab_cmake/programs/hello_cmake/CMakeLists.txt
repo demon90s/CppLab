@@ -4,3 +4,8 @@ FILE(GLOB_RECURSE SRC_FILES "./*.cpp")
 source_group(src FILES ${SRC_FILES})
 
 ADD_EXECUTABLE(hello_cmake_${CMAKE_BUILD_TYPE} ${SRC_FILES})
+
+set_target_properties(hello_cmake_${CMAKE_BUILD_TYPE}
+    PROPERTIES
+    CXX_STANDARD 11
+    CXX_STANDARD_REQUIRED ON)

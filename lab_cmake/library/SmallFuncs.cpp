@@ -1,4 +1,5 @@
 #include "SmallFuncs.h"
+#include "marcofuncs.hpp"
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
@@ -241,4 +242,44 @@ bool Is_File_UTF8_NoBom(const char *filename)
 	bool is_utf8_no_bom = IsUTF8(file.c_str(), file.length()) && !IsUTF8_Bom(file.c_str(), file.length());
 
 	return is_utf8_no_bom;
+}
+int ParseParam(const char *src, std::vector<std::string> &result, const char *delim)
+{
+	static char temp[4096] = {};
+
+	STRNCPY(temp, src, sizeof(temp));
+	result.clear();
+
+	char *token = strtok(temp, delim);
+
+	while (NULL != token)
+	{
+		result.push_back(token);
+		token = strtok(NULL, delim);
+	}
+
+	return (int)result.size();
+}
+
+std::vector<std::string> SplitString(const std::string &str, const char *delim)
+{
+	std::vector<std::string> result;
+	size_t delim_len = strlen(delim);
+	std::string::size_type pos1 = 0;
+	std::string::size_type pos2 = str.find(delim);
+
+	while (pos2 != std::string::npos)
+	{
+		result.push_back(std::string(str, pos1, pos2 - pos1));
+
+		pos1 = pos2 + delim_len;
+		pos2 = str.find(delim, pos1);
+	}
+
+	if (pos1 != str.length())
+	{
+		result.push_back(std::string(str, pos1));
+	}
+
+	return result;
 }

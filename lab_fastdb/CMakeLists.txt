@@ -27,7 +27,7 @@ endif(MSVC)
 
 # Linux设定
 if (CMAKE_COMPILER_IS_GNUCXX)
-	SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3 -Wall -D_DEBUG -std=c++11")
+        SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3 -Wall -D_DEBUG -std=c++11 -fpermissive")
 	SET(CMAKE_CXX_FLAGS_RELEASE "-O0 -g -Wall -std=c++11")
 	SET(LINK_LIB_COMMON libmysql.so libmysqlclient.so)
 endif(CMAKE_COMPILER_IS_GNUCXX)
@@ -42,3 +42,5 @@ group_by_dir(${PROJECT_SOURCE_DIR} ${FASTDB_FILES})
 group_by_dir(${PROJECT_SOURCE_DIR} ${SRC_FILES})
 
 ADD_EXECUTABLE(lab_fastdb_${CMAKE_BUILD_TYPE} ${FASTDB_FILES} ${SRC_FILES})
+
+target_link_libraries(lab_fastdb_${CMAKE_BUILD_TYPE} pthread)

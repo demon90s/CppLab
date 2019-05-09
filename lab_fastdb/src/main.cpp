@@ -15,7 +15,7 @@ static size_t db_init_sz_mb = 1;
 #define Log(format, ...) \
 if (open_log) printf(format "\n", ##__VA_ARGS__); fflush(stdout);
 
-// ¿ªÆô fastdb
+// ï¿½ï¿½ï¿½ï¿½ fastdb
 static bool OpenDB()
 {
 	if (db.isOpen())
@@ -40,7 +40,7 @@ static bool OpenDB()
 	return ret;
 }
 
-// ¹Ø±Õ fastdb
+// ï¿½Ø±ï¿½ fastdb
 static void CloseDB()
 {
 	if (db.isOpen())
@@ -50,7 +50,7 @@ static void CloseDB()
 	}
 }
 
-// ²åÈëÒ»Ìõ¼ÇÂ¼
+// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Â¼
 static void InsertRecord()
 {
 	table_test table;
@@ -70,7 +70,7 @@ static void InsertRecord()
 	Log("Insert one record");
 }
 
-// ²éÕÒ¼ÇÂ¼
+// ï¿½ï¿½ï¿½Ò¼ï¿½Â¼
 static void Find()
 {
 	dbQuery dbquery;
@@ -90,7 +90,7 @@ static void Find()
 		for (int i = 0; i < n; ++i)
 		{
 			auto record = cursor.get();
-			Log("record %d info: inc_id[%d], name[%s], number_char[%d], number_int[%d], number_ll[%lld]", i + 1,
+            Log("record %d info: inc_id[%d], name[%s], number_char[%d], number_int[%d], number_ll[%ld]", i + 1,
 				record->inc_id, record->name, record->number_char, record->number_int, record->number_ll);
 
 			cursor.next();
@@ -102,7 +102,7 @@ static void Find()
 	}
 }
 
-// É¾³ý¼ÇÂ¼
+// É¾ï¿½ï¿½ï¿½ï¿½Â¼
 static void Remove()
 {
 	dbQuery dbquery;
@@ -120,7 +120,7 @@ static void Remove()
 	Log("Removed %d record", n);
 }
 
-// ¸üÐÂ¼ÇÂ¼
+// ï¿½ï¿½ï¿½Â¼ï¿½Â¼
 static void Update()
 {
 	dbQuery dbquery;
@@ -155,7 +155,10 @@ static void Update()
 
 int main()
 {
-	OpenDB();
+    if (!OpenDB())
+    {
+        return 1;
+    }
 
 	InsertRecord();
 	//InsertRecord();

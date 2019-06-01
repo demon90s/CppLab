@@ -5,5 +5,3 @@
 #include <algorithm>
 
 
-
-int f() {}

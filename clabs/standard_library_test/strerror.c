@@ -18,6 +18,7 @@ int main()
     printf("Enter d: ");
     scanf("%lf", &d);
 
+    errno = 0;
     res = sqrt(d);      /* 不能对负数做平方根 */
     if (errno != 0) {
         fprintf(stderr, "sqrt error: %s\n", strerror(errno));

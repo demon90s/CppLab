@@ -3,8 +3,24 @@
 
 // see: https://zh.cppreference.com/w/cpp/header/climits
 
+void print_platform()
+{
+	// gcc macro
+	#ifdef __i386__
+	printf("platform: 32\n");
+	#endif
+
+	#ifdef __x86_64__
+	printf("platform: 64\n");
+	#endif
+
+	printf("\n");
+}
+
 int main()
 {
+	print_platform();
+
 	// 字节的位数
 	printf("char bit: %d\n", CHAR_BIT);
 

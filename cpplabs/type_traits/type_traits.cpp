@@ -37,6 +37,24 @@ void test_is_same()
     std::cout << std::boolalpha;
     std::cout << std::is_same<int, long>() << std::endl;
 }
+
+void test_is_integral()
+{
+    std::cout << std::boolalpha;
+
+    std::cout << std::is_integral<char>::value << '\n'; // true
+    std::cout << std::is_integral<int>::value << '\n'; // true
+    std::cout << std::is_integral<float>::value << '\n'; // false
+}
+
+void test_is_float_point()
+{
+    std::cout << std::boolalpha;
+
+    std::cout << std::is_floating_point<float>::value << '\n';  // true
+    std::cout << std::is_floating_point<double>::value << '\n';  // true
+    std::cout << std::is_floating_point<int>::value << '\n';  // false
+}
  
 void test_is_array() 
 {
@@ -51,7 +69,9 @@ int main()
 {
     //test_foo();
     //test_is_same();
-    test_is_array();
+    //test_is_integral();
+    test_is_float_point();
+    //test_is_array();
 
     return 0;
 }

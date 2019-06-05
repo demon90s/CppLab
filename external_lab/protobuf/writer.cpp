@@ -64,6 +64,12 @@ int main()
 	msg.set_str("Hello");
 
 	{
+		msg.add_arr(42);
+		msg.add_arr(100);
+		msg.add_arr(66);
+	}
+
+	{
 		hello::Test_Person *p = new hello::Test_Person;	
 		p->add_s(42);
 		p->add_s(100);

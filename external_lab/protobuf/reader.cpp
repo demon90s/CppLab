@@ -10,6 +10,13 @@ void ListMsg(const hello::Test &msg)
 	cout << "id:\t" << msg.id() << endl;
 	cout << "str:\t" << msg.str() << endl;
 
+	cout << "arr:\t";
+	for (int i = 0; i < msg.arr_size(); i++)
+	{
+		cout << msg.arr().Get(i) << " ";
+	}
+	cout << "\n";
+
 	cout << "p.n:\t" << msg.p().n() << endl;
 	cout << "p.a:\t" << msg.p().a() << endl;
 	cout << "p.s:\t";
@@ -64,7 +71,7 @@ void ParseFromBuffer(hello::Test &msg)
 		read_len = sb_ptr->len;
 		memcpy(sb.data, sb_ptr->data, sb_ptr->len);
 	}
-	
+
 	if (!msg.ParseFromArray(sb.data, read_len))
 	{
 		cerr << "Failed to parse address book from buffer." << endl;

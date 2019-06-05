@@ -23,11 +23,12 @@ message Test		// 定义message
 	optional string		str = 2;
 	optional Person		p = 3;
 	optional OptType	opt = 4 [default = Query];
+	repeated int32		arr = 5;
 
 	// 更多其他类型
-	optional bool		b = 5 [ default = true ];
-	optional double		d = 6 [ default = 3.14 ];
-	optional float		f = 7 [ default = 9.8 ];
+	optional bool		b = 6 [ default = true ];
+	optional double		d = 7 [ default = 3.14 ];
+	optional float		f = 78 [ default = 9.8 ];
 
 	// more e.g.
 	// uint32 int64 uint64

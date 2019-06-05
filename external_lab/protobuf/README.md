@@ -8,7 +8,7 @@
 $ ./configure
 $ make
 $ make check
-$ make install
+$ sudo make install
 $ ldconfig # protobuf库默认安装到了：/usr/local/include，检查有没有加入到 /etc/ld.so.conf 文件
 ```
 
@@ -23,7 +23,7 @@ $ ldconfig # protobuf库默认安装到了：/usr/local/include，检查有没�
 $ ./configure
 $ make
 $ make check
-$ make install
+$ sudo make install
 ```
 
 之后，就可以通过这个命令查看编译链接protobuf所需的命令：

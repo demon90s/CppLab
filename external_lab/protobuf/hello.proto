@@ -1,7 +1,41 @@
-package hello;
-message Test
+// 我是注释
+
+syntax="proto2";	// 设置使用protobuf版本
+
+package hello;		// 包
+message Test		// 定义message
 {
+	// 定义一个嵌套message
+	message Person {
+		optional string n = 1 [default = "diwen"];			// =1是字段标识为1，default是未设置时的默认值
+		optional string a = 2 [default = "guangzhou"];
+		repeated int32 s = 3;
+	}
+
+	// 定义一个枚举类型
+	enum OptType {
+		Query = 1;		// =1不是标识号，是枚举值为1的意思
+		Add = 2;
+		Remove = 3;
+	}
+
 	required int32		id = 1;
-	required string		str = 2;
-	optional int32		opt = 3;
+	optional string		str = 2;
+	optional Person		p = 3;
+	optional OptType	opt = 4 [default = Query];
+
+	// 更多其他类型
+	optional bool		b = 5 [ default = true ];
+	optional double		d = 6 [ default = 3.14 ];
+	optional float		f = 7 [ default = 9.8 ];
+
+	// more e.g.
+	// uint32 int64 uint64
 }
+
+// explain:
+// required 必须设置的字段
+// optional 可以选择设置的字段
+// repeated 可以重复0次或无限次的字段
+
+// 每一个字段都有一个标识号，不能取[19000－19999]

@@ -13,7 +13,7 @@ void ListMsg(const hello::Test &msg)
 	cout << "arr:\t";
 	for (int i = 0; i < msg.arr_size(); i++)
 	{
-		cout << msg.arr().Get(i) << " ";
+		cout << msg.arr(i) << " ";
 	}
 	cout << "\n";
 
@@ -22,7 +22,7 @@ void ListMsg(const hello::Test &msg)
 	cout << "p.s:\t";
 	for (int i = 0; i < msg.p().s_size(); i++)
 	{
-		cout << msg.p().s().Get(i) << " ";
+		cout << msg.p().s(i) << " ";
 	}
 	cout << "\n";
 
@@ -32,6 +32,10 @@ void ListMsg(const hello::Test &msg)
 	cout << "b:\t" << msg.b() << endl;
 	cout << "d:\t" << msg.d() << endl;
 	cout << "f:\t" << msg.f() << endl;
+
+	// output with debug functions, only print setted fields
+	cout << "------------------------------------\n";
+	cout << msg.DebugString();
 }
 
 // 从文件中反序列化出来

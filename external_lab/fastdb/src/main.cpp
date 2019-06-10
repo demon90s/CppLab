@@ -15,7 +15,7 @@ static size_t db_init_sz_mb = 1;
 #define Log(format, ...) \
 if (open_log) printf(format "\n", ##__VA_ARGS__); fflush(stdout);
 
-// ���� fastdb
+// open
 static bool OpenDB()
 {
 	if (db.isOpen())
@@ -40,7 +40,7 @@ static bool OpenDB()
 	return ret;
 }
 
-// �ر� fastdb
+// close
 static void CloseDB()
 {
 	if (db.isOpen())
@@ -50,7 +50,7 @@ static void CloseDB()
 	}
 }
 
-// ����һ����¼
+// insert
 static void InsertRecord()
 {
 	table_test table;
@@ -70,7 +70,7 @@ static void InsertRecord()
 	Log("Insert one record");
 }
 
-// ���Ҽ�¼
+// find
 static void Find()
 {
 	dbQuery dbquery;
@@ -102,7 +102,7 @@ static void Find()
 	}
 }
 
-// ɾ����¼
+// remove
 static void Remove()
 {
 	dbQuery dbquery;
@@ -120,7 +120,7 @@ static void Remove()
 	Log("Removed %d record", n);
 }
 
-// ���¼�¼
+// update
 static void Update()
 {
 	dbQuery dbquery;

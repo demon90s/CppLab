@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iterator>
 #include <cstring>
+#include <numeric>
 
 /*
  * C++ 标准库保证 array<> 的所有元素一定位于连续且相邻的内存内。

@@ -14,6 +14,8 @@ $ ldconfig # protobuf库默认安装到了：/usr/local/include，检查有没�
 
 这个安装过程在我的虚拟机里比较久。
 
+如果是windows平台，在包里有一个cmake目录，可以用cmake工程build。
+
 ### 安装pkg-config
 
 先到package目录拿到压缩包解压，之后进入解压目录。
@@ -49,6 +51,8 @@ protoc --cpp_out=. hello.proto
 参见 writer.cpp 和 reader.cpp
 
 ## 参考资料
+
+[Official site](https://developers.google.cn/protocol-buffers/)
 
 [Git](https://github.com/google/protobuf)
 

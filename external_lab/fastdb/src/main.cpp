@@ -10,7 +10,7 @@ static bool open_log = true;
 static dbDatabase db;
 static dbDatabase::OpenParameters open_params;
 static std::string db_name = "test_fastdb";
-static size_t db_init_sz_mb = 1;
+static size_t db_init_sz_mb = 8;
 
 #define Log(format, ...) \
 if (open_log) printf(format "\n", ##__VA_ARGS__); fflush(stdout);

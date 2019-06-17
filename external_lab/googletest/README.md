@@ -2,6 +2,8 @@ google test version: 1.8.1
 
 test platform: Ubuntu server 18.04 
 
+compiler: g++4.8.5
+
 ###################
 build lib step:
 

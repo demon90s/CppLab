@@ -2,21 +2,21 @@
  * printf scanf
  * 格式化输入输出
  * 
- * d  	->	int
- * ld 	->	long int
- * lld	->	long long int
+ * 转换说明：
+ * d  	->	int 十进制
  * u	->	unsigned int
  * o	->	8进制整数
  * x	->	16进制整数
- * f	->  float or double, not for scanf double
+ * f	->	float or double, not for scanf double
  * lf	->	double for scanf
  * s	-> 	const char *
  * 
  * printf 返回写入的字符数，不包括空字符
- * scanf 返回成功匹配的个数
+ * scanf 返回成功匹配的个数，如果出现错误或者达到流end，返回EOF，出现错误时ferror is set 。
  */
 
 #include <stdio.h>
+#include <string.h>
 
 /*
  * 读写 int 和 float
@@ -90,6 +90,7 @@ void example4()
 
 /*
  * 读写字符 p86
+ * 不会跳过开始的空白字符
  */
 void example5()
 {
@@ -97,7 +98,15 @@ void example5()
 	
 	printf("Enter char: ");
 	scanf("%c", &ch);
-	printf("%c", ch);
+	printf("0x%x\n", ch);
+}
+
+/*
+ * 写 size_t
+ */
+void example_size_t()
+{
+	printf("sizeof int: %zu\n", sizeof(int));
 }
 
 /*
@@ -114,11 +123,27 @@ void example6()
 }
 
 /*
- * 写 size_t
- */
-void example7()
+ * 读字符串
+ * 程序员保证buf足够
+ * 从第一个非空白字符开始读
+ * 遇空白终止读取(将其放回)，末尾被自动添加0
+*/
+void example_scanf_string()
 {
-	printf("sizeof int: %zu\n", sizeof(int));
+	char buf[1024];
+
+	printf("Enter string: ");
+	scanf("%s", buf);
+	printf("%s\n", buf);
+	printf("length: %zu\n", strlen(buf));
+}
+
+/* 安全使用 scanf 读取字符串的例子 */
+void example_scanf_string2()
+{
+	char str[5];
+	scanf("%4s", str);
+	printf("%s\n", str);
 }
 
 int main()
@@ -129,7 +154,9 @@ int main()
 	//example4();
 	//example5();
 	//example6();
-	example7();
+	//example_size_t();
+	//example_scanf_string();
+	example_scanf_string2();
 
 	return 0;
 }

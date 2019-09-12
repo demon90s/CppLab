@@ -10,6 +10,9 @@
     如果声明了 NDEBUG 宏，将使得 assert 调用失效。其中一个方法是：
     #define NDEBUG
     #include <assert.h>
+
+    或使用编译选项-D：
+    gcc -DNDEBUG assert.c -o assert
 */
 
 #include <assert.h>

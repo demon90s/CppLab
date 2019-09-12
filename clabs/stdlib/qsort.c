@@ -6,11 +6,10 @@
 
     comp 定义为：int (*comp)(const void* p1, const void* p2);
 
-    若 p1 < p2 应该返回负数
-    若 p1 == p2 返回0
-    若 p1 > p2 返回正数
+    p1排在p2前头 应该返回负数
+    p1排在p2后头 应该返回正数
 
-    如果两个数相等，它们排序后的结果是未指定的。
+    如果两个数相等（返回0），它们排序后的结果是未指定的。
 */
 
 #include <stdio.h>
@@ -23,7 +22,22 @@ struct Foo {
 
 int compare_foo(const void* p1, const void* p2)
 {
-    return ((struct Foo*)p1)->power - ((struct Foo*)p2)->power;
+    //printf("[COMPARE] p1[%d] p2[%d]\n", ((struct Foo*)p1)->power, ((struct Foo*)p2)->power);
+    //return ((struct Foo*)p1)->power - ((struct Foo*)p2)->power;
+
+    int power_diff = ((struct Foo*)p1)->power - ((struct Foo*)p2)->power;
+    if (power_diff < 0)
+    {
+        return -1;
+    }
+    else if (power_diff > 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 int main(int argc, char const *argv[])

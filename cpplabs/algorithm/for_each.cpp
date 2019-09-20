@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <vector>
 
 void Test1()
 {

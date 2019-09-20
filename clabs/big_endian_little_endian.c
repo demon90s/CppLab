@@ -4,6 +4,8 @@
     对于一个数，如果是大端存储，那么低位地址存放高位有效字节，如果是小端存储，那么低位存放低位有效字节。
 
     几乎所有的网络协议都是 big endian
+
+    Linux系统采取的是 little ending
 */
 
 #include <stdio.h>

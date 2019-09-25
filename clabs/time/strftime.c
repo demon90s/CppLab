@@ -58,11 +58,24 @@ void test2()
     printf("%s\n", date);
 }
 
+// HH:MM:SS PM/AM
+void test3()
+{
+    time_t now = time(NULL);
+    struct tm *tmp_now = localtime(&now);
+
+    char date[1024];
+    strftime(date, 1024, "%r", tmp_now);
+    printf("%s\n", date);
+}
+
 int main(int argc, char const *argv[])
 {
     test1();
 
     test2();
+
+    test3();
 
     return 0;
 }

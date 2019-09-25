@@ -4,6 +4,10 @@
 
 // 可以使用 thread::joinable 可以判断是否可以 join
 
+/*
+	若不能开始线程，则抛出 std::system_error 
+*/
+
 #include <iostream>
 #include <thread>
 

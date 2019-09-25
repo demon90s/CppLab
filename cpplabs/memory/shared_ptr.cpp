@@ -1,6 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <string.h>
 
 // shared_ptr
 // 智能指针，可使用引用计数来共享资源
@@ -52,12 +53,24 @@ void test_reset()
 	std::cout << p1.use_count() << std::endl;			// 1
 }
 
+// 分配数组
+// 必须用自定义的删除器
+void test_array()
+{
+	std::shared_ptr<char> p = std::shared_ptr<char>(new char[1024]{},
+								[](char* p) { delete []p; });
+
+	strcpy(p.get(), "hello");
+	std::cout << p.get() << std::endl;
+}
+
 int main()
 {
 	//test1();
 	//test_use_count();
 	//test_deleter();
-	test_reset();
+	//test_reset();
+	test_array();
 
 	return 0;
 }

@@ -9,11 +9,33 @@
 #include <stdio.h>
 #include <string.h>
 
-int main(int argc, char const *argv[])
+void test1()
 {
     char str[] = "memmove can be very useful.....";
     memmove(str + 20, str + 15, 11);
     puts(str);
+}
+
+void test2()
+{
+    // 模拟一个队列的入队/出队操作
+    int arr[] = {1, 2, 3, 4};
+
+    memmove(arr + 1, arr, sizeof(arr) - sizeof(arr[0]));
+    arr[0] = 100;
+
+    for (size_t i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
+    {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    // out: 100 1 2 3
+}
+
+int main(int argc, char const *argv[])
+{
+    test1();
+    test2();
 
     return 0;
 }

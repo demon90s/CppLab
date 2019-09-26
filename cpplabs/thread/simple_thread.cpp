@@ -5,6 +5,7 @@
 // 可以使用 thread::joinable 可以判断是否可以 join
 
 /*
+	构造完毕线程立刻开始执行。线程函数可以是一个可调用对象。
 	若不能开始线程，则抛出 std::system_error 
 */
 
@@ -43,10 +44,23 @@ void test_detach()
 	return;
 }
 
+// functor thread
+void test_functor()
+{
+	auto work_thread = [](std::string msg) {
+		std::cout << "thread run: " << msg << std::endl;	
+	};
+
+	std::thread t(work_thread, "test functor");
+
+	t.join();
+}
+
 int main()
 {
-	test_join();
+	//test_join();
 	//test_detach();
+	test_functor();
 
 	return 0;
 }

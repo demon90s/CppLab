@@ -8,6 +8,10 @@
     使用二元比较函数 comp 比较排序
 
     复杂度：O(N·log(N)) 次比较
+
+    comp NOTES:
+    1. 从大到小排：return lhs > rhs
+    2. 从小到大排：return lhs < rhs
 */
 
 #include <algorithm>

@@ -6,10 +6,14 @@
 
     comp 定义为：int (*comp)(const void* p1, const void* p2);
 
+    RULES:
     p1排在p2前头 应该返回负数
     p1排在p2后头 应该返回正数
-
     如果两个数相等（返回0），它们排序后的结果是未指定的。
+
+    NOTES:
+    1. 从大到小逆序：return p2 - p1
+    2. 从小到大逆序：return p1 - p2
 */
 
 #include <stdio.h>

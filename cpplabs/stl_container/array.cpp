@@ -20,6 +20,9 @@ void test_carray_stdarray()
 
 	//printf("%s\n", &a[0]);		// print contents of the array as C-string
 	printf("%s\n", a.data());
+
+	//sizeof
+	printf("sizeof(a)=%zu\n", sizeof(a));	// 41
 }
 
 // array 的使用案例
@@ -52,9 +55,9 @@ void test()
 
 int main()
 {
-	//test_carray_stdarray();
+	test_carray_stdarray();
 	
-	test();
+	//test();
 
 	return 0;
 }

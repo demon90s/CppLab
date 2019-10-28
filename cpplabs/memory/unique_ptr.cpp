@@ -25,6 +25,13 @@ void test2()
 	std::unique_ptr<char[]> a(new char[rand()]);
 }
 
+void test3()
+{
+	std::unique_ptr<Foo> up(new Foo);
+
+	up.reset(new Foo);	// reset resource
+}
+
 // copy temperory unique_ptr
 // 我们可以拷贝一个将要销毁的 unique_ptr
 void example1()
@@ -38,10 +45,25 @@ void example1()
 	std::cout << *p << std::endl;
 }
 
+// custom deleter
+void CustomDeleter()
+{
+	auto deleter = [](Foo *fp) {
+		std::cout << "custom delete Foo\n";
+		delete fp;
+	};
+
+	std::unique_ptr<Foo, decltype(deleter)> cup(new Foo, deleter);
+
+	std::cout << "sizeof cup=" << sizeof(cup) << std::endl;	// 8, just like raw pointer(use lambda)
+}
+
 int main()
 {
 	//test2();
-	example1();
+	//test3();
+	//example1();
+	CustomDeleter();
 
 	std::cout << "main return" << std::endl;
 	return 0;

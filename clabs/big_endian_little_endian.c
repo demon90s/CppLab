@@ -19,6 +19,10 @@ void get_endian()
 {
     union TestEndian te;
     te.a = 0x4321;
+
+    printf("&b[0]=%p\n", &te.b[0]);
+    printf("&b[1]=%p\n", &te.b[1]);
+
     if (te.b[0] == 0x43 && te.b[1] == 0x21) {
         printf("this system is big endian\n");
     }

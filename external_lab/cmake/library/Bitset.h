@@ -7,32 +7,42 @@
 #include <cstring>
 #include <climits>
 
-// Ö§³ÖNÎ»bitµÄ±ê¼Ç½á¹¹£¬N±ØĞëÊÇ×Ö½Ú±ÈÌØÎ»£¨8£©µÄ±¶Êı
-// bitÎ»´Ó×îµÍÎ»¿ªÊ¼£¨×îÓÒ£©
+// æ”¯æŒNä½bitçš„æ ‡è®°ç»“æ„ï¼ŒNå¿…é¡»æ˜¯å­—èŠ‚æ¯”ç‰¹ä½ï¼ˆ8ï¼‰çš„å€æ•°
+// bitä½ä»æœ€ä½ä½å¼€å§‹ï¼ˆæœ€å³ï¼‰
 template <unsigned N>
 class Bitset
 {
+	static const int BIT_FIELD_SIZE = CHAR_BIT * sizeof(unsigned char);	// ä¸€ä¸ªä½åŸŸå ä¸€ä¸ªå­—èŠ‚
+	static const int BIT_FIELD_COUNT = N / BIT_FIELD_SIZE;
+	static const int BIT_COUNT = N;										// æ€»å…±æ”¯æŒNä¸ªbit
 public:
-	void Reset();						// ÖØÖÃËùÓĞbitÎ»
-	bool Test(int bit) const;			// ÅĞ¶ÏµÚbitÎ»ÊÇ·ñ¼¤»î
-	void Set(int bit);					// ÉèÖÃµÚbitÎ»Îª1
-	void UnSet(int bit);				// ÉèÖÃµÚbitÎ»Îª0
+	Bitset() { this->Reset(); }
+	void Reset();														// é‡ç½®æ‰€æœ‰bitä½
+	bool Test(int bit) const;											// åˆ¤æ–­ç¬¬bitä½æ˜¯å¦æ¿€æ´»
+	void Set(int bit);													// è®¾ç½®ç¬¬bitä½ä¸º1
+	void UnSet(int bit);												// è®¾ç½®ç¬¬bitä½ä¸º0
+	constexpr int Bit() const { return N; }								// æ€»å…±æ”¯æŒå¤šå°‘æ¯”ç‰¹ä½
+	int CountOfSet() const;												// æ€»å…±è®¾ç½®äº†å¤šå°‘bitä½
 
-	std::string ToString() const;		// ·µ»ØÊı¾İµÄ×Ö·û´®±íÊ¾
+	operator std::string() const { return ToStdString(); }
+	operator unsigned long long() const { return ToULongLong(); }
+	operator unsigned int() const { return ToUInt(); }
+	void operator|=(const Bitset &rhs);
+
+	std::string ToStdString() const;
+	unsigned long long ToULongLong() const;
+	unsigned int ToUInt() const;
+
+	void Copy(unsigned char (&bit_set)[BIT_FIELD_COUNT]);
 
 private:
-    static const int BIT_FIELD_SIZE = CHAR_BIT * sizeof(unsigned char);	// Ò»¸öÎ»ÓòÕ¼Ò»¸ö×Ö½Ú
-    static const int BIT_FIELD_COUNT = N / BIT_FIELD_SIZE;
-    static const int BIT_COUNT = N;										// ×Ü¹²Ö§³ÖN¸öbit
-
-    static_assert(N > 0 && N % BIT_FIELD_SIZE == 0, "Invalid Bitset Instance");
+	static_assert(N > 0 && N % BIT_FIELD_SIZE == 0, "Invalid Bitset Instance");
 
 	unsigned char bit_field_list[BIT_FIELD_COUNT] = {0};
 };
 
 // typedef
-using Bitset8	= Bitset<8>;
-using Bitset16	= Bitset<16>;
+using Bitset8   = Bitset<8>;
 using Bitset32	= Bitset<32>;
 using Bitset64	= Bitset<64>;
 using Bitset128 = Bitset<128>;
@@ -113,10 +123,24 @@ void Bitset<N>::UnSet(int bit)
 }
 
 template <unsigned N> inline
-std::string Bitset<N>::ToString() const
+int Bitset<N>::CountOfSet() const
+{
+	int count = 0;
+	for (unsigned i = 0; i < N; i++)
+	{
+		if (this->Test(i))
+		{
+			count++;
+		}
+	}
+	return count;
+}
+
+template <unsigned N> inline
+std::string Bitset<N>::ToStdString() const
 {
 	std::list<char> tmp_list;
-    for (unsigned i = 0; i < N; ++i)
+	for (unsigned i = 0; i < N; ++i)
 	{
 		if (this->Test(i))
 		{
@@ -131,10 +155,66 @@ std::string Bitset<N>::ToString() const
 }
 
 template <unsigned N> inline
+unsigned long long Bitset<N>::ToULongLong() const
+{
+	unsigned long long ret = 0;
+	for (unsigned i = 0; i < N && i < sizeof(ret) * CHAR_BIT; ++i)
+	{
+		if (this->Test(i))
+		{
+			ret |= 1ULL << i;
+		}
+	}
+	return ret;
+}
+
+template <unsigned N> inline
+unsigned int Bitset<N>::ToUInt() const
+{
+	unsigned int ret = 0;
+	for (unsigned i = 0; i < N && i < sizeof(ret) * CHAR_BIT; ++i)
+	{
+		if (this->Test(i))
+		{
+			ret |= 1U << i;
+		}
+	}
+	return ret;
+}
+
+template <unsigned N> inline
 std::ostream& operator<<(std::ostream &os, const Bitset<N> &bs)
 {
-	os << bs.ToString();
+	os << bs.ToStdString();
 	return os;
+}
+
+template <unsigned N> inline
+void Bitset<N>::Copy(unsigned char (&bit_set)[BIT_FIELD_COUNT])
+{
+	static_assert(sizeof(bit_field_list) == sizeof(bit_set), "Invalid param");
+
+	memcpy(bit_set, bit_field_list, sizeof(bit_set));
+}
+
+template <unsigned N> inline
+void Bitset<N>::operator|=(const Bitset<N> &rhs)
+{
+	for (unsigned i = 0; i < N; ++i)
+	{
+		if (rhs.Test(i))
+		{
+			this->Set(i);
+		}
+	}
+}
+
+template <unsigned N> inline
+Bitset<N> operator|(const Bitset<N> &lhs, const Bitset<N> &rhs)
+{
+	Bitset<N> bs = lhs;
+	bs |= rhs;
+	return bs;
 }
 
 //-------------------------------------------------------------------------------------------

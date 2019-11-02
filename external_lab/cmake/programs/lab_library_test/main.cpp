@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 {
 	std::cout << argv[0] << std::endl;
 
-    //TestBitset();
+    TestBitset();
 	//TestGetMinIndex();
 	//TestSerializer();
 	//TestTraceBack();
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 	//Test_LL_TO_INT();
 	//Test_PrintFlag();
     //Test_ObjectPool();
-    Test_FunctorTable();
+    //Test_FunctorTable();
 
 	Pause("paused...");
 
@@ -60,13 +60,31 @@ int main(int argc, char* argv[])
 
 void TestBitset()
 {
-	Bitset8 b8;
-	b8.Set(1);
-	b8.Set(2);
-	std::cout << b8 << std::endl;
+	/*
+	{
+		Bitset8 b8;
+		b8.Set(1);
+		b8.Set(2);
+		std::cout << b8 << std::endl;
 
-	b8.Reset();
-	std::cout << b8 << std::endl;
+		b8.Reset();
+		std::cout << b8 << std::endl;
+	}
+	*/
+
+	{
+		Bitset32 b32;
+		b32.Set(1);
+		std::cout << b32 << std::endl;
+
+		Bitset32 b32_2;
+		b32_2.Set(2);
+		std::cout << b32_2 << std::endl;
+
+		b32 |= b32_2;
+		std::cout << b32 << std::endl;
+	}
+	
 }
 
 void TestSerializer()

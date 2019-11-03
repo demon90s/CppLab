@@ -1,7 +1,9 @@
 /*
     #include <mutex>
 
-    一种可以移动的 lock guard，并且使用更加灵活的方式管理 mutex。。
+    一种可以移动的 lock guard，并且使用更加灵活的方式管理 mutex。
+
+    另外，如要使用 condition variable ，那么也需要用 unique_lock 来交给条件变量控制
 */
 
 #include <iostream>

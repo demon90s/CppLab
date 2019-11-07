@@ -8,7 +8,8 @@ TARGETS = constexpr \
  nullptr \
  range_for \
  raw_string_literal \
- ratio
+ ratio \
+ user_defined_literal
 
 all: $(TARGETS)
 

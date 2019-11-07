@@ -34,7 +34,7 @@ int main()
 	//foo(c); // 隐式转换, 非法
 	foo(static_cast<Color>(c)); // OK
 
-	foo(static_cast<Color>(1000));	// OK but overflow
+	foo(static_cast<Color>(1000));	// OK but overflow -24
 
 	return 0;
 }

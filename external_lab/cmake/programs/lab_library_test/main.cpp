@@ -12,12 +12,12 @@
 #include "NameFilter/NameFilter.hpp"
 #include "ObjectPool.hpp"
 #include "FunctorTable.hpp"
+#include "marcofuncs.hpp"
 
 void TestBitset();
 void TestGetMinIndex();
 void TestSerializer();
 void TestTraceBack();
-void TestNum();
 void TestArray2D();
 void TestColorPrint();
 void TestFileReader();
@@ -26,16 +26,13 @@ void TestGetMaxMin();
 void TestLimitList();
 void TestNameFilter();
 void TestTimeStrToTimestamp();
-void Test_LL_TO_INT();
 void Test_PrintFlag();
 void Test_ObjectPool();
 void Test_FunctorTable();
 
 int main(int argc, char* argv[])
 {
-	std::cout << argv[0] << std::endl;
-
-    TestBitset();
+    //TestBitset();
 	//TestGetMinIndex();
 	//TestSerializer();
 	//TestTraceBack();
@@ -52,8 +49,6 @@ int main(int argc, char* argv[])
 	//Test_PrintFlag();
     //Test_ObjectPool();
     //Test_FunctorTable();
-
-	Pause("paused...");
 
 	return 0;
 }
@@ -129,46 +124,6 @@ void TestSerializer()
 void TestTraceBack()
 {
 	TraceBack();
-}
-
-void TestNum()
-{
-	LimitNum<0, 100> number;
-	number = 1000;
-	std::cout << number << std::endl;
-
-	number = number - 90;
-	std::cout << number << std::endl;
-
-	number = number + 20;
-	std::cout << number << std::endl;
-
-	number = number * 5;
-	std::cout << number << std::endl;
-
-	number = number / 10;
-	std::cout << number << std::endl;
-
-	number = number % 3;
-	std::cout << number << std::endl;
-
-	number = 1000;
-	std::cout << number << std::endl;
-
-	number -= 90;
-	std::cout << number << std::endl;
-
-	number += 20;
-	std::cout << number << std::endl;
-
-	number *= 5;
-	std::cout << number << std::endl;
-
-	number /= 10;
-	std::cout << number << std::endl;
-
-	number %= 3;
-	std::cout << number << std::endl;
 }
 
 void TestArray2D()
@@ -362,25 +317,6 @@ void TestTimeStrToTimestamp()
 		}
 
 		std::cout << "Enter time str(yyyy-mm-dd hh:mm::ss): ";
-	}
-}
-
-void Test_LL_TO_INT()
-{
-	{
-		long long ll_v = 112345678900000000;
-
-		std::cout << ll_v << std::endl;
-		std::cout << (int)ll_v << std::endl;
-		std::cout << LL_TO_INT(ll_v) << std::endl;
-	}
-
-	{
-		long long ll_v = -11234567890000000;
-
-		std::cout << ll_v << std::endl;
-		std::cout << (int)ll_v << std::endl;
-		std::cout << LL_TO_INT(ll_v) << std::endl;
 	}
 }
 

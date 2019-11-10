@@ -3,10 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// ¾²Ì¬¼ì²é£¬Êä³ö×Ö·û´®ÄÚÈİ¾ÍÊÇ¼ì²éÄÚÈİ
-#define STATIC_ASSERT(expr) static_assert(expr, #expr)
-
-// ¼ò»¯Êı×é¿½±´£¬¼ÓÁË¾²Ì¬¼ì²é
+// ç®€åŒ–æ•°ç»„æ‹·è´ï¼ŒåŠ äº†é™æ€æ£€æŸ¥
 #define ARRAYCPY(dst, src)\
 do\
 {\
@@ -15,15 +12,12 @@ do\
 	static_assert(sizeof((src)[0]) == sizeof((dst)[0]), "ARRAYCPY sizeof((src)[0]) == sizeof((dst)[0])");\
 } while(0)
 
-// ÉèÖÃ¡¢ÅĞ¶Ï¡¢Çå³ı±ê¼ÇÎ»£¬bitÈ¡Öµ·¶Î§£º[0, 64)
+// è®¾ç½®ã€åˆ¤æ–­ã€æ¸…é™¤æ ‡è®°ä½ï¼Œbitå–å€¼èŒƒå›´ï¼š[0, 64)
 #define SET_BIT(flag, bit) ((flag) |= (UInt64)1 << (bit))
 #define IS_BIT_SET(flag, bit) (((flag) & ((UInt64)1 << (bit))) != 0)
 #define CLEAR_BIT(flag, bit) ((flag) &= ~((UInt64)1 << (bit)))
 
-// long long ×ª»»³É int £¬Èç¹û³¬¹ıÁË int µÄ×îÖµ£¬¾ÍÈ¡ËüµÄ×îÖµ
-#define LL_TO_INT(ll_v) ((ll_v) > INT_MAX ? INT_MAX : ((ll_v) < INT_MIN ? INT_MIN : (int)(ll_v)))
-
-// ×Ö·û´®¿½±´ ×ªlong longÊÇÎªÁËÆÁ±ÎLINUXÏÂµÄ¾¯¸æ
+// å­—ç¬¦ä¸²æ‹·è´ è½¬long longæ˜¯ä¸ºäº†å±è”½LINUXä¸‹çš„è­¦å‘Š
 #define STRNCPY(dst_str, src_str, dst_len)                     \
 {                                                              \
 	if (NULL != (dst_str) && (int)(dst_len) > 0)               \
@@ -40,7 +34,7 @@ do\
 	}                                                          \
 }
 
-// ¶¨³¤×Ö·û´®Êı×é¿½±´
+// å®šé•¿å­—ç¬¦ä¸²æ•°ç»„æ‹·è´
 #define F_STRNCPY(dst_str, src_str, len)                       \
 {                                                              \
 	if (NULL != (dst_str) && (int)(len) > 0)                   \
@@ -57,7 +51,7 @@ do\
 	}                                                          \
 }
 
-// ×Ö·û´®¸ñÊ½»¯²Ù×÷º¯Êı
+// å­—ç¬¦ä¸²æ ¼å¼åŒ–æ“ä½œå‡½æ•°
 inline int SNPRINTF(char *dst, int len, const char *format, ...)
 {
 	if (NULL == dst || len <= 0 || NULL == format) return -1;

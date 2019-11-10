@@ -9,7 +9,8 @@ TARGETS = constexpr \
  range_for \
  raw_string_literal \
  ratio \
- user_defined_literal
+ user_defined_literal \
+ regex
 
 all: $(TARGETS)
 

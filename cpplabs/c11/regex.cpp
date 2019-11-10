@@ -10,7 +10,7 @@
 #include <iostream>
 #include <string>
 
-int main()
+void test_regex_match()
 {
     std::string str;
 
@@ -24,9 +24,30 @@ int main()
         //std::regex re("abc+");              // + 表示1个或多个+前的字符，如 'abc' 和 ‘abccc’ 都 match
         //std::regex re("ab[cd]*");           // [...] 表示括号中的任意1个字符，如 'ab' ‘abc’ ‘abcd’ 都 match
         //std::regex re("ab[^cd]*");          // [^,,,] 表示任意一个不是括号中所有字符的字符
-        std::regex re("ab[cd]{3}");          // {n} 表示前面的字符出现n次
+        //std::regex re("ab[cd]{3}");         // {n} 表示前面的字符出现n次 {3,} 表示>=3个，{3,5}代表3,4,5个...
+        //std::regex re("abc|def");           // | 表示或，abc或def match 
+
+        std::regex re("[[:w:]]+@[[:w:]]+\.com"); // email, [[:w:]]表示一个word character \.表示.，用\转义
 
         bool match = std::regex_match(str, re);
         std::cout << (match ? "match" : "not match") << std::endl;
     }
+}
+
+void test_regex_search()
+{
+    std::string str;
+    std::regex re("abc");
+
+    while (std::cin >> str)
+    {
+        bool match = std::regex_search(str, re);
+        std::cout << (match ? "match" : "not match") << std::endl;
+    }
+}
+
+int main()
+{
+    //test_regex_match();
+    test_regex_search();
 }

@@ -1,6 +1,6 @@
 /*
- ���дʹ��˹���
- ���д��ı��У�һ�д���һ�����д�
+ 敏感词过滤工具
+ 敏感词文本中，一行代表一个敏感词
 */
 
 #pragma once
@@ -8,7 +8,7 @@
 #include <map>
 #include <string>
 
-static const int MAX_SENSITIVEWORD_SIZE = 127;				// ���д�����ֽ���
+static const int MAX_SENSITIVEWORD_SIZE = 127;				// 敏感词最大字节数
 
 class NameNode;
 

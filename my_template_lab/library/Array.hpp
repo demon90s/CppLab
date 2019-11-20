@@ -2,6 +2,7 @@
 
 #include <string>
 #include <cassert>
+#include <functional>
 
 template<typename T, int N>
 class Array
@@ -45,9 +46,21 @@ public:
             (const_cast<Array*>(this)->operator[](index)));
     }
 
-    T *begin()
+public:
+    void Travel(std::function<void(T&)> f)
     {
-        return m_data;
+        for (auto &item : m_data)
+        {
+            f(item);
+        }
+    }
+
+    void Travel(std::function<void(const T&)> f)
+    {
+        for (const auto &item : m_data)
+        {
+            f(item);
+        }
     }
 
     void Copy(T (&raw)[N]) const
@@ -60,6 +73,11 @@ public:
 
 public:
     // iterators
+    T *begin()
+    {
+        return m_data;
+    }
+
     const T *begin() const
     {
         return static_cast<const T*>(

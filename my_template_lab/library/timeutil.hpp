@@ -1,13 +1,70 @@
 #pragma once
 
 #include <ctime>
+#include <string>
 
-class TimeUtil
+namespace timeutil
 {
-public:
-    static const int SECOND_PER_MINUTE = 60;
-    static const int SECOND_PER_HOUR = SECOND_PER_MINUTE * 60;
-    static const int SECOND_PER_DAY = SECOND_PER_HOUR * 24;
+    static const char* const week_name[7] = 
+        { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", };
+
+    class Timestamp
+    {
+    private:
+        long long m_timestamp;
+    public:
+        Timestamp(long long timestamp = 0) :
+            m_timestamp(timestamp)
+        {}
+        explicit operator long long()
+        {
+            return m_timestamp;
+        }
+
+        int Second() const
+        {
+            return LocalTime()->tm_sec;
+        }
+        int Minutes() const
+        {
+            return LocalTime()->tm_min;
+        }
+        int Hour() const
+        {
+            return LocalTime()->tm_hour;
+        }
+        int Day() const
+        {
+            return LocalTime()->tm_mday;
+        }
+        int Week() const
+        {
+            return LocalTime()->tm_wday;
+        }
+        int Month() const
+        {
+            return LocalTime()->tm_mon + 1;
+        }
+        int Year() const
+        {
+            return LocalTime()->tm_year + 1900;
+        }
+
+        std::string AscTime() const
+        {
+            char buffer[1024] {};
+            snprintf(buffer, sizeof(buffer), "%d-%02d-%02d %02d:%02d:%02d %s",
+                    Year(), Month(), Day(), Hour(), Minutes(), Second(), week_name[Week()] );
+            return buffer;
+        }
+
+    private:
+        const tm *LocalTime() const
+        {
+            time_t t = static_cast<time_t>(m_timestamp);
+            return localtime(&t);
+        }
+    };
 
     class SecondTimePoint
     {
@@ -39,6 +96,9 @@ public:
         HourTimePoint(int hour = 0, int minute = 0, int second = 0) : 
             m_hour(hour), m_minute_timepoint(minute, second)
         {}
+        int GetHour() const { return m_hour; }
+        int GetMinute() const { return m_minute_timepoint.GetMinute(); }
+        int GetSecond() const { return m_minute_timepoint.GetSecond(); }
 
     private:
         int m_hour;
@@ -51,6 +111,11 @@ public:
         WeekDayTimePoint(int week_day = 0, int hour = 0, int minute = 0, int second = 0) :
             m_week_day(week_day), m_hour_timepoint(hour, minute, second)
         {}
+        int GetWeek() const { return m_week_day; }
+        int GetHour() const { return m_hour_timepoint.GetHour(); }
+        int GetMinute() const { return m_hour_timepoint.GetMinute(); }
+        int GetSecond() const { return m_hour_timepoint.GetSecond(); }
+
     private:
         int m_week_day;
         HourTimePoint m_hour_timepoint;
@@ -59,11 +124,17 @@ public:
     class MonthDayTimePoint
     {
     public:
-        MonthDayTimePoint(int month_day = 0, int hour = 0, int minute = 0, int second = 0) :
-            m_month_day(month_day), m_hour_timepoint(hour, minute, second)
+        MonthDayTimePoint(int month = 1, int month_day = 1, int hour = 0, int minute = 0, int second = 0) :
+            m_month(month), m_month_day(month_day), m_hour_timepoint(hour, minute, second)
         {}
+        int GetMonth() const { return m_month; }
+        int GetMonthDay() const { return m_month_day; }
+        int GetHour() const { return m_hour_timepoint.GetHour(); }
+        int GetMinute() const { return m_hour_timepoint.GetMinute(); }
+        int GetSecond() const { return m_hour_timepoint.GetSecond(); }
 
     private:
+        int m_month;
         int m_month_day;
         HourTimePoint m_hour_timepoint;
     };
@@ -71,42 +142,47 @@ public:
     class YearTimePoint
     {
     public:
-        YearTimePoint(int year = 0, int month_day = 0, int hour = 0, int minute = 0, int second = 0) :
-            m_year(year), m_month_day_timepoint(month_day, hour, minute, second)
+        YearTimePoint(int year = 1970, int month = 1, int month_day = 1, int hour = 0, int minute = 0, int second = 0) :
+            m_year(year), m_month_day_timepoint(month, month_day, hour, minute, second)
         {}
+        int GetYear() const { return m_year; }
+        int GetMonthDay() const { return m_month_day_timepoint.GetMonthDay(); }
+        int GetHour() const { return m_month_day_timepoint.GetHour(); }
+        int GetMinute() const { return m_month_day_timepoint.GetMinute(); }
+        int GetSecond() const { return m_month_day_timepoint.GetSecond(); }
 
     private:
         int m_year;
         MonthDayTimePoint m_month_day_timepoint;
     };
 
-    static long long NowTimestamp()
+    inline Timestamp NowTimestamp()
     {
         return time(NULL);
     }
 
-    static tm* LocalTime()
+    inline tm* LocalTime()
     {
         time_t now = time(NULL);
         return localtime(&now);
     }
 
-    static int SecondToNextTimePoint(const SecondTimePoint &timepoint)
+    inline int SecondToNextTimePoint(const SecondTimePoint &timepoint)
     {
         tm* local_time = LocalTime();
 
-        if (timepoint.GetSecond() < local_time->tm_sec)
+        if (timepoint.GetSecond() <= local_time->tm_sec)
             local_time->tm_min += 1;
         local_time->tm_sec = timepoint.GetSecond();
 
         return static_cast<int>(mktime(local_time) - NowTimestamp());
     }
 
-    static int SecondToNextTimePoint(const MinuteTimePoint &timepoint)
+    inline int SecondToNextTimePoint(const MinuteTimePoint &timepoint)
     {
         tm* local_time = LocalTime();
 
-        if (timepoint.GetMinute() < local_time->tm_min)
+        if (timepoint.GetMinute() <= local_time->tm_min)
             local_time->tm_hour += 1;
         local_time->tm_sec = timepoint.GetSecond();
         local_time->tm_min = timepoint.GetMinute();
@@ -114,57 +190,44 @@ public:
         return mktime(local_time) - NowTimestamp();
     }
 
-    static int NextTimeInterval(int minute, int second)
+    inline int SecondToNextTimePoint(const WeekDayTimePoint &timepoint)
     {
         tm* local_time = LocalTime();
 
-        if (minute < local_time->tm_min)
-            local_time->tm_hour += 1;
-        local_time->tm_sec = second;
-        local_time->tm_min = minute;
-
-        return mktime(local_time) - NowTimestamp();
-    }
-
-    static int NextTimeInterval(int hour, int minute, int second)
-    {
-        tm* local_time = LocalTime();
-
-        if (hour < local_time->tm_hour)
-            local_time->tm_mday += 1;
-        local_time->tm_sec = second;
-        local_time->tm_min = minute;
-        local_time->tm_hour = hour;
-
-        return mktime(local_time) - NowTimestamp();
-    }
-
-    static int NextWeekInterval(int week, int hour, int minute, int second)
-    {
-        tm* local_time = LocalTime();
-
-        if (week < local_time->tm_wday)
+        if (timepoint.GetWeek() <= local_time->tm_wday)
             local_time->tm_wday += 7;
-        local_time->tm_sec = second;
-        local_time->tm_min = minute;
-        local_time->tm_hour = hour;
+        local_time->tm_sec = timepoint.GetSecond();
+        local_time->tm_min = timepoint.GetMinute();
+        local_time->tm_hour = timepoint.GetHour();
 
         return mktime(local_time) - NowTimestamp();
     }
 
-    static int NextMonthInterval(int month_day, int hour, int minute, int second)
+    inline int SecondToNextTimePoint(const MonthDayTimePoint &timepoint)
     {
         tm* local_time = LocalTime();
 
-        if (month_day < local_time->tm_mday)
-        {
+        if (timepoint.GetMonthDay() <= local_time->tm_mday)
             local_time->tm_mon += 1;
-        }
-        local_time->tm_sec = second;
-        local_time->tm_min = minute;
-        local_time->tm_hour = hour;
-        local_time->tm_mday = month_day;
+        local_time->tm_sec = timepoint.GetSecond();
+        local_time->tm_min = timepoint.GetMinute();
+        local_time->tm_hour = timepoint.GetHour();
+        local_time->tm_mday = timepoint.GetMonthDay();
 
         return mktime(local_time) - NowTimestamp();
     }
-};
+
+    inline int SecondToNextTimePoint(const YearTimePoint &timepoint)
+    {
+        tm* local_time = LocalTime();
+
+        if (timepoint.GetMonthDay() <= local_time->tm_mday)
+            local_time->tm_mon += 1;
+        local_time->tm_sec = timepoint.GetSecond();
+        local_time->tm_min = timepoint.GetMinute();
+        local_time->tm_hour = timepoint.GetHour();
+        local_time->tm_mday = timepoint.GetMonthDay();
+
+        return mktime(local_time) - NowTimestamp();
+    }
+}

@@ -1,11 +1,17 @@
 /*
     大端存储、小端存储
 
-    对于一个数，如果是大端存储，那么低位地址存放高位有效字节，如果是小端存储，那么低位存放低位有效字节。
+    对于一个数
+    - 如果大端存储，高位字节存放到低位地址（big bit在前）
+    - 如果小端存储，高位字节存放到高位地址（little bit在前）
 
     几乎所有的网络协议都是 big endian
 
     Linux系统采取的是 little ending
+
+    内存地址0x0是最低位
+
+    数的最低位是最右位
 */
 
 #include <stdio.h>
@@ -13,7 +19,7 @@
 // 获取系统是 big endian 还是 little endian
 union TestEndian {
     short a;
-    char b[2];
+    char b[2]; // b[0] 是内存低8位，b[1]是内存高8位
 };
 void get_endian()
 {

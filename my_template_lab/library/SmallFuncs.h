@@ -6,38 +6,41 @@
 #include <cstring>
 #include <vector>
 
-// ¹ÒÆğ½ø³Ì£¬¿ÉÒÔÑ¡ÔñÊä³öÒ»¸ö×Ö·û´®×÷ÎªÌáÊ¾
+// æŒ‚èµ·è¿›ç¨‹ï¼Œå¯ä»¥é€‰æ‹©è¾“å‡ºä¸€ä¸ªå­—ç¬¦ä¸²ä½œä¸ºæç¤º
 extern void Pause(const char *notice = nullptr);
 
-// »ñÈ¡ºÁÃëÊ±¼ä´Á
+// è·å–æ¯«ç§’æ—¶é—´æˆ³
 extern unsigned long PITime();
 
-// Ë¯ÃßÖ´ĞĞÏß³ÌÈô¸ÉºÁÃë
+// ç¡çœ æ‰§è¡Œçº¿ç¨‹è‹¥å¹²æ¯«ç§’
 void PISleep(unsigned long timems);
 
-// Ê±¼ä×Ö·û´®£¨¸ñÊ½Èç 2018-09-16 10:12:08£©×ª»»³ÉÊ±¼ä´Á
+// æ—¶é—´å­—ç¬¦ä¸²ï¼ˆæ ¼å¼å¦‚ 2018-09-16 10:12:08ï¼‰è½¬æ¢æˆæ—¶é—´æˆ³
 extern bool TimeStrToTimestamp(const char *time_str, time_t *timestamp);
 
-// Á½¸öintÓëÒ»¸ölong longÖ®¼äµÄ×ª»»
+// ä¸¤ä¸ªintä¸ä¸€ä¸ªlong longä¹‹é—´çš„è½¬æ¢
 long long ConvertParamToLongLong(int param_0, int param_1);
 void ParseParamFromLongLong(long long key, int *param_0, int *param_1);
 
-// È¡Ëæ»úÕûÊıÖµ£¬È¡Öµ·¶Î§ÊÇ[beg, end)
+// å–éšæœºæ•´æ•°å€¼ï¼Œå–å€¼èŒƒå›´æ˜¯[beg, end)
 int RandomNum(int beg, int end);
 
-// ÅĞ¶Ï Buffer ÊÇ·ñÊÇ UTF8 ¸ñÊ½µÄĞòÁĞ
+// åˆ¤æ–­ Buffer æ˜¯å¦æ˜¯ UTF8 æ ¼å¼çš„åºåˆ—
 extern bool IsUTF8(const char* buffer, long size);
 
-// ÅĞ¶Ï Buffer ÊÇ·ñÊÇ UTF8 ´ø BOM ¸ñÊ½µÄĞòÁĞ
+// åˆ¤æ–­ Buffer æ˜¯å¦æ˜¯ UTF8 å¸¦ BOM æ ¼å¼çš„åºåˆ—
 extern bool IsUTF8_Bom(const char* buffer, long size);
 
-// ÅĞ¶ÏÎÄ¼şÊÇ·ñÊÇ UTF-8 ÎŞ BOM ¸ñÊ½µÄ
+// åˆ¤æ–­æ–‡ä»¶æ˜¯å¦æ˜¯ UTF-8 æ—  BOM æ ¼å¼çš„
 extern bool Is_File_UTF8_NoBom(const char *filename);
 
-// °´·Ö¸ô·û·Ö½â×Ö·û´®£¬´æµ½resultÀï£¬·µ»Ø·Ö½âµÄ×Ö·û´®¸öÊı, µ«²»Ïß³Ì°²È«
+// æŒ‰åˆ†éš”ç¬¦åˆ†è§£å­—ç¬¦ä¸²ï¼Œå­˜åˆ°resulté‡Œï¼Œè¿”å›åˆ†è§£çš„å­—ç¬¦ä¸²ä¸ªæ•°, ä½†ä¸çº¿ç¨‹å®‰å…¨
 int ParseParam(const char *src, std::vector<std::string> &result, const char *delim);
 
-// °´·Ö¸ô·û·Ö½â×Ö·û´®£¬½«·Ö¸îºÃµÄ×Ö·û´®·µ»Ø
+// æŒ‰åˆ†éš”ç¬¦åˆ†è§£å­—ç¬¦ä¸²ï¼Œå°†åˆ†å‰²å¥½çš„å­—ç¬¦ä¸²è¿”å›
 std::vector<std::string> SplitString(const std::string &str, const char* delim);
+
+// æ ¼å¼åŒ–å­—ç¬¦ä¸²
+std::string StringFormat(const char* fmt, ...);
 
 #endif // SMALL_FUNCS_H

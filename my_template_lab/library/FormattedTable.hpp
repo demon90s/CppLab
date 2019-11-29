@@ -27,7 +27,7 @@ private:
     using Row = std::vector<std::string>;
 
     template<typename T>
-    std::string ToString(T &val)
+    static std::string ToString(T &val)
     {
         std::ostringstream oss;
         if (oss << val) {
@@ -39,6 +39,22 @@ private:
     static bool IsAsc(const char *str)
     {
         return (str[0] & (1 << 8)) == 0;
+    }
+
+    static std::string FixValue(const std::string &value, int hint_len)
+    {
+        char buffer[1024] {};   // 不可能一个字段有这么长的
+
+        int more_len = hint_len - static_cast<int>(value.length());
+        if (!IsAsc(value.c_str()))
+        {
+            more_len += static_cast<int>(value.length() / 3); // trick, 目的是中英文对齐（一个value混入中英文就不行了，暂时先这样）
+        }
+
+        if (more_len < 0) more_len = 0;
+        std::string v = value + std::string(more_len, ' ');
+        snprintf(buffer, sizeof(buffer), " %-s ", v.c_str());
+        return buffer;
     }
 
     struct Field
@@ -61,7 +77,7 @@ public:
 
         for (const auto &field : field_list)
         {
-            m_field_list.emplace_back(field + " ");
+            m_field_list.emplace_back(field);
         }
     }
 
@@ -100,12 +116,7 @@ public:
             {
                 if (i < row.size())
                 {
-                    char buffer[1024] {};
-                    int len = m_field_list[i].hint_len;
-
-                    snprintf(buffer, sizeof(buffer), " %-*s", len, row[i].c_str());
-                    
-                    table += buffer;
+                    table += this->FixValue(row[i], m_field_list[i].hint_len);
                 }
                 
                 table += '|';
@@ -124,7 +135,7 @@ private:
         auto add_index = raw.size();
         if (add_index < m_field_list.size())
         {
-            std::string value = ToString(t) + " ";
+            std::string value = ToString(t);
             int value_len = static_cast<int>(value.length());
             if (value_len > m_field_list[add_index].hint_len)
             {
@@ -157,11 +168,7 @@ private:
         {
             const auto &field = m_field_list[i];
 
-            char buffer[1024] {};
-            int len = m_field_list[i].hint_len;
-
-            snprintf(buffer, sizeof(buffer), " %-*s", len, field.name.c_str());
-            m_bar += buffer;
+            m_bar += this->FixValue(field.name, field.hint_len);
 
             m_bar_plus_index.insert(m_bar.size());
             m_bar += '|';

@@ -34,8 +34,8 @@ int main()
     });
 
     pt.AddRow("diwen", 29, "Programmer", Position{30, 20});
-    pt.AddRow("帝文", 29, "程序员", Position{30, 20});
-    pt.AddRow("lee", 32, "Producer", Position{10, 10});
+    pt.AddRow("帝文", 29, "程序员哈哈哈啊哈哈哈哈和", Position{30, 20});
+    pt.AddRow("lee", 32, "Product", Position{10, 10});
 
     std::cout << pt.GetFormattedTable() << std::endl;
 

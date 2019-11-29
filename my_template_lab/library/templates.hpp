@@ -14,7 +14,7 @@ inline int ArrayItemCount(T(&arr)[N])
 	return N;
 }
 
-// 注意，这两个函数，效率比较低
+// 娉ㄦ剰锛岃繖涓や釜鍑芥暟锛屾晥鐜囨瘮杈冧綆
 template<typename T>
 bool string_to_basetype(const std::string &str, T &val)
 {

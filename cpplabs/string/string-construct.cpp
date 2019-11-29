@@ -60,5 +60,8 @@ int main()
 	//copy_construct();
 	//other_construct();
 
+	std::string s(10, 'c');
+	std::cout << s << std::endl;
+
 	return 0;
 }

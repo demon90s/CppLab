@@ -148,7 +148,7 @@ int RandomNum(int beg, int end)
 	}
 	else
 	{
-		int rand_num = (rand() << 16) + rand(); // Á½´ÎËæ»úÊý²¹³ÉÒ»¸öint£¨Ö÷Òª½â¾öwindowsÏÂrand×î´óÖµÖ»ÓÐ2^15µÄÎÊÌâ£©
+		int rand_num = (rand() << 16) + rand(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½intï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½windowsï¿½ï¿½randï¿½ï¿½ï¿½ÖµÖ»ï¿½ï¿½2^15ï¿½ï¿½ï¿½ï¿½ï¿½â£©
 		if (rand_num < 0)
 		{
 			rand_num *= -1;
@@ -164,16 +164,16 @@ bool IsUTF8(const char* buffer, long size)
 	unsigned char* end = (unsigned char*)buffer + size;
 	while (start < end)
 	{
-		if (*start < 0x80) // (10000000): ÖµÐ¡ÓÚ0x80µÄÎªASCII×Ö·û   
+		if (*start < 0x80) // (10000000): ÖµÐ¡ï¿½ï¿½0x80ï¿½ï¿½ÎªASCIIï¿½Ö·ï¿½   
 		{
 			start++;
 		}
-		else if (*start < (0xC0)) // (11000000): Öµ½éÓÚ0x80Óë0xC0Ö®¼äµÄÎªÎÞÐ§UTF-8×Ö·û   
+		else if (*start < (0xC0)) // (11000000): Öµï¿½ï¿½ï¿½ï¿½0x80ï¿½ï¿½0xC0Ö®ï¿½ï¿½ï¿½Îªï¿½ï¿½Ð§UTF-8ï¿½Ö·ï¿½   
 		{
 			is_utf8 = false;
 			break;
 		}
-		else if (*start < (0xE0)) // (11100000): ´Ë·¶Î§ÄÚÎª2×Ö½ÚUTF-8×Ö·û   
+		else if (*start < (0xE0)) // (11100000): ï¿½Ë·ï¿½Î§ï¿½ï¿½Îª2ï¿½Ö½ï¿½UTF-8ï¿½Ö·ï¿½   
 		{
 			if (start >= end - 1)
 				break;
@@ -184,7 +184,7 @@ bool IsUTF8(const char* buffer, long size)
 			}
 			start += 2;
 		}
-		else if (*start < (0xF0)) // (11110000): ´Ë·¶Î§ÄÚÎª3×Ö½ÚUTF-8×Ö·û   
+		else if (*start < (0xF0)) // (11110000): ï¿½Ë·ï¿½Î§ï¿½ï¿½Îª3ï¿½Ö½ï¿½UTF-8ï¿½Ö·ï¿½   
 		{
 			if (start >= end - 2)
 				break;
@@ -282,4 +282,33 @@ std::vector<std::string> SplitString(const std::string &str, const char *delim)
 	}
 
 	return result;
+}
+
+std::string StringFormat(const char *fmt, ...)
+{
+	int buffer_len = 1024;
+	char *buffer = new char[buffer_len]{};
+	int str_len = -1;
+
+	do
+	{
+		va_list ap;
+		va_start(ap, fmt);
+		str_len = vsnprintf(buffer, buffer_len, fmt, ap);
+
+		if (str_len >= buffer_len) {
+			str_len = -1;
+
+			char *tmp_buffer = new char[buffer_len * 2]{};
+			delete[] buffer;
+			buffer_len *= 2;
+			buffer = tmp_buffer;
+		}
+		va_end(ap);
+	} while (str_len == -1);
+
+	std::string str = buffer;
+	delete[] buffer;
+
+	return str;
 }

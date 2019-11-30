@@ -26,37 +26,6 @@ class FormattedTable
 private:
     using Row = std::vector<std::string>;
 
-    template<typename T>
-    static std::string ToString(T &val)
-    {
-        std::ostringstream oss;
-        if (oss << val) {
-            return oss.str();
-        }
-        return "";
-    }
-
-    static bool IsAsc(const char *str)
-    {
-        return (str[0] & (1 << 8)) == 0;
-    }
-
-    static std::string FixValue(const std::string &value, int hint_len)
-    {
-        char buffer[1024] {};   // 不可能一个字段有这么长的
-
-        int more_len = hint_len - static_cast<int>(value.length());
-        if (!IsAsc(value.c_str()))
-        {
-            more_len += static_cast<int>(value.length() / 3); // trick, 目的是中英文对齐（一个value混入中英文就不行了，暂时先这样）
-        }
-
-        if (more_len < 0) more_len = 0;
-        std::string v = value + std::string(more_len, ' ');
-        snprintf(buffer, sizeof(buffer), " %-s ", v.c_str());
-        return buffer;
-    }
-
     struct Field
     {
         Field(const std::string &_name) :
@@ -69,6 +38,8 @@ private:
     };
 
 public:
+    // APIS
+
     // 设置字段内容
     void SetFieldList(const std::initializer_list<std::string> &field_list)
     {
@@ -129,6 +100,8 @@ public:
     }
 
 private:
+    // IMPLS
+
     template <typename T>
     void DoAddRowHelper(Row &raw, const T &t)
     {
@@ -190,6 +163,57 @@ private:
                 m_bar_frame += '-';
             }
         }
+    }
+
+    private:
+    template<typename T>
+    static std::string ToString(T &val)
+    {
+        std::ostringstream oss;
+        if (oss << val) {
+            return oss.str();
+        }
+        return "";
+    }
+
+    static bool IsAsc(char c)
+    {
+        return (c & (1 << 8)) == 0;
+    }
+
+    static int GetMBCount(const char *value, int len)
+    {
+        // 获得 value 的多字节字符个数（认为多字节字符占据3个字节）
+        const char *p = value;
+        int count = 0;
+        while (p < value + len)
+        {
+            if (!IsAsc(*p))
+            {
+                p += 3;
+                count++;
+            }
+            else
+            {
+                p++;
+            }
+        }
+        return count;
+    }
+
+    static std::string FixValue(const std::string &value, int hint_len)
+    {
+        char buffer[1024] {};   // 不可能一个字段有这么长的
+
+        int more_len = hint_len - static_cast<int>(value.length());
+
+        int mb_count = GetMBCount(value.c_str(), static_cast<int>(value.length()));
+        more_len += mb_count; // trick, 目的是中英文对齐（且要求中文是3字节字符编码（UTF-8满足），先这样）
+
+        if (more_len < 0) more_len = 0;
+        std::string v = value + std::string(more_len, ' ');
+        snprintf(buffer, sizeof(buffer), " %-s ", v.c_str());
+        return buffer;
     }
 
 private:

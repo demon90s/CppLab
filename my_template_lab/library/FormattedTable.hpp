@@ -165,7 +165,6 @@ private:
         }
     }
 
-    private:
     template<typename T>
     static std::string ToString(T &val)
     {

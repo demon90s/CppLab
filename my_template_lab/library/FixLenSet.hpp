@@ -11,7 +11,7 @@
 #include <functional>
 #include <algorithm>
 #include <iostream>
-#include "Bitset.h"
+#include "Bitset.hpp"
 
 template<typename T, int N>
 class FixLenSet

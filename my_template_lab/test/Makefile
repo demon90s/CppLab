@@ -3,12 +3,10 @@ CPPFLAGS = -g -Wall -std=c++11
 
 TARGETS = test_Array \
 			test_FixLenStr \
-			test_ObjTimer \
 			test_ObjFuncInvoker \
 			test_FixLenRankList \
 			test_FixLenSet \
-			test_funcs \
-			test_FormattedTable
+			test_FormattedTable \
 
 all: $(TARGETS)
 

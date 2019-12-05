@@ -22,7 +22,7 @@ void test()
 	std::cout << std::endl;
 
 	// print "technical data"
-	std::cout << " max_size(): " << sentence.max_size() << std::endl;
+	std::cout << " max_size(): " << sentence.max_size() << std::endl;	// 表示容器的最大容量
 	std::cout << " size(): " << sentence.size() << std::endl;
 	std::cout << " capacity(): " << sentence.capacity() << std::endl;
 
@@ -93,9 +93,9 @@ void test_increase()
 
 int main()
 {
-	//test();
+	test();
 	//test_emplace();
 
-	test_increase();
+	//test_increase();
 	return 0;
 }

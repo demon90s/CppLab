@@ -9,10 +9,10 @@ int main()
 	char c;
 	iss >> c;
 
-	cout << c << endl;
+	cout << c << endl;		// a
 
 	iss >> c;
-	cout << c << endl;
+	cout << c << endl;		// b
 
 	return 0;
 }

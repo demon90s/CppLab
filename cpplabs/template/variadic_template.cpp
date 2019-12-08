@@ -3,10 +3,8 @@
 
 #include <iostream>
 
-template<typename T>
-void print(const T &v)
+void print()
 {
-    std::cout << v << std::endl;
 }
 
 template<typename T, typename... Args>

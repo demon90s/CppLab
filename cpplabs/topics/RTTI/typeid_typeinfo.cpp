@@ -37,10 +37,46 @@ void test2()
 {
 	printf("%s\n", typeid(Foo()).name());			// 静态类型, 不会真的执行表达式(编译期得到结果)
 }
+
+void test3()
+{
+	class Base { public: virtual ~Base() {} };
+	class Derived : public Base {};
+
+	Base *p = new Derived();
+
+	printf("%s\n", typeid(*p).name());	// xxxDerived 因基类有虚函数，得到实际的子类型
+
+	delete p;
+}
+
+enum class Week
+{
+	Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
+};
+
+enum WEEK
+{
+	SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+};
+
+void test4()
+{
+	// 测试一些平凡类型
+	int number;
+	printf("number: %s\n", typeid(number).name());
+
+	printf("enum class Sunday: %s\n", typeid(Week::Sunday).name());	// 输出 Week
+
+	printf("enum Sunday: %s\n", typeid(SUNDAY).name());	// 输出 WEEK
+}
+
 int main()
 {
 	//test1();
-	test2();
+	//test2();
+	//test3();
+	test4();
 
 	return 0;
 }

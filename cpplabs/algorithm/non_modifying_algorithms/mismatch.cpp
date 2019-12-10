@@ -15,7 +15,7 @@
 
 void Test1()
 {
-    std::vector<int> v1 {1, 2, 3, 4, 5};
+    std::vector<int> v1 {2, 1, 3, 3, 5};
     std::vector<int> v2 {1, 2, 3, 3, 5};
 
     auto diff_pair = std::mismatch(v1.begin(), v1.end(), v2.begin());
@@ -24,6 +24,7 @@ void Test1()
     }
     else {
         std::cout << "no diff between v1 and v2" << std::endl;
+        std::cout << "diff pos at v1: " << std::distance(v1.begin(), diff_pair.first) << std::endl;
     }
 }
 

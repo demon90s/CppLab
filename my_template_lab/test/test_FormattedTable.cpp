@@ -24,7 +24,8 @@ int main()
     pt.AddRow("帝文orz```.我我", 29, "程", Position{30, 20});
     pt.AddRow("lee", 32, "Product", Position{10, 10});
 
-    std::cout << pt.GetFormattedTable() << std::endl;
+    //std::cout << pt.GetFormattedTable() << std::endl;
+    std::cout << pt.GetListedTable() << std::endl;
 
     pt.SetFieldList({
         "ID", "Country", "Power"

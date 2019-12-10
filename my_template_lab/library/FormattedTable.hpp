@@ -10,12 +10,23 @@
 /*
     可打印的表，打印结果如：
 
+    (1) formatted table
     +-----+----------+
     |field|filed|... |
     +-----+----------+
     |value|value|... |
     |value|value|... |
     +-----+----------+
+
+    (2) listed table
+    **************** 1. row ****************
+    field: value
+    field: value
+    ...
+    **************** 2. row ****************
+    field: value
+    field: value
+    ...
 
     要求打印的类型已重载 std::ostream& operator<<(std::ostream &os, const T &v) 运算符
     内置类型天然满足
@@ -95,6 +106,26 @@ public:
             table += '\n';
         }
         table += m_bar_frame;
+
+        return table;
+    }
+
+    // 得到listed表格
+    std::string GetListedTable()
+    {
+        std::string table;
+
+        for (std::size_t row = 0; row < m_row_list.size(); row++)
+        {
+            table += ("*************************** " + std::to_string(row + 1) + ". row ***************************\n");
+            
+            for (std::size_t i = 0; i < m_field_list.size() && i < m_row_list[row].size(); i++)
+            {
+                table += (m_field_list[i].name + ": ");
+                table += m_row_list[row][i];
+                table += '\n';
+            }
+        }
 
         return table;
     }

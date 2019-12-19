@@ -8,7 +8,8 @@ TARGETS = test_Array \
 			test_FixLenSet \
 			test_FormattedTable \
 			test_TimeUtil \
-			test_FixLenHashTable
+			test_FixLenHashTable \
+			test_BenchMark
 
 all: $(TARGETS)
 

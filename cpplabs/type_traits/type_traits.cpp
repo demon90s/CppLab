@@ -63,6 +63,7 @@ void test_is_array()
     std::cout << std::boolalpha;
     std::cout << std::is_array<A>::value << '\n';       // false
     std::cout << std::is_array<A[]>::value << '\n';     // true
+    std::cout << std::is_array<A[5]>::value << '\n';    // true
 }
 
 int main()
@@ -70,8 +71,8 @@ int main()
     //test_foo();
     //test_is_same();
     //test_is_integral();
-    test_is_float_point();
-    //test_is_array();
+    //test_is_float_point();
+    test_is_array();
 
     return 0;
 }

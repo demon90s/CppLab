@@ -11,8 +11,8 @@ public:
 	Foo& operator+=(const Foo&) { /**/return *this; }
 	Foo& operator++() { /**/return *this; } // 前置版本
 	Foo& operator--() { /**/return *this; }
-	Foo  operator++(int) { auto ret = *this; ++*this; return ret; } // 后置版本
-	Foo  operator--(int) { auto ret = *this; --*this; return ret; }
+	const Foo  operator++(int) { auto ret = *this; ++*this; return ret; } // 后置版本
+	const Foo  operator--(int) { auto ret = *this; --*this; return ret; }
 
 	int& operator*() { return *m_p; /* you got real logic */ }
 	int* operator->() { return &this->operator*(); }

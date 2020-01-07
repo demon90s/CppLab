@@ -4,7 +4,8 @@ CPPFLAGS = -g -Wall -std=c++11
 TARGETS = test_Array \
 			test_FixLenStr \
 			test_ObjTimer \
-			test_ObjFuncInvoker
+			test_ObjFuncInvoker \
+			test_FixLenRankList
 
 all: $(TARGETS)
 

@@ -6,6 +6,7 @@ void test1()
 {
     FixLenHashTable<int, std::string, 10> id_name_map;
 
+    std::cout << std::boolalpha;
     std::cout << id_name_map.Put(1, "liudiwen") << std::endl;       // 1
     std::cout << id_name_map.Put(1, "liudiwen") << std::endl;       // 0
 
@@ -69,32 +70,27 @@ void test2()
 
 void test3()
 {
-    FixLenHashTable<int, std::string, 5> id_string_map;
+    FixLenHashTable<int, std::string, 4> id_string_map;
 
     id_string_map.Put(1, "diwen");
     id_string_map.Put(2, "miemie");
     id_string_map.Put(3, "meili");
+    id_string_map.Put(11, "xxx");
 
     id_string_map.Travel([](int id, std::string &name) { 
-        if (id > 0)
-        {
-            std::cout << name << std::endl;
-        }
+        std::cout << name << std::endl;
     });
 
     std::cout << "------------------------\n";
     id_string_map.Erase(1);
     id_string_map.Travel([](int id, std::string &name) { 
-        if (id > 0)
-        {
-            std::cout << name << std::endl;
-        }
+        std::cout << name << std::endl;
     });
 }
 
 int main()
 {
-    //test1();
+    test1();
     //test2();
-    test3();
+    //test3();
 }

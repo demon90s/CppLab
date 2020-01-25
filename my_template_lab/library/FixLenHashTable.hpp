@@ -1,13 +1,14 @@
 #pragma once
 
+// 该容器的目的是为了提供一个可直接二进制化的hash table
+
 // 无序的定长HashTable，要求存入的元素key自己实现 std::hash<> 的特化 和 operator==
 // 内置类型天然满足
 
 // 插入读取常数效率
 
-// 不允许出现碰撞，如果发生碰撞，就以失败处理
-
 #include <functional>
+#include "Bitset.hpp"
 
 template<typename Key, typename Value, int Len>
 class FixLenHashTable
@@ -21,6 +22,10 @@ private:
 
     Pair m_data[Len];
 
+    static const int INVALID_INDEX = -1;
+    static const int INDEX_COUNT = ((Len % 8 == 0) ? (Len / 8) : (Len / 8 + 1)) * 8;
+    Bitset<INDEX_COUNT> m_used_flag;
+
 public:
     FixLenHashTable()
     {
@@ -29,59 +34,103 @@ public:
 
     bool Put(const Key &key, const Value &value)
     {
-        int index = this->GetIndex(key);
+        const int search_index = static_cast<int>(std::hash<Key>()(key) % Len);
+        int index = search_index;
+        bool find = false;
+        
+        do
+        {
+            if (m_used_flag.Test(index))
+            {
+                if (m_data[index].key == key)
+                {
+                    break; // 重复key
+                }
+                index = (index + 1) % Len;
+            }
+            else
+            {
+                find = true;
+                break;
+            }
+        } while (index != search_index);
 
-        if (m_data[index].key == key)
+        if (!find)
         {
             return false;
         }
+
         m_data[index].key = key;
         m_data[index].value = value;
+
+        m_used_flag.Set(index);
+
         return true;
     }
 
     bool Erase(const Key &key)
     {
         int index = this->GetIndex(key);
-
-        if (m_data[index].key == key)
+        if (index == INVALID_INDEX)
         {
-            m_data[index] = Pair {};
-            return true;
+            return false;
         }
 
-        return false;
-    }
-
-    Value *Get(const Key &key)
-    {
-        int index = this->GetIndex(key);
-
-        if (m_data[index].key == key)
-        {
-            return &m_data[index].value;
-        }
-
-        return nullptr;
+        m_used_flag.UnSet(index);
+        return true;
     }
 
     const Value *Get(const Key &key) const
     {
-        return static_cast<const Value*>(
-            const_cast<FixLenHashTable*>(this)->Get(key));
+        int index = this->GetIndex(key);
+        if (index == INVALID_INDEX)
+        {
+            return nullptr;
+        }
+
+        return &m_data[index].value;
+    }
+
+    Value *Get(const Key &key)
+    {
+        return const_cast<Value*>(
+            static_cast<const FixLenHashTable*>(this)->Get(key));
     }
 
     void Travel(std::function<void(Key, Value&)> f)
     {
-        for (auto &p : m_data)
+        for (int index = 0; index < Len; index++)
         {
-            f(p.key, p.value);
+            if (m_used_flag.Test(index))
+                f(m_data[index].key, m_data[index].value);
         }
     }
 
 private:
     int GetIndex(const Key &key) const
     {
-        return static_cast<int>(std::hash<Key>()(key) % Len);
+        const int search_index = static_cast<int>(std::hash<Key>()(key) % Len);
+        int index = search_index;
+        bool find = false;
+        
+        do
+        {
+            if (!m_used_flag.Test(index) || !(m_data[index].key == key))
+            {
+                index = (index + 1) % Len;
+            }
+            else
+            {
+                find = true;
+                break;
+            }
+        } while (index != search_index);
+
+        if (!find)
+        {
+            return INVALID_INDEX;
+        }
+
+        return index;
     }
 };

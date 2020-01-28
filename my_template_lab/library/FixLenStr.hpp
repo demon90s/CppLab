@@ -4,7 +4,7 @@
 #include <string>
 #include <cassert>
 
-template<int LEN = 32>
+template<int LEN>
 class FixLenStr
 {
 public:

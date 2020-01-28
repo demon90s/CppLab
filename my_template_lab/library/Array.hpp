@@ -51,15 +51,16 @@ public:
 
     T &operator[](int index)
     {
-        assert(!InvalidIndex(index));
-
-        return m_data[index];
+        return const_cast<T&>(
+            static_cast<const Array*>(this)->operator[](index)
+            );
     }
 
     const T &operator[](int index) const
     {
-        return static_cast<const T&>(
-            (const_cast<Array*>(this)->operator[](index)));
+        assert(!InvalidIndex(index));
+
+        return m_data[index];
     }
 
 public:
@@ -160,8 +161,7 @@ public:
 
     const T *begin() const
     {
-        return static_cast<const T*>(
-            (const_cast<Array*>(this)->begin()));
+        return m_data;
     }
 
     const T *cbegin() const
@@ -176,8 +176,7 @@ public:
 
     const T *end() const
     {
-        return static_cast<const T*>(
-            (const_cast<Array*>(this)->end()));
+        return m_data + this->Size();
     }
 
     const T *cend() const

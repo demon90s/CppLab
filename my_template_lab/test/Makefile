@@ -1,23 +1,18 @@
-CXX = g++
-CPPFLAGS = -g -Wall -std=c++11
+CC=g++
+INCLUDE=-I./include -I../library
+CPPFLAGS=-g -Wall -std=c++11
+LDFLAGS=./lib/libgtest.a -lpthread
 
-TARGETS = test_Array \
-			test_FixLenStr \
-			test_ObjFuncInvoker \
-			test_FixLenRankList \
-			test_FixLenSet \
-			test_FormattedTable \
-			test_TimeUtil \
-			test_FixLenHashTable \
-			test_BenchMark
+OBJS=main.o \
+	test_FixLenHashTable.o
 
-all: $(TARGETS)
+all: main
 
-test_funcs: test_funcs.cpp ../library/SmallFuncs.cpp
-	$(CXX) $(CPPFLAGS) test_funcs.cpp ../library/SmallFuncs.cpp -o $@
+main: $(OBJS)
+	$(CC) $(CPPFLAGS) -o main $(OBJS) $(LDFLAGS)
 
-test_FormattedTable: test_FormattedTable.cpp ../library/FormattedTable.hpp
-	$(CXX) $(CPPFLAGS) test_FormattedTable.cpp -o $@
+%.o: %.cpp
+	$(CC) $(INCLUDE) $(CPPFLAGS) -c $< -o $@
 
 clean:
-	-rm -f $(TARGETS)
+	-rm -f main *.o

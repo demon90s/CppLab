@@ -1,22 +1,15 @@
-#include "../library/FixLenHashTable.hpp"
-#include <string>
-#include <iostream>
+#include "FixLenHashTable.hpp"
+#include "gtest/gtest.h"
 
-void test1()
+TEST(test_FixLenHashTable, test_Put_Get)
 {
     FixLenHashTable<int, std::string, 10> id_name_map;
 
-    std::cout << std::boolalpha;
-    std::cout << id_name_map.Put(1, "liudiwen") << std::endl;       // 1
-    std::cout << id_name_map.Put(1, "liudiwen") << std::endl;       // 0
+    EXPECT_TRUE(id_name_map.Put(1, "liudiwen"));
+    EXPECT_FALSE(id_name_map.Put(1, "liudiwen"));
 
-    std::cout << *id_name_map.Get(1) << std::endl; // liudiwen
-
-    auto name = id_name_map.Get(2);
-    if (!name)
-    {
-        std::cout << "id 2 not found" << std::endl; // not found
-    }
+    EXPECT_STREQ((*id_name_map.Get(1)).c_str(), "liudiwen");
+    EXPECT_EQ(id_name_map.Get(2), nullptr);
 }
 
 // 为这个类型定义 hash 特例化
@@ -50,25 +43,23 @@ struct hash<Foo>
 };
 }
 
-void test2()
+TEST(test_FixLenHashTable, test_Custom_key)
 {
     FixLenHashTable<Foo, std::string, 10> foo_str_map;
 
     Foo key {"diwen", 29, 888.888};
-    std::cout << foo_str_map.Put(key, "diwen") << std::endl;
-    std::cout << foo_str_map.Put(key, "diwen") << std::endl;
 
-    std::cout << *foo_str_map.Get(key) << std::endl;
+    EXPECT_TRUE(foo_str_map.Put(key, "diwen"));
+    EXPECT_FALSE(foo_str_map.Put(key, "diwen"));
+
+    EXPECT_STREQ((*foo_str_map.Get(key)).c_str(), "diwen");
 
     key.a = 30;
     auto name = foo_str_map.Get(key);
-    if (!name)
-    {
-        std::cout << "not found" << std::endl; // not found
-    }
+    EXPECT_EQ(name, nullptr);
 }
 
-void test3()
+TEST(test_FixLenHashTable, test_Erase)
 {
     FixLenHashTable<int, std::string, 4> id_string_map;
 
@@ -77,20 +68,8 @@ void test3()
     id_string_map.Put(3, "meili");
     id_string_map.Put(11, "xxx");
 
-    id_string_map.Travel([](int id, std::string &name) { 
-        std::cout << name << std::endl;
-    });
+    id_string_map.Erase(11);
 
-    std::cout << "------------------------\n";
-    id_string_map.Erase(1);
-    id_string_map.Travel([](int id, std::string &name) { 
-        std::cout << name << std::endl;
-    });
-}
-
-int main()
-{
-    test1();
-    //test2();
-    //test3();
+    auto value = id_string_map.Get(11);
+    EXPECT_EQ(value, nullptr);
 }

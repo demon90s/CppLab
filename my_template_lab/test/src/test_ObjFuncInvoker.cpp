@@ -26,9 +26,11 @@ private:
     ObjFuncInvoker<Foo> m_func_invoker;
 };
 
+/*
 int main()
 {
     Foo foo;
 
     foo.Check();
 }
+*/

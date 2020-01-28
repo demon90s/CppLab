@@ -12,6 +12,7 @@ std::ostream& operator<<(std::ostream &os, const Position &position)
     return os;
 }
 
+/*
 int main()
 {
     FormattedTable pt;
@@ -36,3 +37,4 @@ int main()
 
     std::cout << pt.GetFormattedTable() << std::endl;
 }
+*/

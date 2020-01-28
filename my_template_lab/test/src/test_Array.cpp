@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 
+/*
 void test1()
 {
     Array<int, 5> iarray {1, 2, 3, 4, 5};
@@ -104,9 +105,4 @@ void test3()
     }
     std::cout << "sorting....end\n";
 }
-
-int main()
-{
-    test3();
-    //test2();
-}
+*/

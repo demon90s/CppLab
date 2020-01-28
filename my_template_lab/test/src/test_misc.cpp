@@ -42,8 +42,9 @@ int GetMatchScore(const char *str1, const char *str2)
 
     return std::max(score1, score2);
 }
-
+/*
 int main()
 {
     std::cout << GetMatchScore("printrolebaseinfo", "wudx") << std::endl;
 }
+*/

@@ -1,6 +1,7 @@
 #include "../library/FixLenStr.hpp"
 #include <iostream>
 
+/*
 int main()
 {
     FixLenStr<32> str = "hello";
@@ -31,3 +32,4 @@ int main()
 
     std::cout << str.Len() << std::endl;
 }
+*/

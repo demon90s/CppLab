@@ -21,6 +21,7 @@ GTEST_DIR=./${GTEST_FILE}/googletest
 g++ -std=c++11 -isystem ${GTEST_DIR}/include -I${GTEST_DIR} -pthread -c ${GTEST_DIR}/src/gtest-all.cc
 ar -rv libgtest.a gtest-all.o
 
+mkdir -p lib
 mv libgtest.a ./lib
 rm -f gtest-all.o
 

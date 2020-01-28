@@ -1,5 +1,6 @@
 #include "../library/FixLenSet.hpp"
 
+/*
 void test1()
 {
     FixLenSet<int, 5> iset;
@@ -101,8 +102,4 @@ void test2()
         std::cout << *item << " " << index << std::endl;
     }
 }
-
-int main()
-{
-    test2();
-}
+*/

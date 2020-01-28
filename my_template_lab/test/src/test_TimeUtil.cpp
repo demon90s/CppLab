@@ -1,6 +1,7 @@
 #include "../library/TimeUtil.hpp"
 #include <iostream>
 
+/*
 void test1()
 {
     auto sec = TimeUtil<>::SecondToNextTimePoint(TimeUtil<>::SecondTimePoint(10));
@@ -18,6 +19,7 @@ void test2()
     std::cout << static_cast<long long>(t) << std::endl;
 }
 
+
 int main()
 {
     test1();
@@ -25,3 +27,4 @@ int main()
 
     std::cout << TimeUtil<>::SecondToString(-1000) << std::endl;
  }
+ */

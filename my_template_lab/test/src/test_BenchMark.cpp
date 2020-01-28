@@ -1,5 +1,6 @@
 #include "../library/BenchMarking.hpp"
 
+/*
 int main()
 {
     int v = 0;
@@ -21,3 +22,4 @@ int main()
 
     std::cout << v << std::endl;
 }
+*/

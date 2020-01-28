@@ -1,5 +1,6 @@
 #include "../library/FixLenRankList.hpp"
 
+/*
 void test1()
 {
     FixLenRankList<int, 10> ranklist;
@@ -77,8 +78,4 @@ void test2()
     ranklist.PrintRankList();
 }
 
-int main()
-{
-    //test1();
-    test2();
-}
+*/

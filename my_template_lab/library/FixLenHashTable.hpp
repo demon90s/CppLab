@@ -34,6 +34,11 @@ public:
 
     bool Put(const Key &key, const Value &value)
     {
+        if (m_used_flag.CountOfSet() == m_used_flag.Bit())
+        {
+            return false;
+        }
+
         const int search_index = static_cast<int>(std::hash<Key>()(key) % Len);
         int index = search_index;
         bool find = false;

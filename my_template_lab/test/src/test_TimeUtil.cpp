@@ -1,4 +1,4 @@
-#include "../library/TimeUtil.hpp"
+#include "TimeUtil.hpp"
 #include <iostream>
 
 /*

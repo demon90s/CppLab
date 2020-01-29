@@ -1,4 +1,4 @@
-#include "../library/ObjFuncInvoker.hpp"
+#include "ObjFuncInvoker.hpp"
 #include <iostream>
 
 class Foo

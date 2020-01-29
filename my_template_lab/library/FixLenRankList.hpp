@@ -14,19 +14,20 @@ template<typename T, int LEN>
 class FixLenRankList
 {
 private:
-    int m_max_index;
+    int m_need_sort_flag;
     T m_rank_list[LEN];
 
 public:
     FixLenRankList() :
-        m_max_index(0),
+        m_need_sort_flag(0),
         m_rank_list {}
     {
+        static_assert(LEN > 0, "LEN MUST > 0");
     }
 
     void Reset()
     {
-        m_max_index = 0;
+        m_need_sort_flag = 0;
         for (auto &item : m_rank_list)
         {
             item = T {};
@@ -55,26 +56,27 @@ public:
         *min_it = item;
 
         // 重新计算最大值
-        auto max_it = std::max_element(std::begin(m_rank_list), std::end(m_rank_list));
-        m_max_index = std::distance(std::begin(m_rank_list), max_it);
-    }
-
-    // 排序
-    void Sort()
-    {
-        std::stable_sort(std::begin(m_rank_list), std::end(m_rank_list), 
-            [](const T &lhs, const T &rhs) { return rhs < lhs; });
+        m_need_sort_flag = 1;
     }
 
     // 获取第一名，一定是最新的
     const T &GetTop() const
     {
-        return m_rank_list[m_max_index];
+        if (m_need_sort_flag)
+        {
+            const_cast<FixLenRankList*>(this)->Sort();
+        }
+        return m_rank_list[0];
     }
 
-    // 不保证已排序
-    std::vector<T> GetTopList(int count) const
+    // 保证已排序
+    std::vector<T> GetTopList(int count = LEN) const
     {
+        if (m_need_sort_flag)
+        {
+            const_cast<FixLenRankList*>(this)->Sort();
+        }
+
         std::vector<T> top;
         top.reserve(count);
         for (int i = 0; i < count && i < LEN; i++)
@@ -85,26 +87,26 @@ public:
     }
 
 public:
-    // iterators
-    const T *begin() const
-    {
-        return m_rank_list;
-    }
-
-    const T *end() const
-    {
-        return m_rank_list;
-    }
-
-public:
     void PrintRankList() const
     {
+        auto rank_list = this->GetTopList();
+
         std::cout << "-----------------------------------\n";
         std::cout << "rank\tvalue\n";
-        for (int rank = 0; rank < LEN; rank++)
+        for (size_t rank = 0; rank < rank_list.size(); rank++)
         {
-            std::cout << rank + 1 << "\t" << m_rank_list[rank] << std::endl;
+            std::cout << rank + 1 << "\t" << rank_list[rank] << std::endl;
         }
         std::cout << "-----------------------------------\n";
+    }
+
+private:
+    // 排序
+    void Sort()
+    {
+        std::stable_sort(std::begin(m_rank_list), std::end(m_rank_list), 
+            [](const T &lhs, const T &rhs) { return rhs < lhs; });
+
+        m_need_sort_flag = 0;
     }
 };

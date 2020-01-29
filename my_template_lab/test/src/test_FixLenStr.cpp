@@ -1,4 +1,4 @@
-#include "../library/FixLenStr.hpp"
+#include "FixLenStr.hpp"
 #include <iostream>
 
 /*

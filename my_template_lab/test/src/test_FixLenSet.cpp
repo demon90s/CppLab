@@ -1,4 +1,4 @@
-#include "../library/FixLenSet.hpp"
+#include "FixLenSet.hpp"
 
 /*
 void test1()

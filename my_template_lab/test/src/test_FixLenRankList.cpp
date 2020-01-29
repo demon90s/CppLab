@@ -1,7 +1,7 @@
-#include "../library/FixLenRankList.hpp"
+#include "FixLenRankList.hpp"
+#include "gtest/gtest.h"
 
-/*
-void test1()
+TEST(test_FixLenRankList, test1)
 {
     FixLenRankList<int, 10> ranklist;
 
@@ -10,23 +10,20 @@ void test1()
     ranklist.Push(5);
     ranklist.Push(20);
 
-    ranklist.Sort();
-
     ranklist.PrintRankList();
 
     std::vector<int> top = ranklist.GetTopList(1);
-    std::cout << top[0] << std::endl;
+    EXPECT_EQ(20, top[0]);
 
     for (int i = 0; i < 50; i++)
     {
         ranklist.Push(i);
     }
-    std::cout << ranklist.GetTop() << std::endl;
-
-    ranklist.Sort();
-    ranklist.PrintRankList();
+    EXPECT_EQ(49, ranklist.GetTop());
 }
 
+namespace fixlenranklist
+{
 class Foo
 {
 public:
@@ -59,23 +56,20 @@ std::ostream& operator<<(std::ostream &os, const Foo &foo)
     return os;
 }
 
-void test2()
-{
-    FixLenRankList<Foo, 5> ranklist;
-
-    ranklist.Push(Foo(0, 30));
-    ranklist.Push(Foo(1, 10));  // pass
-    ranklist.Push(Foo(2, 11));
-    ranklist.Push(Foo(3, 22));
-    ranklist.Push(Foo(4, 11));
-    ranklist.Push(Foo(4, 9));   // pass
-    ranklist.Push(Foo(4, 100));
-
-    ranklist.PrintRankList();
-
-    ranklist.Sort();
-    std::cout << ranklist.GetTop() << std::endl;
-    ranklist.PrintRankList();
 }
 
-*/
+void test2()
+{
+    FixLenRankList<fixlenranklist::Foo, 5> ranklist;
+
+    ranklist.Push(fixlenranklist::Foo(0, 30));
+    ranklist.Push(fixlenranklist::Foo(1, 10));  // pass
+    ranklist.Push(fixlenranklist::Foo(2, 11));
+    ranklist.Push(fixlenranklist::Foo(3, 22));
+    ranklist.Push(fixlenranklist::Foo(4, 11));
+    ranklist.Push(fixlenranklist::Foo(4, 9));   // pass
+    ranklist.Push(fixlenranklist::Foo(4, 100));
+
+    const auto &top = ranklist.GetTop();
+    EXPECT_EQ(top.id, 4);
+}

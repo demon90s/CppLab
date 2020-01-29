@@ -30,7 +30,7 @@ private:
 public:
     FixLenHashTable() : m_size(0)
     {
-        static_assert(Len > 0, "FixLenMap Len MUST > 0");
+        static_assert(Len > 0, "Len MUST > 0");
     }
     
     int Size() const 

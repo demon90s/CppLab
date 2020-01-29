@@ -11,16 +11,18 @@
 // 目的是避免使用裸操作数组，make life easier
 
 template<typename T, int N>
-class Array
+class FixLenArray
 {
 private:
     T m_data[N];
 public:
-    Array() :
+    FixLenArray() :
         m_data {}
-    {}
+    {
+        static_assert(N > 0, "N MUST > 0");
+    }
 
-    Array(const std::initializer_list<T> &il) :
+    FixLenArray(const std::initializer_list<T> &il) :
         m_data {}
     {
         int count = 0;
@@ -52,7 +54,7 @@ public:
     T &operator[](int index)
     {
         return const_cast<T&>(
-            static_cast<const Array*>(this)->operator[](index)
+            static_cast<const FixLenArray*>(this)->operator[](index)
             );
     }
 
@@ -156,7 +158,7 @@ public:
     // iterators
     T *begin()
     {
-        return m_data;
+        return const_cast<T*>(static_cast<const FixLenArray*>(this)->begin());
     }
 
     const T *begin() const
@@ -171,7 +173,7 @@ public:
 
     T *end()
     {
-        return m_data + this->Size();
+        return const_cast<T*>(static_cast<const FixLenArray*>(this)->end());
     }
 
     const T *end() const

@@ -73,3 +73,49 @@ TEST(test_FixLenHashTable, test_Erase)
     auto value = id_string_map.Get(11);
     EXPECT_EQ(value, nullptr);
 }
+
+TEST(test_FixLenHashTable, test_big_data)
+{
+    FixLenHashTable<int, std::string, 10000> id_string_map;
+
+    for (int i = 0; i < 5000; i++)
+    {
+        bool ret = id_string_map.Put(i, std::to_string(i));
+
+        EXPECT_TRUE(ret);
+    }
+
+    for (int i = 10000; i < 15000; i++)
+    {
+        bool ret = id_string_map.Put(i, std::to_string(i));
+
+        EXPECT_TRUE(ret);
+    }
+
+    for (int i = 15000; i < 20000; i++)
+    {
+        bool ret = id_string_map.Put(i, std::to_string(i));
+
+        EXPECT_FALSE(ret);
+    }
+
+    for (int i = 0; i < 5000; i++)
+    {
+        auto v = id_string_map.Get(i);
+
+        EXPECT_STREQ(v->c_str(), std::to_string(i).c_str());
+    }
+
+    for (int i = 10000; i < 15000; i++)
+    {
+        auto v = id_string_map.Get(i);
+
+        EXPECT_STREQ(v->c_str(), std::to_string(i).c_str());
+    }
+
+    for (int i = 0; i < 10000; i++)
+    {
+        id_string_map.Erase(i);
+    }
+    EXPECT_EQ(5000, id_string_map.Size());
+}

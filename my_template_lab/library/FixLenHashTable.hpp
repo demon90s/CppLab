@@ -21,20 +21,26 @@ private:
     };
 
     Pair m_data[Len];
+    int m_size;
 
     static const int INVALID_INDEX = -1;
     static const int INDEX_COUNT = ((Len % 8 == 0) ? (Len / 8) : (Len / 8 + 1)) * 8;
     Bitset<INDEX_COUNT> m_used_flag;
 
 public:
-    FixLenHashTable()
+    FixLenHashTable() : m_size(0)
     {
         static_assert(Len > 0, "FixLenMap Len MUST > 0");
+    }
+    
+    int Size() const 
+    {
+        return m_size;
     }
 
     bool Put(const Key &key, const Value &value)
     {
-        if (m_used_flag.CountOfSet() == m_used_flag.Bit())
+        if (this->Size() >= Len)
         {
             return false;
         }
@@ -70,6 +76,7 @@ public:
 
         m_used_flag.Set(index);
 
+        m_size++;
         return true;
     }
 
@@ -82,6 +89,7 @@ public:
         }
 
         m_used_flag.UnSet(index);
+        m_size--;
         return true;
     }
 

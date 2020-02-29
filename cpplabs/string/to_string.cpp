@@ -7,16 +7,19 @@
 
 #include <string>
 #include <iostream>
+#include <cassert>
 
 void Test1()
 {
-    std::cout << std::to_string(42) << std::endl;
-    std::cout << std::to_string(3.14) << std::endl;
+    assert(std::to_string(42) == "42");
+    assert(std::to_string(3.14) == "3.140000");
 }
 
 int main()
 {
     Test1();
+
+    std::cout << "[TEST] to_string PASS\n";
 
     return 0;
 }

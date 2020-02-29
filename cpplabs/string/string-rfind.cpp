@@ -4,13 +4,17 @@
 
 #include <iostream>
 #include <string>
+#include <cassert>
 
 int main()
 {
 	std::string s = "AnnieBellenie";
 
 	auto pos = s.rfind("nie");
-	std::cout << pos << std::endl;
+	
+	assert(pos == 10);
+
+	std::cout << "[TEST] string::rfind PASS\n";
 
 	return 0;
 }

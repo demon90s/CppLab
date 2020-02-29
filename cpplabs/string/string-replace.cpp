@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <string>
+#include <cassert>
 
 int main()
 {
@@ -12,7 +13,9 @@ int main()
 
 	s.replace(0, 5, "Hi");
 
-	std::cout << s << std::endl;
+	assert(s == "Hi, world");
+
+	std::cout << "[TEST] string::replace PASS\n";
 
 	return 0;
 }

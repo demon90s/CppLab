@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <cassert>
 
 using namespace std;
 
@@ -9,10 +10,20 @@ int main()
 	char c;
 	iss >> c;
 
-	cout << c << endl;		// a
+	assert(c == 'a');
 
 	iss >> c;
-	cout << c << endl;		// b
+	assert(c == 'b');
+
+	iss >> c;
+	assert(iss);
+	assert(c == 'c');
+	
+	iss >> c;	// opera fail
+	assert(!iss);
+	assert(c == 'c');
+
+	std::cout << "[TEST] istringstream PASS\n";
 
 	return 0;
 }

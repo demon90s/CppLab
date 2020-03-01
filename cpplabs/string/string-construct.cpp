@@ -4,20 +4,19 @@
 
 #include <string>
 #include <iostream>
+#include <cassert>
 
 void default_construct()
 {
 	std::string s;
-
-	std::cout << s; // empty
+	assert(s == "");
 }
 
 void copy_construct()
 {
 	//std::string s = "Hello"; // 隐式转换
 	std::string s("Hello");
-
-	std::cout << s << std::endl;
+	assert(s == "Hello");
 }
 
 void other_construct()
@@ -30,7 +29,7 @@ void other_construct()
 		std::string::size_type n = 5;
 		std::string s(cp, n);
 
-		std::cout << s << std::endl;
+		assert(s == "Hello");
 	}
 
 	// s是 string s2 从下标 pos2 开始的字符的拷贝。若 pos2 > s2.size()，构造函数的行为未定义
@@ -39,7 +38,7 @@ void other_construct()
 		std::string::size_type pos2 = 6;
 		std::string s(s2, pos2);
 
-		std::cout << s << std::endl;
+		assert(s == "world");
 	}
 
 	// s是 string s2 从下标 pos2 开始 len2 个字符的拷贝。若 pos2 > s2.size() ，构造函数的行为未定义。
@@ -50,18 +49,16 @@ void other_construct()
 		std::string::size_type len2 = 4; // ello
 		std::string s(s2, pos2, len2);
 
-		std::cout << s << std::endl;
+		assert(s == "ello");
 	}
 }
 
 int main()
 {
-	//default_construct();
-	//copy_construct();
-	//other_construct();
+	default_construct();
+	copy_construct();
+	other_construct();
 
-	std::string s(10, 'c');
-	std::cout << s << std::endl;
-
+	std::cout << "[TEST] string construct PASS\n";
 	return 0;
 }

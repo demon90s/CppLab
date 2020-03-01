@@ -14,22 +14,33 @@ size_type copy(char *dest, size_type count, size_type pos = 0) const;
 
 #include <iostream>
 #include <string>
+#include <cassert>
+#include <cstring>
 
 void test1()
 {
 	std::string str = "Hello World";
+	char cstr[12]; memset(cstr, -1, sizeof(cstr));	// 故意这么做,copy不会添加空字符
+	int n = str.copy(cstr, std::string::npos);
 
-	char *cstr = new char[str.length() + 1]{};
+	assert(cstr[11] == -1);
+	assert(n == 11);	// 复制了11个字符,没有包括空字符
 
-	str.copy(cstr, std::string::npos);
+	cstr[11] = '\0';
+	assert(strcmp(cstr, "Hello World") == 0);
 
-	std::cout << "cstr: " << cstr << std::endl;
+	char cstr2[6] {};
+	str.copy(cstr2, sizeof(cstr2) - 1);
+	assert(strcmp(cstr2, "Hello") == 0);
 
-	delete []cstr;
+	str.copy(cstr2, sizeof(cstr2) - 1, 6);
+	assert(strcmp(cstr2, "World") == 0);
 }
 
 int main()
 {
 	test1();
+
+	std::cout << "[TEST] string::copy PASS\n";
 	return 0;
 }

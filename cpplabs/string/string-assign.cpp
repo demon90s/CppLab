@@ -4,14 +4,15 @@
 
 #include <iostream>
 #include <string>
+#include <cassert>
 
 int main()
 {
 	std::string s = "Hey";
 
 	s.assign("Hi");
+	assert(s == "Hi");
 
-	std::cout << s << std::endl;
-
+	std::cout << "[TEST] string::assign PASS\n";
 	return 0;
 }

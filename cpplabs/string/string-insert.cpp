@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <cassert>
 
 int main()
 {
@@ -13,31 +14,29 @@ int main()
 	{
 		std::string s = "Hello world";
 		s.insert(s.size(), 5, '!');	// 在s末尾插入5个感叹号
-
-		std::cout << s << std::endl;
+		assert(s == "Hello world!!!!!");
 	}
 
 	{
 		const char *cp = "Stately, plump back";
 		std::string s = "Hey";
 		s.insert(s.size(), cp + 7); // "Hey, plump back"
-
-		std::cout << s << std::endl;
+		assert(s == "Hey, plump back");
 	}
 
 	{
 		std::string s = "some string", s2 = "some other string";
 		s.insert(0, s2); // 在s中位置0之前插入s2的拷贝
-
-		std::cout << s << std::endl;
+		assert(s == "some other stringsome string");
 	}
 
 	{
 		std::string s = "some string", s2 = "some other string";
 		s.insert(0, s2, 0, s2.size()); // 在s[0]之前插入s2中s2[0]开始的s2.size()个字符
-
-		std::cout << s << std::endl;
+		assert(s == "some other stringsome string");
 	}
+
+	std::cout << "[TEST] string::insert PASS\n";
 
 	return 0;
 }

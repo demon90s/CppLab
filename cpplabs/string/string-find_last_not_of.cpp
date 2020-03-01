@@ -7,24 +7,22 @@
 
 #include <string>
 #include <iostream>
+#include <cassert>
 
 void Test1()
 {
     std::string s = "ABCDEFGHIJK";
 
     auto pos = s.find_last_not_of("ABC");
+    assert(pos == 10);
 
-    if (pos == std::string::npos) {
-        std::cout << "not find" << std::endl;
-    }
-    else {
-        std::cout << "got last not of: " << s[pos] << std::endl;
-    }
+    pos = s.find_last_not_of("JK");
+    assert(pos == 8);
 }
 
 int main()
 {
     Test1();
-
+    std::cout << "[TEST] string::find_last_not_of PASS\n";
     return 0;
 }

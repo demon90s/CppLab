@@ -7,23 +7,21 @@
 
 #include <string>
 #include <iostream>
+#include <cassert>
 
 void Test1()
 {
     std::string s = "ABCDEFGHIJK";
 
     auto pos = s.find_first_not_of("ABC");
-
-    if (pos == std::string::npos) {
-        std::cout << "not find" << std::endl;
-    }
-    else {
-        std::cout << "got first not of: " << s[pos] << std::endl;
-    }
+    assert(pos == 3);
 }
+    
 
 int main()
 {
     Test1();
+
+    std::cout << "[TEST] string::find_first_not_of PASS\n";
     return 0;
 }

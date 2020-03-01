@@ -7,18 +7,20 @@
 
 #include <string>
 #include <iostream>
+#include <cassert>
 
 void Test1()
 {
     std::string s = "ABC";
 
-    if (s.compare("ABD") < 0) {
-        std::cout << "ABC < ABD" << std::endl;
-    }
+    assert(s.compare("ABD") < 0);
+    assert(s.compare("ABB") > 0);
+    assert(s.compare("ABC") == 0);
 }
 
 int main()
 {
     Test1();
+    std::cout << "[TEST] string::compare PASS\n";
     return 0;
 }

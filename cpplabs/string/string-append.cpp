@@ -4,14 +4,15 @@
 
 #include <iostream>
 #include <string>
+#include <cassert>
 
 int main()
 {
 	std::string s = "C++ Primer";
 
 	s.append(" 4th Ed.");
+	assert(s == "C++ Primer 4th Ed.");
 
-	std::cout << s << std::endl;
-
+	std::cout << "[TEST] string::append PASS\n";
 	return 0;
 }

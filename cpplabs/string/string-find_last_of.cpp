@@ -7,22 +7,22 @@
 
 #include <string>
 #include <iostream>
+#include <cassert>
 
 void Test1()
 {
     std::string s = "ABCDEFGHIJK";
 
     auto pos = s.find_last_of("EGI");
-    if (pos == std::string::npos) {
-        std::cout << "not find" << std::endl;
-    }
-    else {
-        std::cout << "find, pos: " << pos << std::endl;
-    }
+    assert(pos == 8);
+
+    pos = s.find_last_of("123");
+    assert(pos == std::string::npos);
 }
 
 int main()
 {
     Test1();
+    std::cout << "[TEST] string::find_last_of PASS\n";
     return 0;
 }

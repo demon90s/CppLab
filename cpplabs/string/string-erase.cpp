@@ -5,14 +5,15 @@
 
 #include <iostream>
 #include <string>
+#include <cassert>
 
 int main()
 {
 	std::string s = "Hello World";
-
 	s.erase(5);
+	assert(s == "Hello");
 
-	std::cout << s << std::endl;
 
+	std::cout << "[TEST] string::erase PASS\n";
 	return 0;
 }

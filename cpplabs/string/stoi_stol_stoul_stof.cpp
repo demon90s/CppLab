@@ -14,18 +14,18 @@
 
 #include <string>
 #include <iostream>
-#include <google/gtest/gtest.h>
+#include <cassert>
 
-TEST(cpplab, stoi_example)
+void test1()
 {
     int i = std::stoi("42");
-    ASSERT_TRUE(i == 42);
+    assert(i == 42);
 
     i = std::stoi("1010", 0, 2);
-    ASSERT_TRUE(i == 10);
+    assert(i == 10);
 }
 
-TEST(cpplab, stoi_exception)
+void test2()
 {
     {
         bool catched_invalid_argument = false;
@@ -36,7 +36,7 @@ TEST(cpplab, stoi_exception)
         catch (std::invalid_argument e) {
             catched_invalid_argument = true;
         }
-        ASSERT_TRUE(catched_invalid_argument);
+        assert(catched_invalid_argument);
     }
 
     {
@@ -48,13 +48,14 @@ TEST(cpplab, stoi_exception)
         catch (std::out_of_range e) {
             catched_out_of_range = true;
         }
-        ASSERT_TRUE(catched_out_of_range);
+        assert(catched_out_of_range);
     }
 }
 
 int main(int argc, char* argv[])
 {
-    testing::InitGoogleTest(&argc, argv);
+    test1();
+    test2();
 
-    return RUN_ALL_TESTS();
+    std::cout << "[TEST] stoi, stol, stoul, stof PASS\n";
 }

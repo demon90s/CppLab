@@ -14,18 +14,7 @@
 
 #include <typeinfo>
 #include <cstdio>
-
-void func() {}
-void test1()
-{
-	printf("value of func: %p\n", func);
-	printf("value of &func: %p\n", &func);
-	printf("value of *func: %p\n", *func);
-
-	printf("typename of func: %s\n", typeid(func).name());
-	printf("typename of &func: %s\n", typeid(&func).name());
-	printf("typename of *func: %s\n", typeid(*func).name());
-}
+#include <cassert>
 
 // 一个静态类型
 class Foo {
@@ -33,21 +22,36 @@ public:
 	Foo() { printf("Foo::Foo()\n"); }
 };
 
-void test2()
+void test1()
 {
-	printf("%s\n", typeid(Foo()).name());			// 静态类型, 不会真的执行表达式(编译期得到结果)
+	Foo *p = 0;
+	
+	// 静态类型, 不会真的执行表达式(编译期得到结果)
+	assert(typeid(*p) == typeid(Foo));
 }
 
-void test3()
+void test2()
 {
 	class Base { public: virtual ~Base() {} };
 	class Derived : public Base {};
 
 	Base *p = new Derived();
 
-	printf("%s\n", typeid(*p).name());	// xxxDerived 因基类有虚函数，得到实际的子类型
+	// Derived 因基类有虚函数，得到实际的子类型，该表达式在运行时求值
+	assert(typeid(*p) == typeid(Derived));
 
 	delete p;
+
+	bool catched = false;
+	p = 0;
+	try {
+		// 对空指针操作，会抛异常
+		typeid(*p);
+	} catch(std::bad_typeid e)
+	{
+		catched = true;
+	}
+	assert(catched);
 }
 
 enum class Week
@@ -60,11 +64,11 @@ enum WEEK
 	SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
 };
 
-void test4()
+void test3()
 {
 	// 测试一些平凡类型
 	int number;
-	printf("number: %s\n", typeid(number).name());
+	printf("number: %s\n", typeid(number).name());	// i
 
 	printf("enum class Sunday: %s\n", typeid(Week::Sunday).name());	// 输出 Week
 
@@ -73,10 +77,11 @@ void test4()
 
 int main()
 {
-	//test1();
-	//test2();
-	//test3();
-	test4();
+	test1();
+	test2();
+	test3();
+
+	printf("[TEST] typeid typeinfo PASS\n");
 
 	return 0;
 }

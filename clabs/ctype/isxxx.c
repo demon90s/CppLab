@@ -1,4 +1,5 @@
 /*
+    #include <ctype.h>
     isalnum(c)      c是否是字母或数字
     isalpha(c)      c是否是字母
     iscntrl(c)      c是否是控制字符
@@ -12,39 +13,25 @@
     isxdigit(c)     c是否是十六进制数字
 
     控制字符包括 \0x00 \0x1f \0x7f
+
+    注意，传进去的是一个字符。
+
+    测试成功返回非零数，失败返回0。
 */
 
 #include <stdio.h>
 #include <ctype.h>
-
-#define TEST(f) printf("%c\t", f(*p) ? 'x' : ' ');
+#include <assert.h>
 
 int main(int argc, char const *argv[])
 {
-    const char *str = "azAZ0  !\t";
-    const char* p;
-    printf("char\talnum\tcntrl\tgraph\tprint\tspace\txdigit\talpha\tdigit\tlower\tupper\tpunct\n");
+    assert(isalnum('a'));
+    assert(isalnum('8'));
+    assert(isalnum('.') == 0);
+    printf("[TEST] isalnum PASS\n");
 
-    for (p = str; *p != '\0'; p++) {
-        if (!isgraph(*p))
-            printf("0x%02x:\t", *p);
-        else
-            printf("%c:\t", *p);
-
-        TEST(isalnum);
-        TEST(iscntrl);
-        TEST(isgraph);
-        TEST(isprint);
-        TEST(isspace);
-        TEST(isxdigit);
-        TEST(isalpha);
-        TEST(isdigit);
-        TEST(islower);
-        TEST(isupper);
-        TEST(ispunct);
-
-        printf("\n");
-    }
-
-    return 0;
+    assert(isxdigit('A'));
+    assert(isxdigit('1'));
+    assert(isxdigit('O') == 0);
+    printf("[TEST] isxdigit PASS\n");
 }

@@ -5,14 +5,17 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <assert.h>
 
 int main()
 {
-    printf("round(3.3): %.1f\n", round(3.3));               // 3.0
-    printf("round(3.6): %.1f\n", round(3.6));               // 4.0
+    assert(round(3.3) == 3.0);
+    assert(round(3.6) == 4.0);
 
-    printf("round(-3.3): %.1f\n", round(-3.3));             // -3.0
-    printf("round(-3.6): %.1f\n", round(-3.6));             // -4.0
+    assert(round(-3.3) == -3.0);
+    assert(round(-3.6) == -4.0);
+
+    printf("[TEST] round PASS\n");
 
     return 0;
 }

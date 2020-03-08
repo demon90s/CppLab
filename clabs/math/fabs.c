@@ -5,12 +5,16 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <assert.h>
 
 int main(int argc, char const *argv[])
 {
     double pi = 3.14;
-    printf("%f\n", fabs(pi));
-    printf("%f\n", fabs(-pi));
+
+    assert(fabs(pi) == 3.14);
+    assert(fabs(-pi) == 3.14);
+
+    printf("[TEST] fabs PASS\n");
 
     return 0;
 }

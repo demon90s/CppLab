@@ -5,11 +5,14 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <assert.h>
 
 int main(int argc, char const *argv[])
 {
-    printf("floor(+2.7) = %+.1f\n", floor(2.7));            // +2.0
-    printf("floor(-2.7) = %+.1f\n", floor(-2.7));           // -3.0
+    assert(floor(2.7) == 2.0);
+    assert(floor(-2.7) == -3.0);
+
+    printf("[TEST] floor PASS\n");
 
     return 0;
 }

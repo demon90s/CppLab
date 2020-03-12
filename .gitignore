@@ -15,6 +15,7 @@ lib/
 *.sln.docstates
 core
 a.out
+a.exe
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

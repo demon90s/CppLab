@@ -23,5 +23,8 @@ int main()
 	//StaticCheckType(f2_t, p); // failure
 	StaticCheckType(f2_t, Func); // succesz
 
+	std::string s1, s2;
+	StaticCheckType(s1, s2);	// success
+
 	return 0;
 }

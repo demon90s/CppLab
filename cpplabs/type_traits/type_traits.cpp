@@ -54,6 +54,7 @@ void test_is_float_point()
     std::cout << std::is_floating_point<float>::value << '\n';  // true
     std::cout << std::is_floating_point<double>::value << '\n';  // true
     std::cout << std::is_floating_point<int>::value << '\n';  // false
+    std::cout << std::is_floating_point<std::string>::value << '\n';    // false
 }
  
 void test_is_array() 
@@ -71,8 +72,8 @@ int main()
     //test_foo();
     //test_is_same();
     //test_is_integral();
-    //test_is_float_point();
-    test_is_array();
+    test_is_float_point();
+    //test_is_array();
 
     return 0;
 }

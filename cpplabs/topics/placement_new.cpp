@@ -1,7 +1,9 @@
 // 定位new表达式
+// 需要 include <new>
 
 #include <iostream>
 #include <cassert>
+#include <new>
 
 struct Foo
 {

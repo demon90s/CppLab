@@ -37,8 +37,7 @@ struct D {
 }; // 8 byte alignment, total 24 bytes
 
 // 强制4字节对齐
-#pragma pack(push)
-#pragma pack(4)
+#pragma pack(push, 4)
 struct E {
     char c;
     short a;

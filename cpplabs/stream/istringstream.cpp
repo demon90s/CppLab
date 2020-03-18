@@ -21,9 +21,8 @@ int main()
 	
 	iss >> c;	// opera fail
 	assert(!iss);
+	assert(iss.eof());		// 读取完了，eof置位
 	assert(c == 'c');
 
 	std::cout << "[TEST] istringstream PASS\n";
-
-	return 0;
 }

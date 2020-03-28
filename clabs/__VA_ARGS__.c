@@ -10,9 +10,15 @@
     printf(format "\n", ##__VA_ARGS__);\
     fflush(stdout);
 
+// 更简单
+#define Log2(...) \
+    printf(__VA_ARGS__);\
+    fflush(stdout);
+
 int main()
 {
     Log("hello, %s", "world");
+    Log2("hello, %s", "world");
 
     return 0;
 }

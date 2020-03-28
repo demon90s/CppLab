@@ -6,6 +6,7 @@
 // std::tie<args&...>
 // 得到一个绑定左值引用的 tuple
 // 可以用于处理多重返回值
+// NOTE: 其实就是一个 unpack tuple 的工具
 
 std::tuple<int, double> foo()
 {

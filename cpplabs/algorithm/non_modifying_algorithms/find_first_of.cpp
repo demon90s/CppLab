@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <vector>
 #include <iostream>
+#include <cassert>
 
 void Test1()
 {
@@ -23,16 +24,16 @@ void Test1()
     std::vector<int> sub {5, 3};
 
     auto it = std::find_first_of(vec.begin(), vec.end(), sub.begin(), sub.end());
-    if (it == vec.end()) {
-        std::cout << "not find" << std::endl;
-    }
-    else {
-        std::cout << "first find pos: " << std::distance(vec.begin(), it) << std::endl;
-    }
+
+    auto pos = std::distance(vec.begin(), it);
+    assert(pos == 2);
+    assert(*it == 3);
 }
 
 int main(int argc, char const *argv[])
 {
     Test1();
+
+    std::cout << "[TEST] find_first_of PASS\n";
     return 0;
 }

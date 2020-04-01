@@ -21,6 +21,9 @@ int main()
 	std::string s4 = s.substr(6, 3);
 	assert(s4 == "wor");
 
+	std::string s5 = s.substr(11);
+	assert(s5 == "");
+
 	std::cout << "[TEST] string::substr PASS\n";
 
 	return 0;

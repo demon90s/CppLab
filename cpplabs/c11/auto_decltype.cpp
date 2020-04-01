@@ -15,43 +15,45 @@
 */
 
 #include <cstdio>
+#include <cassert>
 #include <iostream>
 
-int make_int()
-{
-    printf("make_int called\n");
+int make_int(){
+    assert(false);              // 但我不会被调用
     return 42;
-}
-
-void test_auto()
-{
-    auto i = make_int();        // i 是 int
-    printf("i: %d\n", i);
 }
 
 void test_decltype()
 {
-    decltype(make_int()) i;    // i 是 int
+    decltype(make_int()) i;    // i 是 int, make_int函数不会被调用
     i = 42;
-    printf("i: %d\n", i);
+    assert(i == 42);
+
+    // 如果给变量加上一对括号( 即 decltype((v)) )，decltype的结果一定是引用
+    decltype((i)) ri = i;
+    ri = 100;
+    assert(i == 100);
 }
 
 // 返回类型是v的引用类型
 template<typename P>
-auto Print(P v) -> decltype(*v)
+auto Pow(P v) -> decltype(*v)
 {
-    std::cout << *v << std::endl;
+    *v = *v * *v;
     return *v; 
 }
 
 int main()
 {
-    //test_auto();
-    //test_decltype();
+    test_decltype();
 
-    int a = 42;
-    int &ra = Print(&a);
-    std::cout << ra << std::endl;
+    int a = 2;
+    int &ra = Pow(&a);
+    
+    assert(ra == 4);
+    assert(a == 4);
+
+    std::cout << "[TEST] decltype PASS\n";
 
     return 0;
 }

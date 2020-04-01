@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <map>
+#include <cassert>
 
 using namespace std;
 
@@ -37,12 +38,23 @@ do { printf("sizeof %s: %lu\n", #x, sizeof(x)); } while(0)
 
 int main()
 {
-	PRINT(Int64);
-	PRINT(Name);
-	PRINT(Func);
+	PRINT(Int64);				// 8
+	PRINT(Name);				// 32
+	PRINT(Func);				// 8
 
 	Funcs funcs;
 	funcs.Call("f1");
+
+	// 下面是坑
+	{
+		typedef int *IntP;
+		int a = 42;
+		const IntP pi = &a;
+		// pi是顶层而非底层，即不能修改pi，却可以修改它绑定的对象
+		*pi = 100;
+		assert(a == 100);
+		//pi = nullptr; // compile error: assignment of read-only variable
+	}
 
 	return 0;
 }

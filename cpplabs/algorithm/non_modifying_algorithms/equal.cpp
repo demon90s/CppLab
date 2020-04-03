@@ -13,18 +13,25 @@
 #include <vector>
 #include <iostream>
 #include <list>
+#include <cassert>
 
-void Test1()
+int main(int argc, char const *argv[])
 {
     std::vector<int> vec {1, 2, 3, 4, 5};
     std::list<int> lst {1, 2, 3, 4, 5, 6};
 
     bool is_equal = std::equal(vec.begin(), vec.end(), lst.begin());
-    std::cout << (is_equal ? "equal" : "not equal") << std::endl;
-}
+    assert(is_equal == true);   // 尽管长度不一样，但比较的范围一样，内容也一样
 
-int main(int argc, char const *argv[])
-{
-    Test1();
+    int arr[] = {1, 2, 3, 4, 5};
+    is_equal = std::equal(std::begin(arr), std::end(arr), vec.begin());
+    assert(is_equal == true);
+
+    vec[2] = 10;
+    is_equal = std::equal(std::begin(arr), std::end(arr), vec.begin());
+    assert(is_equal == false);
+
+    std::cout << "[TEST] std::equal PASS\n";
+
     return 0;
 }

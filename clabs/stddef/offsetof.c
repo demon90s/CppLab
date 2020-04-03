@@ -8,20 +8,26 @@
 
 #include <stddef.h>
 #include <stdio.h>
+#include <assert.h>
 
+// 4字节对齐
+#pragma pack(push, 4)
 struct s {
     char a;
     int b[2];
     float c;
 };
+#pragma pack(pop)
 
 int main(int argc, char const *argv[])
 {
-    printf("offset a: %zu\n", offsetof(struct s, a));  /* 一定是0，因为第一个成员的地址与自身地址相同 */
+    assert(offsetof(struct s, a) == 0);
 
-    printf("offset b: %zu\n", offsetof(struct s, b));
+    assert(offsetof(struct s, b) == 4);
 
-    printf("offset c: %zu\n", offsetof(struct s, c));
-    
+    assert(offsetof(struct s, c) == 12);
+
+    printf("[TEST] offsetof PASS\n");
+
     return 0;
 }

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <string>
 #include <iterator>
+#include <cassert>
 
 // 使用 vector 的案例
 void test()
@@ -93,9 +94,20 @@ void test_increase()
 
 int main()
 {
+	int arr[3] = {1, 2, 3};
+
+	std::vector<int> ivec {arr, arr + 3};
+	assert(ivec.size() == 3);
+	assert(ivec[0] == 1 && ivec[1] == 2 && ivec[2] == 3);
+
+	ivec = {arr, arr};
+	assert(ivec.size() == 0);
+
 	test();
 	//test_emplace();
-
 	//test_increase();
+
+	std::cout << "[TEST] vector PASS\n";
+
 	return 0;
 }

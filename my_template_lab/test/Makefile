@@ -6,7 +6,7 @@ TARGETS = test_Array \
 			test_ObjTimer \
 			test_ObjFuncInvoker \
 			test_FixLenRankList \
-			test_timeutil
+			test_FixLenSet
 
 all: $(TARGETS)
 

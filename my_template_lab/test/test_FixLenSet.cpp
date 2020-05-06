@@ -68,7 +68,7 @@ std::ostream& operator<<(std::ostream &os, const Foo &foo)
 
 void test2()
 {
-    FixLenSet<Foo, 5> fooset;
+    FixLenSet<Foo, 16> fooset;
     fooset.Insert(Foo(1, 10));
     fooset.Print();
 

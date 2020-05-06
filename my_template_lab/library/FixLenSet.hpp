@@ -1,6 +1,6 @@
 #pragma once
 
-// 定长无序set，元素唯一
+// 定长无序set，元素唯一，线性效率
 // 要求 T 实现 operator== 操作
 
 // 若要用key找，要求T实现一个叫Key的静态函数，返回一个T作为匹配对象
@@ -125,7 +125,7 @@ public:
         return this->GetItem(key) != nullptr;
     }
 
-public:
+private:
     int GetFreeIndex()
     {
         for (int i = 0; i < N; i++)
@@ -138,6 +138,7 @@ public:
         return -1;
     }
 
+public:
     void Print()
     {
         std::cout << "----------------------------\n";

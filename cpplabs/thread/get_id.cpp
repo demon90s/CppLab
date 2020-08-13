@@ -19,6 +19,8 @@ void foo()
 
 int main()
 {
+	std::cout << "main thread id: " << std::this_thread::get_id() << std::endl;
+
 	std::thread t1(foo);
 	std::thread::id t1_id = t1.get_id();
 

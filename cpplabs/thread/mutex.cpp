@@ -15,84 +15,25 @@
 #include <list>
 #include <string>
 
-template<typename T>
-class JobQueue {
-public:
-	JobQueue() {}
+std::mutex output_lock;
 
-	int Size() {
-		m_lock.lock();
-		int sz = (int)m_q.size();
-		m_lock.unlock();
-		return sz;
-	}
-
-	void Push(const T &v) {
-		m_lock.lock();
-		m_q.push_back(v);
-		m_lock.unlock();
-	}
-
-	T Pop() {
-		m_lock.lock();
-		T v = m_q.front();
-		m_q.pop_front();
-		m_lock.unlock();
-		return v;
-	}
-
-private:
-	JobQueue(const JobQueue&) = delete;
-	JobQueue& operator=(const JobQueue&) = delete;
-
-	std::mutex m_lock;
-	std::list<T> m_q;
-};
-
-class Job {
-public:
-	Job(std::string name) : m_name(name) {}
-
-	void Invoke() {
-		std::cout << "do job " << m_name << "\n";
-	}
-
-private:
-	std::string m_name;
-};
-
-bool run = false;
-void work_thread(JobQueue<Job> *jq) {
-	while (run) {
-		if (jq->Size() > 0) {
-			// do IO in this thread
-			Job j = jq->Pop();
-			j.Invoke();
-
-			std::this_thread::sleep_for(std::chrono::milliseconds(300));
-		}
-	}
+void sync_output(const char *msg)
+{
+	output_lock.lock();
+	std::cout << msg << std::endl;
+	output_lock.unlock();
 }
 
 int main()
 {
-	JobQueue<Job> jq;
+	// 同步输出
+	std::thread t1([]() { sync_output("t1 output test"); });
+	std::thread t2([]() { sync_output("t2 output test"); });
 
-	run = true;
-	std::thread t(work_thread, &jq);
+	// 非同步输出，输出就很乱
+	//std::thread t1([]() { std::cout << "t1 output test" << std::endl; });
+	//std::thread t2([]() { std::cout << "t2 output test" << std::endl; });
 
-	// business
-	for (int i = 0; i < 5; i++)
-	{
-		std::string name = "job" + std::to_string(i + 1);
-		Job j(name);
-		jq.Push(j);
-	}
-
-	std::this_thread::sleep_for(std::chrono::seconds(5));
-	run = false;
-
-	t.join();
-
-	return 0;
+	t1.join();
+	t2.join();
 }

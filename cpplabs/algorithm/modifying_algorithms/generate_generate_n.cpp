@@ -22,8 +22,12 @@ void test_generate()
 
 void test_generate_n()
 {
-    std::vector<int> vec = {0, 0, 0, 0, 0};
-    std::generate_n(vec.begin(), 3, rand);
+    std::vector<int> vec;
+
+    auto back_insert_it = std::back_insert_iterator<decltype(vec)>(vec);
+
+    std::generate_n(back_insert_it, 3, rand);
+    
     for (auto i : vec) {
         std::cout << i << " ";
     }

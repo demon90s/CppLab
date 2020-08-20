@@ -6,7 +6,7 @@
 
     lock 加锁
     unlock 解锁
-    trylock 尝试加锁
+    trylock 尝试加锁，立刻返回，成功则获得锁
 */
 #include <iostream>
 #include <thread>

@@ -16,7 +16,9 @@
 
 #include <algorithm>
 #include <vector>
+#include <string>
 #include <iostream>
+#include <cassert>
 
 void Test_find()
 {
@@ -29,6 +31,10 @@ void Test_find()
     else {
         std::cout << "not find" << std::endl;
     }
+
+    std::string s = "hello";
+    auto sit = std::find(s.begin(), s.end(), 'o');
+    assert(sit != s.end());
 }
 
 void Test_find_if()
@@ -85,7 +91,7 @@ void Test_find_if_not()
 
 int main(int argc, char const *argv[])
 {
-    //Test_find();
+    Test_find();
     //Test_find_if();
     Test_find_if_not();
 

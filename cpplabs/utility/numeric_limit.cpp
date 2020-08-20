@@ -44,5 +44,8 @@ int main(int argc, char const *argv[])
     struct Foo {};
     cout << "is_specialized(Foo): " << numeric_limits<Foo>::is_specialized << endl;
 
+    // 一个字节的位数 8
+    std::cout << "char bits: " << numeric_limits<unsigned char>::digits << endl;
+
     return 0;
 }

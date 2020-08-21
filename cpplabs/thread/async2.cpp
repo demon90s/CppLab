@@ -16,7 +16,7 @@ int main()
 {
     int n;
 
-    // deferred, 则直到调用 get 才会启动函数，等同于同步调用
+    // deferred, 惰性求值，则直到调用 get 才会启动函数，等同于同步调用
     /*
     std::future<int> fu = std::async(std::launch::deferred, factorial, std::ref(n));
     std::cout << "enter n: ";

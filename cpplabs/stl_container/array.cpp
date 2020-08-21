@@ -4,6 +4,7 @@
 #include <iterator>
 #include <cstring>
 #include <numeric>
+#include <functional>
 
 /*
  * C++ 标准库保证 array<> 的所有元素一定位于连续且相邻的内存内。
@@ -13,7 +14,7 @@
  */
 void test_carray_stdarray()
 {
-	std::array<char, 41> a;		// create static array of 41 chars
+	std::array<char, 41> a;		// create static array of 41 chars 采用默认初始化
 
 	//strcpy(&a[0], "hello, world");	// copy a C-string into the array
 	strcpy(a.data(), "hello, world");
@@ -53,11 +54,24 @@ void test()
 	std::cout << std::endl;
 }
 
+void test_array_fill()
+{
+	std::array<int, 4> ia;
+
+	// 将所有的元素填充为 -1
+	ia.fill(-1);
+
+	std::copy(ia.begin(), ia.end(), std::ostream_iterator<int>(std::cout, " "));
+	std::cout << std::endl;
+}
+
 int main()
 {
-	test_carray_stdarray();
+	//test_carray_stdarray();
 	
 	//test();
+
+	test_array_fill();
 
 	return 0;
 }

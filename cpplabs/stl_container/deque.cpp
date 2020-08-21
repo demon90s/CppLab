@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <iterator>
 
+// push_front push_back 不会令容器的迭代器失效，删除也是
+
 // deque 运用实例
 void test()
 {

@@ -9,51 +9,70 @@
 #include <new>
 
 inline void *operator new(size_t size) {
-	if (void *mem = malloc(size)) {
-		std::cout << "[DEBUG] call custom new, ptr: " << mem << std::endl;
-		return mem;
-	}
-	else
-		throw std::bad_alloc();
+    if (void *mem = malloc(size)) {
+        std::cout << "[DEBUG] call custom new, ptr: " << mem << std::endl;
+        return mem;
+    }
+    else
+        throw std::bad_alloc();
 }
 
 inline void operator delete(void *mem) noexcept
 {
-	std::cout << "[DEBUG] call custom delete, ptr: " << mem << std::endl;
-	free(mem);
+    std::cout << "[DEBUG] call custom delete, ptr: " << mem << std::endl;
+    free(mem);
 }
 
 inline void *operator new[](size_t sz) {
-	if (void *mem = malloc(sz)) {
-		std::cout << "[DEBUG] call custom new[], sz: " << sz << " ptr: " << mem << std::endl;
-		return mem;
-	}
-	else
-		throw std::bad_alloc();
+    if (void *mem = malloc(sz)) {
+        std::cout << "[DEBUG] call custom new[], sz: " << sz << " ptr: " << mem << std::endl;
+        return mem;
+    }
+    else
+        throw std::bad_alloc();
 }
 
 inline void operator delete[](void *mem) noexcept
 {
-	std::cout << "[DEBUG] call custom delete[], ptr: " << mem << std::endl;
-	free(mem);
+    std::cout << "[DEBUG] call custom delete[], ptr: " << mem << std::endl;
+    free(mem);
 }
 
 class Foo {
 public:
-	Foo() { std::cout << "Foo::Foo()\n"; }
-	~Foo() { std::cout << "Foo::~Foo\n"; }
+    Foo() {
+        std::cout << "Foo::Foo()\n";
+    }
+    virtual ~Foo() {
+        std::cout << "Foo::~Foo\n";
+    }
 
-	void *operator new(size_t sz) {
-		if (void *mem = malloc(sz)) {
-			std::cout << "[DEBUG] alloc an object of Foo\n";
-			return mem;
-		}
-		else
-			throw std::bad_alloc();
-	}
+    void *operator new(size_t sz) {
+        if (void *mem = malloc(sz)) {
+            std::cout << "[DEBUG] alloc an object of Foo, size: " << sz << ", \n";
+            return mem;
+        }
+        else
+            throw std::bad_alloc();
+    }
 
-	void operator delete(void *mem) noexcept {
-		std::cout << "[DEBUG] free an object of Foo\n";
-		free(mem);
-	}
+    void operator delete(void *mem) noexcept {
+        std::cout << "[DEBUG] free an object of Foo\n";
+        free(mem);
+    }
+};
+
+class Bar : public Foo
+{
+public:
+    Bar()
+    {
+        std::cout << "Bar::Bar\n";
+    }
+    ~Bar()
+    {
+        std::cout << "Bar::~Bar\n";
+    }
+private:
+    char buff[1024];
 };
